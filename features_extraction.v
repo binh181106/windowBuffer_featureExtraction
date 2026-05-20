@@ -55,7 +55,7 @@ module feature_engine (
     reg [15:0] previous_rr_reg;
 
     reg signed [47:0] mean_calc;
-    reg signed [47:0] var_calc;
+    reg signed [63:0] var_calc;
 
     // =============================================================================
     // 3. MATH MODULE INTERFACES
@@ -173,7 +173,7 @@ module feature_engine (
                 // ---------------------------------------------------------------------
                 S_CALC_BASE: begin
                     read_enable <= 1'b0;
-                    mean_calc <= sum * 32'd33554; 
+                    mean_calc <= $signed(sum) * 32'sd33554; 
                     
                     f_half_ratio <= (positive_sample_cnt * 32'd33554) >>> 12;
                     f_peak       <= peak_reg <<< 12;
@@ -194,7 +194,8 @@ module feature_engine (
                 // [OUTPUT]: var_calc
                 // ---------------------------------------------------------------------
                 S_CALC_VAR: begin
-                    var_calc <= (sum_square * 32'd33554) - ((mean_calc[27:12] * mean_calc[27:12]) <<< 12);
+                    var_calc <= (($signed(sum_square) * 32'sd33554) >>> 12)
+                             - (($signed(mean_calc[27:12]) * $signed(mean_calc[27:12])) >>> 12);
                     state <= S_START_MATH_1;
                 end
 
