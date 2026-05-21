@@ -1,197 +1,259 @@
-
+`timescale 1ns / 1ps
 
 module feature_engine (
-    input  wire              clk,            // Xung nhịp hệ thống (50MHz)
-    input  wire              rst_n,          // Reset hệ thống (Tích cực mức thấp)
-    input  wire              start_compute,  // Lệnh kích hoạt tính toán từ FSM tổng của Bảo
+    input  wire              clk,            
+    input  wire              rst_n,          
+    input  wire              start_compute,  
     
-    // Giao tiếp với khối Window Buffer
-    input  wire signed [15:0] sample_in,     // Mẫu dữ liệu 16-bit nhận tuần tự từ bộ đệm
-    output reg               read_enable,    // Lệnh đòi hàng gửi ngược về bộ đệm
+    // Giao tiếp với khối Window Buffer (Chuẩn 512 mẫu)
+    input  wire signed [15:0] sample_in,     
+    output reg               read_enable,    
     
-    // Giao tiếp với khối hạ nguồn (Nối thẳng sang lõi AI của 
-    output reg signed  [15:0] f_rms,          // 1: Giá trị hiệu dụng RMS (Cần kết nối CORDIC bên ngoài)
-    output reg signed  [15:0] f_var,          //  2: Phương sai Variance
-    output reg signed  [15:0] f_peak,         // 3: Đỉnh cao nhất Q4.12
-    output reg         [15:0] f_zc,           //  4: Tỷ lệ cắt điểm 0 (Số nguyên)
-    output reg signed  [15:0] f_ptp,          //  5: Biên độ Đỉnh - Đỉnh Q4.12
-    output reg signed  [15:0] f_crest,        //  6: Hệ số đỉnh (Peak/RMS)
-    output reg signed  [15:0] f_half_ratio,   //  7: Tỷ lệ thời gian sóng dương Q4.12
-    output reg signed  [15:0] f_max,          //  8: Giá trị lớn nhất tuyệt đối Q4.12
-    output reg         [15:0] f_rr,           //  9: Khoảng cách RR hiện tại (Số chu kỳ)
-    output reg         [15:0] f_rr_prev,      //  10: Khoảng cách RR chu kỳ trước (Số chu kỳ)
-    output reg signed  [15:0] f_rr_ratio,     //  11: Tỷ lệ RR (RR / RR_prev) chuẩn Q4.12
-    output reg signed  [15:0] f_rr_diff,      //  12: Chênh lệch RR (RR - RR_prev) chuẩn Q4.12
-    output reg               feature_valid   // Cờ báo đã tính xong toàn bộ 12 đặc trưng
+    // Giao tiếp với khối hạ nguồn AI của T.Bình (Đầu ra 32-bit rộng rãi)
+    output reg signed  [31:0] f_rms,          
+    output reg signed  [31:0] f_var,          
+    output reg signed  [31:0] f_peak,         
+    output reg         [31:0] f_zc,           
+    output reg signed  [31:0] f_ptp,          
+    output reg signed  [31:0] f_crest,        
+    output reg signed  [31:0] f_half_ratio,   
+    output reg signed  [31:0] f_max,          
+    output reg         [31:0] f_rr,           
+    output reg         [31:0] f_rr_prev,      
+    output reg signed  [31:0] f_rr_ratio,     
+    output reg signed  [31:0] f_rr_diff,      
+    output reg               feature_valid   
 );
 
-    // 1. Định nghĩa trạng thái FSM con
-    localparam S_IDLE       = 2'b00;
-    localparam S_ACCUMULATE = 2'b01;
-    localparam S_COMPUTE    = 2'b10;
-    localparam S_DONE       = 2'b11;
+    // =============================================================================
+    // 1. FSM STATES
+    // =============================================================================
+    localparam S_IDLE         = 4'd0;
+    localparam S_ACCUMULATE   = 4'd1;
+    localparam S_CALC_BASE    = 4'd2; 
+    localparam S_CALC_VAR     = 4'd3; 
+    localparam S_START_MATH_1 = 4'd4; 
+    localparam S_WAIT_MATH_1  = 4'd5; 
+    localparam S_START_MATH_2 = 4'd6; 
+    localparam S_WAIT_MATH_2  = 4'd7; 
+    localparam S_DONE         = 4'd8;
 
-    reg [1:0] state;
+    reg [3:0] state;
     
-    // 2. Các thanh ghi phục vụ Datapath tích lũy nội bộ
-    reg [8:0]         cnt;
+    // =============================================================================
+    // 2. DATAPATH REGISTERS
+    // =============================================================================
+    reg [8:0]         cnt; // Đủ để đếm từ 0 đến 511 (Chuẩn 512 mẫu)
     reg signed [31:0] sum;
-    reg signed [47:0] sum_square;     // Tích lũy tổng bình phương để tính RMS và Variance
+    reg signed [47:0] sum_square;     
     reg signed [15:0] peak_reg;
     reg signed [15:0] min_reg;
     reg        [15:0] zcr_cnt;
     reg               prev_sign;
-    reg        [15:0] positive_sample_cnt; // Đếm số mẫu dương để tính f_half_ratio
+    reg        [15:0] positive_sample_cnt;
 
-    // Các thanh ghi quản lý thời gian để tính toán nhóm đặc trưng RR-Interval
-    reg [15:0] rr_timer;              // Bộ đếm thời gian chạy liên tục giữa 2 đỉnh
-    reg [15:0] current_rr_reg;        // Giữ giá trị RR tìm được trong khung 2 giây
-    reg [15:0] previous_rr_reg;       // Giữ giá trị RR cũ để tính toán so sánh
+    // Các thanh ghi quản lý thời gian đo khoảng cách RR
+    reg signed [15:0] sample_in_delayed;
+    reg        [15:0] rr_timer;
+    reg        [15:0] current_rr_reg;
+    reg        [15:0] previous_rr_reg;
 
-    // Các thanh ghi toán học trung gian
-    reg signed [47:0] mean_calc;
-    reg signed [47:0] var_calc;
-    reg signed [47:0] rr_ratio_calc;
-
-    // =============================================================================
-    // KHỐI ĐIỀU KHIỂN CHUYỂN TRẠNG THÁI FSM 
-    // =============================================================================
-    always @(posedge clk or negedge rst_n) begin
-        if (!rst_n) state <= S_IDLE;
-        else begin
-            case (state)
-                S_IDLE:       if (start_compute) state <= S_ACCUMULATE;
-                S_ACCUMULATE: if (cnt == 9'd499) state <= S_COMPUTE;
-                S_COMPUTE:    state <= S_DONE;
-                S_DONE:       state <= S_IDLE;
-                default:      state <= S_IDLE;
-            endcase
-        end
-    end
+    reg signed [31:0] mean_calc; // Thu hẹp từ 48 xuống 32-bit vì toán dịch bit rất gọn
+    reg signed [47:0] var_calc;  // Thu hẹp từ 64 xuống 48-bit an toàn
 
     // =============================================================================
-    // KHỐI DATAPATH 
+    // 3. MATH MODULE INTERFACES
+    // =============================================================================
+    reg         div_start;
+    reg  [31:0] div_dividend;
+    reg  [31:0] div_divisor;
+    wire [31:0] div_quotient;
+    wire [31:0] div_remainder;
+    wire        div_done;
+
+    restoring_divider u_divider (
+        .clk(clk), .rst_n(rst_n),
+        .start(div_start), .dividend(div_dividend), .divisor(div_divisor),
+        .quotient(div_quotient), .remainder(div_remainder), .done(div_done)
+    );
+
+    reg         sqrt_start;
+    reg  [63:0] sqrt_radicand;
+    wire [31:0] sqrt_root;
+    wire        sqrt_done;
+
+    iterative_sqrt u_sqrt (
+        .clk(clk), .rst_n(rst_n),
+        .start(sqrt_start), .radicand(sqrt_radicand),
+        .root(sqrt_root), .done(sqrt_done)
+    );
+
+    // =============================================================================
+    // MAIN FSM & DATAPATH
     // =============================================================================
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            read_enable         <= 1'b0;
-            feature_valid       <= 1'b0;
-            cnt                 <= 9'd0;
-            sum                 <= 32'd0;
-            sum_square          <= 48'd0;
-            peak_reg            <= 16'sh8000;
-            min_reg             <= 16'sh7FFF;
-            zcr_cnt             <= 16'd0;
-            prev_sign           <= 1'b0;
-            positive_sample_cnt <= 16'd0;
-            rr_timer            <= 16'd0;
-            current_rr_reg      <= 16'd0;
-            previous_rr_reg     <= 16'd0;
+            state <= S_IDLE;
+            read_enable <= 1'b0; feature_valid <= 1'b0;
+            cnt <= 9'd0; sum <= 32'd0; sum_square <= 48'd0;
+            peak_reg <= 16'sh8000; min_reg <= 16'sh7FFF;
+            zcr_cnt <= 16'd0; prev_sign <= 1'b0; positive_sample_cnt <= 16'd0;
+            rr_timer <= 16'd0; current_rr_reg <= 16'd0; previous_rr_reg <= 16'd0;
+            sample_in_delayed <= 16'd0;
             
-            // Xóa sạch 12 chân ngõ ra mới 
-            f_rms <= 16'd0; f_var <= 16'd0; f_peak <= 16'd0; f_zc <= 16'd0;
-            f_ptp <= 16'd0; f_crest <= 16'd0; f_half_ratio <= 16'd0; f_max <= 16'd0;
-            f_rr <= 16'd0; f_rr_prev <= 16'd0; f_rr_ratio <= 16'd0; f_rr_diff <= 16'd0;
+            f_rms <= 32'd0; f_var <= 32'd0; f_peak <= 32'd0; f_zc <= 32'd0;
+            f_ptp <= 32'd0; f_crest <= 32'd0; f_half_ratio <= 32'd0; f_max <= 32'd0;
+            f_rr <= 32'd0; f_rr_prev <= 32'd0; f_rr_ratio <= 32'd0; f_rr_diff <= 32'd0;
+
+            div_start <= 1'b0; sqrt_start <= 1'b0;
+            mean_calc <= 32'd0; var_calc <= 48'd0;
         end 
         else begin
             case (state)
-                
                 S_IDLE: begin
-                    read_enable   <= 1'b0;
+                    read_enable   <= 1'b0; 
                     feature_valid <= 1'b0;
-                    cnt           <= 9'd0;
-                    sum           <= 32'd0;
+                    cnt           <= 9'd0; 
+                    sum           <= 32'd0; 
                     sum_square    <= 48'd0;
-                    peak_reg      <= 16'sh8000;
+                    peak_reg      <= 16'sh8000; 
                     min_reg       <= 16'sh7FFF;
-                    zcr_cnt       <= 16'd0;
+                    zcr_cnt       <= 16'd0; 
                     positive_sample_cnt <= 16'd0;
+                    div_start     <= 1'b0; 
+                    sqrt_start    <= 1'b0;
+                    
+                    // SỬA LỖI LẬP TRÌNH ĐỘ TRỄ RAM: Đòi hàng trước 1 chu kỳ ngay tại IDLE
+                    if (start_compute) begin
+                        read_enable <= 1'b1;
+                        state       <= S_ACCUMULATE;
+                    end
                 end
 
                 S_ACCUMULATE: begin
-                    read_enable <= 1'b1;
-                    cnt         <= cnt + 9'd1;
-                    
-                    // Quản lý bộ đếm thời gian RR chạy ngầm liên tục
-                    rr_timer <= rr_timer + 16'd1;
+                    cnt               <= cnt + 9'd1;
+                    rr_timer          <= rr_timer + 16'd1;
+                    sample_in_delayed <= sample_in;
 
-                    // 1. Tích lũy tổng thô và tổng bình phương (Phục vụ f_var và f_rms)
-                    sum        <= sum + sample_in;
-                    sum_square <= sum_square + (sample_in * sample_in);
+                    // Tích lũy dữ liệu đồng bộ 100% không dính rác RAM
+                    sum        <= sum + $signed(sample_in);
+                    sum_square <= sum_square + ($signed(sample_in) * $signed(sample_in));
                     
-                    // 2. Thuật toán tìm đỉnh và đáy hình học (f_peak, f_max, f_min)
-                    if (sample_in > peak_reg) begin
-                        peak_reg <= sample_in;
-                        // Mẹo bắt đỉnh R-peak: Khi tìm thấy sườn sóng cao đột biến,
-                        // ta coi đó là đỉnh R, tiến hành chốt khoảng cách thời gian RR
-                        previous_rr_reg <= current_rr_reg;
-                        current_rr_reg  <= rr_timer;
-                        rr_timer        <= 16'd0; // Khởi động lại bộ đếm thời gian mới
-                    end
-                    if (sample_in < min_reg) begin
-                        min_reg <= sample_in;
-                    end
+                    // Mạch tìm đỉnh/đáy toàn cục
+                    if (sample_in > peak_reg) peak_reg <= sample_in;
+                    if (sample_in < min_reg)  min_reg  <= sample_in;
                         
-                    // 3. Tính toán f_zc (Zero Crossing) bằng cổng XOR bit dấu
-                    if (cnt > 9'd0) begin
-                        if (prev_sign ^ sample_in[15]) begin
-                            zcr_cnt <= zcr_cnt + 16'd1;
+                    // Mạch dò đỉnh cục bộ thực tế để tính khoảng cách RR
+                    if ((sample_in_delayed > 16'd15000) && (sample_in < sample_in_delayed)) begin
+                        if (rr_timer > 16'd50) begin
+                            previous_rr_reg <= current_rr_reg;
+                            current_rr_reg  <= rr_timer;
+                            rr_timer        <= 16'd0; 
                         end
+                    end
+
+                    // Đếm Zero Crossing và Half Ratio
+                    if (cnt > 9'd0) begin
+                        if (prev_sign ^ sample_in[15]) zcr_cnt <= zcr_cnt + 16'd1;
                     end
                     prev_sign <= sample_in[15];
 
-                    // 4. Tính toán f_half_ratio: Đếm số lượng mẫu nằm ở miền sóng dương
-                    if (sample_in >= 16'd0) begin
-                        positive_sample_cnt <= positive_sample_cnt + 16'd1;
+                    if (sample_in >= 16'd0) positive_sample_cnt <= positive_sample_cnt + 16'd1;
+
+                    // Khóa đường dây đòi hàng sớm 1 chu kỳ khi sắp chạm đỉnh 511
+                    if (cnt == 9'd510) begin
+                        read_enable <= 1'b0;
+                    end
+
+                    // SỬA LỖI 1: Đếm chuẩn khít khao đủ 512 mẫu (từ 0 đến 511)
+                    if (cnt == 9'd511) begin
+                        state <= S_CALC_BASE;
                     end
                 end
 
-                S_COMPUTE: begin
-                    read_enable <= 1'b0;
+                S_CALC_BASE: begin
+                    // SỬA LỖI 2: Áp dụng toán dịch bit siêu nhẹ của cấu trúc 512 mẫu
+                    mean_calc    <= $signed(sum) <<< 3; // Lấy Sum * 4096 / 512 = Sum * 8
+                    f_half_ratio <= $signed({16'd0, positive_sample_cnt} <<< 3);
                     
-                    // Phép toán 1: Tính Mean phục vụ tính toán trung gian
-                    mean_calc <= sum * 32'd33554; // Quy đổi nhân nghịch đảo (Sum / 500) trong chuẩn Q12
+                    f_peak       <= $signed(peak_reg <<< 12);
+                    f_max        <= $signed(peak_reg <<< 12); 
+                    f_ptp        <= $signed((peak_reg - min_reg) <<< 12);
+                    f_zc         <= {16'd0, zcr_cnt};
                     
-                    // Phép toán 2: Tính Phương sai f_var 
-                    // Công thức phần cứng tối ưu: Var = (Sum_Square / 500) - (Mean^2)
-                    var_calc <= (sum_square * 32'd33554) - ((mean_calc[27:12] * mean_calc[27:12]) <<< 12);
+                    // Nhóm đặc trưng thời gian RR tiền xử lý thu nhỏ nhân 8
+                    f_rr         <= {16'd0, current_rr_reg} <<< 3;
+                    f_rr_prev    <= {16'd0, previous_rr_reg} <<< 3;
+                    f_rr_diff    <= $signed(({16'd0, current_rr_reg} - {16'd0, previous_rr_reg}) <<< 3);
 
-                    // Phép toán 3: Tính toán f_half_ratio đưa về chuẩn số thập phân Q4.12
-                    // Công thức: (Positive_Samples * 4096) / 500 = Positive_Samples * 8.192
-                    f_half_ratio <= (positive_sample_cnt * 32'd33554) >>> 12;
+                    state <= S_CALC_VAR;
+                end
 
-                    // Phép toán 4: Chốt hạ các đặc trưng biên độ hình học đưa về Q4.12
-                    f_peak <= peak_reg <<< 12;
-                    f_max  <= peak_reg <<< 12; // Trong bài toán này f_max đồng bộ giá trị biên độ với f_peak
-                    f_ptp  <= (peak_reg - min_reg) <<< 12;
-                    f_zc   <= zcr_cnt;
+                S_CALC_VAR: begin
+                    // SỬA LỖI TOÁN HỌC: Cân bằng tuyệt đối hai vế về chuẩn Q24 rồi trừ thẳng hàng
+                    var_calc <= (sum_square <<< 3) - ((mean_calc * mean_calc) >>> 12);
+                    state    <= S_START_MATH_1;
+                end
 
-                    // Phép toán 5: Chốt hạ nhóm đặc trưng thời gian RR-Interval 
-                    f_rr      <= current_rr_reg;
-                    f_rr_prev <= previous_rr_reg;
-                    f_rr_diff <= (current_rr_reg - previous_rr_reg) <<< 12; // Ép về chuẩn định dạng tính toán
-                    
-                    // Tránh lỗi chia cho 0 nếu chu kỳ trước trống
+                S_START_MATH_1: begin
+                    // Trích xuất f_var chuẩn xác từ vùng bit Q24 hạ cấp về Q12
+                    f_var <= $signed(var_calc[27:12]);
+
+                    // Đầu vào RMS chính xác là căn bậc hai của Tổng bình phương trung bình
+                    sqrt_radicand <= { (sum_square <<< 3), 12'd0 }; // Đẩy lên Q36 để khai căn ra chuẩn Q18
+                    sqrt_start    <= 1'b1;
+
                     if (previous_rr_reg > 16'd0) begin
-                        rr_ratio_calc <= (current_rr_reg <<< 12) / previous_rr_reg;
-                        f_rr_ratio    <= rr_ratio_calc[15:0];
+                        div_dividend <= (current_rr_reg <<< 12);
+                        div_divisor  <= {16'd0, previous_rr_reg};
+                        div_start    <= 1'b1;
                     end else begin
-                        f_rr_ratio    <= 16'h1000; // Mặc định bằng 1.0 ở chuẩn Q4.12 nếu chưa có dữ liệu cũ
+                        f_rr_ratio   <= 32'h1000; 
                     end
 
-                    // Phép toán 6: Cấu hình tài nguyên ngỏ ra tạm thời cho f_rms và f_crest để đợi nối dây CORDIC
-                    f_rms   <= 16'h1000; // Giá trị tạm (Sẽ được ghi đè chính xác khi nối dây sang module CORDIC)
-                    f_crest <= 16'h1000; 
+                    state <= S_WAIT_MATH_1;
+                end
+
+                S_WAIT_MATH_1: begin
+                    // ĐẬP TẮT LỆNH START NGAY CHU KỲ SAU để chống lặp reset module con
+                    sqrt_start <= 1'b0;
+                    div_start  <= 1'b0;
+
+                    if (sqrt_done && (div_done || previous_rr_reg == 16'd0)) begin
+                        f_rms <= $signed(sqrt_root[29:14]); // Cắt bit tương thích định dạng đầu ra
+                        if (previous_rr_reg > 16'd0) f_rr_ratio <= $signed(div_quotient);
+                        
+                        state <= S_START_MATH_2;
+                    end
+                end
+
+                S_START_MATH_2: begin
+                    if (f_rms > 32'd0) begin
+                        div_dividend <= (f_peak <<< 12);
+                        div_divisor  <= f_rms;
+                        div_start    <= 1'b1;
+                        state        <= S_WAIT_MATH_2;
+                    end else begin
+                        f_crest      <= 32'd0; 
+                        state        <= S_DONE;
+                    end
+                end
+
+                S_WAIT_MATH_2: begin
+                    div_start <= 1'b0; // Đập tắt lệnh start bộ chia lần 2
+                    if (div_done) begin
+                        f_crest <= $signed(div_quotient);
+                        state   <= S_DONE;
+                    end
                 end
 
                 S_DONE: begin
-                    f_var         <= var_calc[27:12]; // Hạ bit kết quả phương sai về đúng chuẩn khung 16-bit Q4.12
-                    feature_valid <= 1'b1;            // Vẫy cờ báo cho lõi AI của T.Bình hốt đủ 12 số thực tế
+                    feature_valid <= 1'b1; 
+                    state         <= S_IDLE;
                 end
                 
                 default: state <= S_IDLE;
             endcase
         end
     end
-
 endmodule
