@@ -8,18 +8,18 @@ module feature_engine (
     input  wire signed [15:0] sample_in,     
     output reg               read_enable,    
     
-    output reg signed  [15:0] f_rms,          
-    output reg signed  [15:0] f_var,          
-    output reg signed  [15:0] f_peak,         
-    output reg         [15:0] f_zc,           
-    output reg signed  [15:0] f_ptp,          
-    output reg signed  [15:0] f_crest,        
-    output reg signed  [15:0] f_half_ratio,   
-    output reg signed  [15:0] f_max,          
-    output reg         [15:0] f_rr,           
-    output reg         [15:0] f_rr_prev,      
-    output reg signed  [15:0] f_rr_ratio,     
-    output reg signed  [15:0] f_rr_diff,      
+    output reg signed  [31:0] f_rms,          
+    output reg signed  [31:0] f_var,          
+    output reg signed  [31:0] f_peak,         
+    output reg         [31:0] f_zc,           
+    output reg signed  [31:0] f_ptp,          
+    output reg signed  [31:0] f_crest,        
+    output reg signed  [31:0] f_half_ratio,   
+    output reg signed  [31:0] f_max,          
+    output reg         [31:0] f_rr,           
+    output reg         [31:0] f_rr_prev,      
+    output reg signed  [31:0] f_rr_ratio,     
+    output reg signed  [31:0] f_rr_diff,      
     output reg               feature_valid   
 );
 
@@ -62,9 +62,9 @@ module feature_engine (
     // =============================================================================
     reg         div_start;
     reg  [31:0] div_dividend;
-    reg  [15:0] div_divisor;
+    reg  [31:0] div_divisor;
     wire [31:0] div_quotient;
-    wire [15:0] div_remainder;
+    wire [31:0] div_remainder;
     wire        div_done;
 
     restoring_divider u_divider (
@@ -79,8 +79,8 @@ module feature_engine (
     );
 
     reg         sqrt_start;
-    reg  [31:0] sqrt_radicand;
-    wire [15:0] sqrt_root;
+    reg  [63:0] sqrt_radicand;
+    wire [31:0] sqrt_root;
     wire        sqrt_done;
 
     iterative_sqrt u_sqrt (
@@ -104,9 +104,9 @@ module feature_engine (
             zcr_cnt <= 16'd0; prev_sign <= 1'b0; positive_sample_cnt <= 16'd0;
             rr_timer <= 16'd0; current_rr_reg <= 16'd0; previous_rr_reg <= 16'd0;
             
-            f_rms <= 16'd0; f_var <= 16'd0; f_peak <= 16'd0; f_zc <= 16'd0;
-            f_ptp <= 16'd0; f_crest <= 16'd0; f_half_ratio <= 16'd0; f_max <= 16'd0;
-            f_rr <= 16'd0; f_rr_prev <= 16'd0; f_rr_ratio <= 16'd0; f_rr_diff <= 16'd0;
+            f_rms <= 32'd0; f_var <= 32'd0; f_peak <= 32'd0; f_zc <= 32'd0;
+            f_ptp <= 32'd0; f_crest <= 32'd0; f_half_ratio <= 32'd0; f_max <= 32'd0;
+            f_rr <= 32'd0; f_rr_prev <= 32'd0; f_rr_ratio <= 32'd0; f_rr_diff <= 32'd0;
 
             div_start <= 1'b0; sqrt_start <= 1'b0;
         end 
@@ -206,7 +206,7 @@ module feature_engine (
                 // [OUTPUT]: f_var, sqrt_start, sqrt_radicand, div_start, div_dividend, div_divisor
                 // ---------------------------------------------------------------------
                 S_START_MATH_1: begin
-                    f_var <= var_calc[27:12];
+                    f_var <= $signed(var_calc[27:12]);
 
                     sqrt_radicand <= {var_calc[27:12], 12'd0}; 
                     sqrt_start    <= 1'b1;
@@ -216,7 +216,7 @@ module feature_engine (
                         div_divisor  <= previous_rr_reg;
                         div_start    <= 1'b1;
                     end else begin
-                        f_rr_ratio   <= 16'h1000; 
+                        f_rr_ratio   <= 32'h1000; 
                     end
 
                     state <= S_WAIT_MATH_1;
@@ -233,8 +233,8 @@ module feature_engine (
                     div_start  <= 1'b0;
 
                     if (sqrt_done && (div_done || previous_rr_reg == 16'd0)) begin
-                        f_rms <= sqrt_root;
-                        if (previous_rr_reg > 16'd0) f_rr_ratio <= div_quotient[15:0];
+                        f_rms <= $signed(sqrt_root);
+                        if (previous_rr_reg > 16'd0) f_rr_ratio <= $signed(div_quotient[15:0]);
                         
                         state <= S_START_MATH_2;
                     end
@@ -253,7 +253,7 @@ module feature_engine (
                         div_start    <= 1'b1;
                         state        <= S_WAIT_MATH_2;
                     end else begin
-                        f_crest <= 16'd0; 
+                        f_crest <= 32'd0; 
                         state   <= S_DONE;
                     end
                 end
@@ -267,7 +267,7 @@ module feature_engine (
                 S_WAIT_MATH_2: begin
                     div_start <= 1'b0;
                     if (div_done) begin
-                        f_crest <= div_quotient[15:0];
+                        f_crest <= $signed(div_quotient[15:0]);
                         state   <= S_DONE;
                     end
                 end
