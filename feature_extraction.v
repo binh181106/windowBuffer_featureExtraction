@@ -58,8 +58,8 @@ module feature_engine (
     reg        [15:0] current_rr_reg;
     reg        [15:0] previous_rr_reg;
 
-    reg signed [31:0] mean_calc; // Thu hẹp từ 48 xuống 32-bit vì toán dịch bit rất gọn
-    reg signed [47:0] var_calc;  // Thu hẹp từ 64 xuống 48-bit an toàn
+    reg signed [31:0] mean_calc; 
+    reg signed [52:0] var_calc; 
 
     // =============================================================================
     // 3. MATH MODULE INTERFACES
@@ -158,7 +158,7 @@ module feature_engine (
                     end
                     prev_sign <= sample_in[15];
 
-                    if (sample_in >= 16'd0) positive_sample_cnt <= positive_sample_cnt + 16'd1;
+                    if (sample_in >= 16'sd0) positive_sample_cnt <= positive_sample_cnt + 16'd1;
 
                     // Khóa đường dây đòi hàng sớm 1 chu kỳ khi sắp chạm đỉnh 511
                     if (cnt == 9'd510) begin
@@ -176,9 +176,9 @@ module feature_engine (
                     mean_calc    <= $signed(sum) <<< 3; // Lấy Sum * 4096 / 512 = Sum * 8
                     f_half_ratio <= $signed({16'd0, positive_sample_cnt} <<< 3);
                     
-                    f_peak       <= $signed(peak_reg <<< 12);
-                    f_max        <= $signed(peak_reg <<< 12); 
-                    f_ptp        <= $signed((peak_reg - min_reg) <<< 12);
+                    f_peak       <= $signed({{16{peak_reg[15]}}, peak_reg}) <<< 12;
+                    f_max        <= $signed({{16{peak_reg[15]}}, peak_reg}) <<< 12; 
+                    f_ptp        <= $signed(({{16{peak_reg[15]}}, peak_reg} - {{16{min_reg[15]}}, min_reg}) <<< 12);
                     f_zc         <= {16'd0, zcr_cnt};
                     
                     // Nhóm đặc trưng thời gian RR tiền xử lý thu nhỏ nhân 8
@@ -197,14 +197,14 @@ module feature_engine (
 
                 S_START_MATH_1: begin
                     // Trích xuất f_var chuẩn xác từ vùng bit Q24 hạ cấp về Q12
-                    f_var <= $signed(var_calc[27:12]);
+                    f_var <= $signed(var_calc[43:12]);
 
                     // Đầu vào RMS chính xác là căn bậc hai của Tổng bình phương trung bình
                     sqrt_radicand <= { (sum_square <<< 3), 12'd0 }; // Đẩy lên Q36 để khai căn ra chuẩn Q18
                     sqrt_start    <= 1'b1;
 
                     if (previous_rr_reg > 16'd0) begin
-                        div_dividend <= (current_rr_reg <<< 12);
+                        div_dividend <= $signed({{16{current_rr_reg[15]}}, current_rr_reg}) <<< 12;
                         div_divisor  <= {16'd0, previous_rr_reg};
                         div_start    <= 1'b1;
                     end else begin
@@ -215,12 +215,11 @@ module feature_engine (
                 end
 
                 S_WAIT_MATH_1: begin
-                    // ĐẬP TẮT LỆNH START NGAY CHU KỲ SAU để chống lặp reset module con
                     sqrt_start <= 1'b0;
                     div_start  <= 1'b0;
 
                     if (sqrt_done && (div_done || previous_rr_reg == 16'd0)) begin
-                        f_rms <= $signed(sqrt_root[29:14]); // Cắt bit tương thích định dạng đầu ra
+                        f_rms <= $signed(sqrt_root[29:14]); 
                         if (previous_rr_reg > 16'd0) f_rr_ratio <= $signed(div_quotient);
                         
                         state <= S_START_MATH_2;
@@ -229,7 +228,7 @@ module feature_engine (
 
                 S_START_MATH_2: begin
                     if (f_rms > 32'd0) begin
-                        div_dividend <= (f_peak <<< 12);
+                        div_dividend <= f_peak;
                         div_divisor  <= f_rms;
                         div_start    <= 1'b1;
                         state        <= S_WAIT_MATH_2;
@@ -240,7 +239,7 @@ module feature_engine (
                 end
 
                 S_WAIT_MATH_2: begin
-                    div_start <= 1'b0; // Đập tắt lệnh start bộ chia lần 2
+                    div_start <= 1'b0; 
                     if (div_done) begin
                         f_crest <= $signed(div_quotient);
                         state   <= S_DONE;
