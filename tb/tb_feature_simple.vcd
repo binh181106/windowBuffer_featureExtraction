@@ -1,0 +1,472 @@
+$date
+	Mon Oct 12 00:07:20 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_feature_simple $end
+$var wire 8 ! sample_in_dut [7:0] $end
+$var wire 4 " state [3:0] $end
+$var wire 9 # sample_addr [8:0] $end
+$var wire 1 $ overflow $end
+$var wire 1 % feature_valid $end
+$var wire 16 & f_zc [15:0] $end
+$var wire 16 ' f_var [15:0] $end
+$var wire 16 ( f_rr_ratio [15:0] $end
+$var wire 16 ) f_rr_prev [15:0] $end
+$var wire 16 * f_rr_diff [15:0] $end
+$var wire 16 + f_rr [15:0] $end
+$var wire 16 , f_rms [15:0] $end
+$var wire 16 - f_ptp [15:0] $end
+$var wire 16 . f_peak [15:0] $end
+$var wire 16 / f_max [15:0] $end
+$var wire 16 0 f_half_ratio [15:0] $end
+$var wire 16 1 f_crest [15:0] $end
+$var reg 1 2 clk $end
+$var reg 16 3 ppg_threshold [15:0] $end
+$var reg 1 4 read_enable $end
+$var reg 1 5 rst_n $end
+$var reg 8 6 sample_in [7:0] $end
+$var reg 1 7 start_compute $end
+$var integer 32 8 i [31:0] $end
+$scope module dut $end
+$var wire 1 2 clk $end
+$var wire 16 9 ppg_threshold [15:0] $end
+$var wire 1 4 read_enable $end
+$var wire 1 5 rst_n $end
+$var wire 8 : sample_in [7:0] $end
+$var wire 1 7 start_compute $end
+$var parameter 32 ; DATA_IN_WIDTH $end
+$var parameter 32 < DATA_OUT_WIDTH $end
+$var parameter 32 = NUM_SAMPLES $end
+$var parameter 4 > S_ACCUMULATE $end
+$var parameter 4 ? S_CALC_BASE $end
+$var parameter 4 @ S_CALC_CREST $end
+$var parameter 4 A S_CALC_RMS $end
+$var parameter 4 B S_CALC_VAR $end
+$var parameter 4 C S_DONE $end
+$var parameter 4 D S_IDLE $end
+$var reg 1 E above_threshold $end
+$var reg 16 F f_crest [15:0] $end
+$var reg 16 G f_half_ratio [15:0] $end
+$var reg 16 H f_max [15:0] $end
+$var reg 16 I f_peak [15:0] $end
+$var reg 16 J f_ptp [15:0] $end
+$var reg 16 K f_rms [15:0] $end
+$var reg 16 L f_rr [15:0] $end
+$var reg 16 M f_rr_diff [15:0] $end
+$var reg 16 N f_rr_prev [15:0] $end
+$var reg 16 O f_rr_ratio [15:0] $end
+$var reg 16 P f_var [15:0] $end
+$var reg 16 Q f_zc [15:0] $end
+$var reg 1 % feature_valid $end
+$var reg 64 R mean_val [63:0] $end
+$var reg 8 S min_reg [7:0] $end
+$var reg 1 $ overflow $end
+$var reg 8 T peak_reg [7:0] $end
+$var reg 16 U pos_cnt [15:0] $end
+$var reg 1 V prev_sign $end
+$var reg 32 W rms_calc [31:0] $end
+$var reg 16 X rr_current [15:0] $end
+$var reg 16 Y rr_previous [15:0] $end
+$var reg 16 Z rr_timer [15:0] $end
+$var reg 9 [ sample_addr [8:0] $end
+$var reg 10 \ sample_cnt [9:0] $end
+$var reg 8 ] sample_delayed [7:0] $end
+$var reg 4 ^ state [3:0] $end
+$var reg 32 _ sum [31:0] $end
+$var reg 64 ` sum_square [63:0] $end
+$var reg 64 a var_calc [63:0] $end
+$var reg 16 b zc_cnt [15:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b0 D
+b110 C
+b11 B
+b100 A
+b101 @
+b10 ?
+b1 >
+b1000 =
+b10000 <
+b1000 ;
+$end
+#0
+$dumpvars
+bx b
+bx a
+bx `
+bx _
+bx ^
+bx ]
+bx \
+bx [
+bx Z
+bx Y
+bx X
+bx W
+xV
+bx U
+bx T
+bx S
+bx R
+bx Q
+bx P
+bx O
+bx N
+bx M
+bx L
+bx K
+bx J
+bx I
+bx H
+bx G
+bx F
+xE
+b0 :
+b1010000 9
+bx 8
+07
+b0 6
+05
+04
+b1010000 3
+02
+bx 1
+bx 0
+bx /
+bx .
+bx -
+bx ,
+bx +
+bx *
+bx )
+bx (
+bx '
+bx &
+x%
+x$
+bx #
+bx "
+b0 !
+$end
+#5000
+b0 *
+b0 M
+b0 (
+b0 O
+b0 )
+b0 N
+b0 +
+b0 L
+b0 /
+b0 H
+b0 0
+b0 G
+b0 1
+b0 F
+b0 -
+b0 J
+b0 &
+b0 Q
+b0 .
+b0 I
+b0 '
+b0 P
+b0 ,
+b0 K
+0E
+b0 Y
+b0 X
+b0 Z
+0V
+b0 U
+b0 b
+b1111111 S
+b10000000 T
+b0 `
+b0 _
+0%
+b0 \
+b0 #
+b0 [
+b0 "
+b0 ^
+0$
+12
+#10000
+02
+#15000
+12
+#20000
+02
+#25000
+12
+#30000
+02
+#35000
+12
+#40000
+02
+#45000
+12
+#50000
+02
+#55000
+12
+#60000
+02
+#65000
+12
+#70000
+02
+#75000
+12
+#80000
+02
+#85000
+12
+#90000
+02
+#95000
+12
+#100000
+02
+15
+#105000
+12
+#110000
+02
+#115000
+12
+#120000
+02
+#125000
+12
+#130000
+02
+#135000
+12
+#140000
+02
+#145000
+12
+#150000
+02
+#155000
+12
+#160000
+02
+#165000
+12
+#170000
+02
+#175000
+12
+#180000
+02
+#185000
+12
+#190000
+02
+#195000
+12
+#200000
+02
+17
+#205000
+b1 "
+b1 ^
+12
+#210000
+02
+b0 8
+07
+#215000
+b1 #
+b1 [
+b1 \
+b1 Z
+b0 ]
+b1 U
+b0 S
+b0 T
+b1 8
+12
+#220000
+02
+#225000
+b10 #
+b10 [
+b10 \
+b10 Z
+b1 ]
+b10 U
+b1 T
+b1 `
+b1 _
+b10 8
+b1 !
+b1 6
+b1 :
+12
+#230000
+02
+#235000
+b11 #
+b11 [
+b11 \
+b11 Z
+b10 ]
+b11 U
+b10 T
+b101 `
+b11 _
+b11 8
+b10 !
+b10 6
+b10 :
+12
+#240000
+02
+#245000
+b100 #
+b100 [
+b100 \
+b100 Z
+b11 ]
+b100 U
+b11 T
+b1110 `
+b110 _
+b100 8
+b11 !
+b11 6
+b11 :
+12
+#250000
+02
+#255000
+b101 #
+b101 [
+b101 \
+b101 Z
+b100 ]
+b101 U
+b100 T
+b11110 `
+b1010 _
+b101 8
+b100 !
+b100 6
+b100 :
+12
+#260000
+02
+#265000
+b110 #
+b110 [
+b110 \
+b110 Z
+b101 ]
+b110 U
+b101 T
+b110111 `
+b1111 _
+b110 8
+b101 !
+b101 6
+b101 :
+12
+#270000
+02
+#275000
+b111 #
+b111 [
+b111 \
+b111 Z
+b110 ]
+b111 U
+b110 T
+b1011011 `
+b10101 _
+b111 8
+b110 !
+b110 6
+b110 :
+12
+#280000
+02
+#285000
+b10 "
+b10 ^
+b1000 #
+b1000 [
+b1000 \
+b1000 Z
+b111 ]
+b1000 U
+b111 T
+b10001100 `
+b11100 _
+b1000 8
+b111 !
+b111 6
+b111 :
+12
+#290000
+02
+#295000
+b11 "
+b11 ^
+b1000000 0
+b1000000 G
+b111 -
+b111 J
+b111 /
+b111 H
+b111 .
+b111 I
+b11100000 R
+12
+#300000
+02
+#305000
+b100 "
+b100 ^
+bx '
+bx P
+b10001010100 a
+12
+#310000
+02
+#315000
+b110 "
+b110 ^
+b1000000000000 (
+b1000000000000 O
+bx ,
+bx K
+b0 W
+12
+#320000
+02
+#325000
+b0 "
+b0 ^
+1%
+12
+#330000
+02
+#335000
+b0 \
+b0 #
+b0 [
+0%
+12

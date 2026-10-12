@@ -1,0 +1,293 @@
+$date
+	Mon Oct 12 07:07:23 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_control_fsm $end
+$var wire 1 ! window_en $end
+$var wire 1 " fsm_idle $end
+$var wire 1 # done $end
+$var wire 4 $ current_state [3:0] $end
+$var reg 1 % apb_enable $end
+$var reg 1 & clk $end
+$var reg 1 ' feat_valid $end
+$var reg 1 ( rst_n $end
+$var reg 1 ) start $end
+$var integer 32 * timeout [31:0] $end
+$scope module dut $end
+$var wire 1 % apb_enable $end
+$var wire 1 & clk $end
+$var wire 1 ' feat_valid $end
+$var wire 1 ( rst_n $end
+$var wire 1 ) start $end
+$var wire 9 + read_addr [8:0] $end
+$var parameter 4 , S_ARGMAX $end
+$var parameter 4 - S_DONE $end
+$var parameter 4 . S_FC1 $end
+$var parameter 4 / S_FC1_B $end
+$var parameter 4 0 S_FC2 $end
+$var parameter 4 1 S_FC2_B $end
+$var parameter 4 2 S_IDLE $end
+$var parameter 4 3 S_LOAD $end
+$var parameter 4 4 S_NORM $end
+$var parameter 4 5 S_RELU $end
+$var reg 10 6 cnt [9:0] $end
+$var reg 1 7 cnt_enable $end
+$var reg 4 8 current_state [3:0] $end
+$var reg 1 # done $end
+$var reg 1 9 feature_read_en $end
+$var reg 1 : feature_start $end
+$var reg 1 " fsm_idle $end
+$var reg 1 ; mlp_start $end
+$var reg 1 < mlp_valid $end
+$var reg 4 = next_state [3:0] $end
+$var reg 4 > next_state_debug [3:0] $end
+$var reg 4 ? state [3:0] $end
+$var reg 1 @ uart_send $end
+$var reg 1 ! window_en $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b101 5
+b10 4
+b1 3
+b0 2
+b111 1
+b110 0
+b100 /
+b11 .
+b1001 -
+b1000 ,
+$end
+#0
+$dumpvars
+0@
+b0 ?
+bx >
+bx =
+0<
+0;
+0:
+09
+b0 8
+07
+b0 6
+b0 +
+bx *
+0)
+0(
+0'
+0&
+0%
+b0 $
+0#
+1"
+0!
+$end
+#5000
+1&
+#10000
+0&
+#15000
+1&
+#20000
+0&
+#25000
+1&
+#30000
+0&
+#35000
+1&
+#40000
+0&
+#45000
+1&
+#50000
+0&
+#55000
+1&
+#60000
+0&
+#65000
+1&
+#70000
+0&
+#75000
+1&
+#80000
+0&
+#85000
+1&
+#90000
+0&
+#95000
+1&
+#100000
+0&
+1(
+#105000
+b0 =
+1"
+bx ?
+1&
+#110000
+0&
+#115000
+b0 >
+0"
+b0 ?
+bx $
+bx 8
+1&
+#120000
+0&
+#125000
+1"
+b0 $
+b0 8
+1&
+#130000
+0&
+#135000
+1"
+1&
+#140000
+0&
+#145000
+1"
+1&
+#150000
+0&
+#155000
+1"
+1&
+#160000
+0&
+#165000
+1"
+1&
+#170000
+0&
+#175000
+1"
+1&
+#180000
+0&
+#185000
+1"
+1&
+#190000
+0&
+#195000
+1"
+1&
+#200000
+0&
+1)
+1%
+#205000
+b1 =
+1"
+0)
+1&
+#210000
+0&
+#215000
+b1 >
+b0 =
+1"
+b1 ?
+1&
+#220000
+0&
+#225000
+b0 *
+1'
+b0 >
+b1 =
+17
+1:
+1!
+0"
+b0 ?
+b1 $
+b1 8
+1&
+#230000
+0&
+#235000
+b1 +
+b1 >
+b0 =
+0!
+1"
+07
+0:
+b1 ?
+b1 6
+b0 $
+b0 8
+b1 *
+1&
+#240000
+0&
+#245000
+b0 +
+b0 >
+b10 =
+07
+0:
+1!
+0"
+b0 ?
+b0 6
+b1 $
+b1 8
+b10 *
+1&
+#250000
+0&
+#255000
+b10 >
+b0 =
+0!
+1"
+b10 ?
+b0 $
+b0 8
+b11 *
+1&
+#260000
+0&
+#265000
+b0 >
+b10 =
+17
+1<
+0"
+b0 ?
+b10 $
+b10 8
+b100 *
+1&
+#270000
+0&
+#275000
+b10 >
+b0 =
+0<
+1"
+07
+b10 ?
+b1 6
+b0 $
+b0 8
+0'
+b101 *
+1&
