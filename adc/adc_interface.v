@@ -4,8 +4,8 @@
 // ADC Interface Module (8-bit Parallel Input)
 // =============================================================================
 // Function: Latch and forward 8-bit parallel ADC data
-// Supports: PPG sensor (MAX30102) or ECG sensor (AD8232)
-// Data rate: 250Hz typical for PPG, 500Hz for ECG
+// Application: ECG sensor (AD8232)
+// Sample Rate: 500 Hz
 // =============================================================================
 
 module adc_interface #(

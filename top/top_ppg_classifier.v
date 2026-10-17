@@ -1,10 +1,11 @@
 `timescale 1ns / 1ps
 
 // =============================================================================
-// Top Level PPG Classifier SoC
+// Top Level ECG Classifier SoC
 // =============================================================================
 // Module: top_ppg_classifier
-// Description: Complete PPG classification system with APB interface
+// Description: Complete ECG classification system with APB interface
+// Sample Rate: 500 Hz (ECG standard)
 // Target: FPGA/ASIC implementation
 // =============================================================================
 
@@ -205,7 +206,7 @@ module top_ppg_classifier (
         .sample_count()
     );
 
-    assign sample_rate_div = 16'd400000;  // 100MHz / 250Hz / 4 ≈ 250000
+    assign sample_rate_div = 16'd200000;  // 100MHz / 500Hz / 4 = 200000 (ECG 500Hz)
 
     // =============================================================================
     // Window Buffer
