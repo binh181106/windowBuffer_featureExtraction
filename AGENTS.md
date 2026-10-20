@@ -53,6 +53,27 @@ Chi tiết port, định dạng số, thứ tự feature: xem **`docs/interfaces
 6. **Không tự thay đổi trọng số** (`weight.hex`) hoặc tham số mô hình. File này do người phụ trách AI cập nhật, kèm ghi chú nguồn huấn luyện.
 7. Không "sửa cho testbench pass" bằng cách làm yếu testbench hoặc đổi giá trị kỳ vọng. Nếu testbench sai, giải thích vì sao và hỏi người dùng.
 
+### 4.1 BẮT BUỘC ĐỌC README TRƯỚC KHI SỬA
+
+**Mỗi folder module có README.md riêng.** AI agent BẮT BUỘC phải đọc các file sau TRƯỚC KHI sửa bất kỳ file nào trong folder đó:
+
+1. `docs/interfaces.md` - Interface contract (NGUỒN SỰ THẬT)
+2. `README.md` ở root repo - Quy tắc chung
+3. `README.md` trong folder module - Chi tiết module
+4. Testbench tương ứng trong `tb/`
+
+```
+Quy trình BẮT BUỘC khi sửa file:
+┌─────────────────────────────────────────────────────────┐
+│ 1. Đọc docs/interfaces.md                              │
+│ 2. Đọc <module_folder>/README.md                       │
+│ 3. Đọc tb/tb_<module>.sv                               │
+│ 4. MỚI ĐƯỢC sửa code                                   │
+└─────────────────────────────────────────────────────────┘
+```
+
+**Không tuân thủ quy trình này = sửa sai interface = bị reject PR.**
+
 ## 5. Quy ước code
 
 - Verilog cho RTL (`.v`), SystemVerilog cho testbench (`.sv`).

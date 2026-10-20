@@ -20,7 +20,8 @@
 module window_buffer #(
     parameter DATA_WIDTH = 8,
     parameter WINDOW_SIZE = 512,
-    parameter OVERLAP = 256        // 50% overlap
+    parameter OVERLAP = 256,       // 50% overlap
+    parameter BASELINE_OFFSET = 169 // AD8232 baseline offset (~169-170 for 0V output)
 ) (
     input  wire              clk,
     input  wire              rst_n,
@@ -32,6 +33,7 @@ module window_buffer #(
     input  wire [8:0]       read_addr,
     output wire [DATA_WIDTH-1:0] frame_out,
     output reg               window_ready,
+    output reg               ready_bank,     // Alias for window_ready (backward compat)
     output reg  [31:0]      samples_collected,
     output reg  [8:0]       sample_cnt      // Debug
 );
@@ -43,7 +45,17 @@ module window_buffer #(
     localparam ADDR_MAX = WINDOW_SIZE - 1;  // 511
 
     // =============================================================================
-    // RAM for circular buffer
+    // Baseline Subtraction
+    // =============================================================================
+    // AD8232 outputs ~169-170 at 0V, so we subtract to get true ECG signal
+    // Result is signed: sample - baseline (can be negative)
+    wire [DATA_WIDTH-1:0] baseline_corrected;
+    assign baseline_corrected = (sample_in >= BASELINE_OFFSET) ?
+                                (sample_in - BASELINE_OFFSET) :
+                                8'd0;  // Saturate at 0 if below baseline
+
+    // =============================================================================
+    // RAM for circular buffer (stores baseline-corrected samples)
     // =============================================================================
     reg [DATA_WIDTH-1:0] ram [0:ADDR_MAX];
 
@@ -60,13 +72,15 @@ module window_buffer #(
             write_ptr         <= 9'd0;
             sample_cnt        <= 9'd0;
             window_ready      <= 1'b0;
+            ready_bank        <= 1'b0;
             samples_collected <= 32'd0;
         end else begin
             window_ready <= 1'b0;
+            ready_bank <= 1'b0;
 
             if (enable && sample_valid) begin
-                // Write to circular buffer
-                ram[write_ptr] <= sample_in;
+                // Write to circular buffer with baseline subtraction
+                ram[write_ptr] <= baseline_corrected;
 
                 // Advance circular pointer
                 if (write_ptr == ADDR_MAX)
@@ -82,9 +96,11 @@ module window_buffer #(
 
                 // Overlap trigger: Output window every OVERLAP (256) samples
                 // when we have at least WINDOW_SIZE samples
-                if (sample_cnt >= OVERLAP &&
-                    (sample_cnt - OVERLAP + 1) % OVERLAP == 0) begin
+                // Triggers at sample_cnt = 255, 511, 767...
+                if (sample_cnt >= OVERLAP - 1 &&
+                    (sample_cnt - (OVERLAP - 1)) % OVERLAP == 0) begin
                     window_ready <= 1'b1;
+                    ready_bank <= 1'b1;
                 end
             end
         end
