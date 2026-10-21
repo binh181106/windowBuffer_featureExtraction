@@ -3,10 +3,11 @@
 // =============================================================================
 // Feature Extraction Module (8-bit input -> 12 features x 16-bit output)
 // =============================================================================
-// Function: Extract statistical features from 512 PPG samples
+// Function: Extract statistical features from 512 ECG samples
 // Features: RMS, Variance, Peak, Zero-crossing, Peak-to-Peak, Crest Factor,
 //           Half-ratio, Max, RR Interval, RR Ratio, RR Diff
 // Output: 16-bit signed values, Q4.12 format for fractional features
+// Sample Rate: 360 Hz
 // =============================================================================
 
 module feature_extraction #(
@@ -20,7 +21,7 @@ module feature_extraction #(
 
     // Control
     input  wire              start_compute,   // Start feature extraction
-    input  wire [15:0]       ppg_threshold,   // Threshold for RR detection
+    input  wire [15:0]       ecg_threshold,   // R-peak threshold for RR detection
 
     // Data Input (from Window Buffer)
     input  wire              read_enable,     // Request sample from buffer
@@ -180,8 +181,8 @@ module feature_extraction #(
                         pos_cnt <= pos_cnt + 16'd1;
                     end
 
-                    // RR Detection (peak above threshold)
-                    if (sample_delayed > ppg_threshold[7:0]) begin
+                    // RR Detection (R-peak above threshold)
+                    if (sample_delayed > ecg_threshold[7:0]) begin
                         if (sample_in < sample_delayed && rr_timer > 16'd50) begin
                             // Peak detected
                             rr_previous <= rr_current;

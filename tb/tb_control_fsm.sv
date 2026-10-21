@@ -22,7 +22,7 @@ module tb_control_fsm;
 
     initial begin
         clk = 0;
-        forever #5 clk = ~clk;
+        forever #9.92 clk = ~clk;  // 19.84ns period = 50.4MHz
     end
 
     integer timeout;

@@ -5,7 +5,7 @@ Mục tiêu của file này: các agent **không đạp lên nhau** và **không
 
 ## 1. Tổng quan dự án
 
-Hệ thống phân loại tín hiệu ECG với tăng tốc AI (dự án **không liên quan PPG**; README cũ ghi PPG là nhầm, tên file `top_ppg_classifier.v` chỉ là tên lịch sử):
+Hệ thống phân loại tín hiệu ECG với tăng tốc AI (dự án **không liên quan PPG**; tên file `top_ecg_classifier.v` trước đây là `top_ppg_classifier.v` — đã đổi):
 
 ```
 ADC (8-bit) -> window_buffer (512 mẫu, overlap 50%) -> feature_extraction (12 feature, 16-bit)
@@ -26,7 +26,7 @@ Chi tiết port, định dạng số, thứ tự feature: xem **`docs/interfaces
 | `control/` | `control_fsm.v` |
 | `apb/` | `apb_slave_if.v` |
 | `uart/` | `uart_tx.v` |
-| `top/` | `top_ppg_classifier.v` |
+| `top/` | `top_ecg_classifier.v` |
 | `tb/` | testbench `tb_*.sv`, `Makefile`, `run_all.sh` |
 | `sim/` | file/kết quả mô phỏng |
 | `synthesis/` | `run_synth.tcl` |

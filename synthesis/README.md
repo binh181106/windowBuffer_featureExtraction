@@ -7,7 +7,7 @@ Vivado synthesis script cho FPGA implementation.
 
 ## Target
 - FPGA: Gowin GW5A-LV25 (hoặc Xilinx tương đương)
-- Clock: 100 MHz
+- Clock: 50.4 MHz (19.84 ns period)
 
 ## Resources (Estimated)
 - LUT: ~2000
@@ -16,5 +16,5 @@ Vivado synthesis script cho FPGA implementation.
 - DSP: 4 (for MAC operations)
 
 ## Xem thêm
-- Top level: `top/top_ppg_classifier.v`
+- Top level: `top/top_ecg_classifier.v`
 - Interface contract: `docs/interfaces.md`

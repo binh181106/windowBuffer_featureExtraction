@@ -35,11 +35,11 @@ Collect 512 ECG samples với 50% overlap. Đảm bảo R-peaks không bị miss
 | samples_collected | 32 | Total samples collected |
 | ready_bank | 1 | Which bank is ready |
 
-## Timing (ECG 500 Hz)
-- 1 sample = 2ms
-- 512 samples = 1.024s
-- Overlap 256 = 512ms
-- New window mỗi 512ms
+## Timing (ECG 360 Hz)
+- 1 sample = 2.778ms
+- 512 samples = 1.422s
+- Overlap 256 = 711ms
+- New window mỗi 711ms
 
 ## Xem thêm
 - Testbench: `tb/tb_window_buffer.sv`

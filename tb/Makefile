@@ -1,5 +1,5 @@
 # =============================================================================
-# Makefile for PPG Classifier Testbenches
+# Makefile for ECG Classifier Testbenches
 # =============================================================================
 # Usage: make <target>
 # Targets:
@@ -29,7 +29,8 @@ RTL_SOURCES = $(RTL_DIR)/apb/apb_slave_if.v \
               $(RTL_DIR)/ai/ai_classifier.v \
               $(RTL_DIR)/ai/mlp_weights_rom.v \
               $(RTL_DIR)/control/control_fsm.v \
-              $(RTL_DIR)/uart/uart_tx.v
+              $(RTL_DIR)/uart/uart_tx.v \
+              $(RTL_DIR)/top/top_ecg_classifier.v
 
 # Testbenches
 TB_APB = tb_apb_slave_if.sv
@@ -39,7 +40,7 @@ TB_FEATURE = tb_feature_extraction.sv
 TB_CONTROL = tb_control_fsm.sv
 TB_UART = tb_uart_tx.sv
 TB_AI = tb_ai_classifier.sv
-TB_TOP = tb_top_ppg_classifier.sv
+TB_TOP = tb_top_ecg_classifier.sv
 
 # Waveform files
 VCD_FILES = tb_apb_slave_if.vcd \
@@ -49,7 +50,7 @@ VCD_FILES = tb_apb_slave_if.vcd \
             tb_control_fsm.vcd \
             tb_uart_tx.vcd \
             tb_ai_classifier.vcd \
-            tb_top_ppg_classifier.vcd
+            tb_top_ecg_classifier.vcd
 
 # =============================================================================
 # Targets
@@ -60,7 +61,7 @@ VCD_FILES = tb_apb_slave_if.vcd \
 all: apb adc window feature control uart ai top
 
 help:
-	@echo "PPG Classifier Testbench Makefile"
+	@echo "ECG Classifier Testbench Makefile"
 	@echo ""
 	@echo "Usage: make <target>"
 	@echo ""
@@ -114,7 +115,7 @@ ai:
 # Top-Level Test
 top:
 	@echo "=== Running Top-Level Test ==="
-	cd $(TB_DIR) && $(IVL) -g2005-sv -o tb_top_ppg_classifier.vvp $(TB_TOP) $(RTL_SOURCES) && $(VVP) tb_top_ppg_classifier.vvp
+	cd $(TB_DIR) && $(IVL) -g2005-sv -o tb_top_ecg_classifier.vvp $(TB_TOP) $(RTL_SOURCES) && $(VVP) tb_top_ecg_classifier.vvp
 
 # Clean
 clean:

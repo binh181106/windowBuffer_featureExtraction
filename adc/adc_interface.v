@@ -5,19 +5,19 @@
 // =============================================================================
 // Function: Latch and forward 8-bit parallel ADC data
 // Application: ECG sensor (AD8232)
-// Sample Rate: 500 Hz
+// Sample Rate: 360 Hz @ 50.4 MHz => sample_rate_div = 140000 (18-bit)
 // =============================================================================
 
 module adc_interface #(
-    parameter DATA_WIDTH = 8     // ADC resolution
+    parameter DATA_WIDTH = 8,      // ADC resolution
+    parameter DIV_WIDTH  = 18      // Sample rate divider width (140000 needs 18 bits)
 ) (
     // Clock and Reset
     input  wire              clk,
     input  wire              rst_n,
 
     // Configuration
-    input  wire [15:0]      sample_rate_div,  // Clock divider for sample rate
-    input  wire              mode_ppg_ecg,     // 0=PPG mode, 1=ECG mode
+    input  wire [DIV_WIDTH-1:0] sample_rate_div,  // Clock divider for sample rate
 
     // ADC Interface (8-bit parallel)
     input  wire [DATA_WIDTH-1:0] adc_data_in,   // 8-bit parallel ADC data
@@ -42,7 +42,7 @@ module adc_interface #(
     reg                   overflow_flag;
 
     // Sample rate timer
-    reg [15:0]            rate_timer;
+    reg [DIV_WIDTH-1:0]   rate_timer;
     reg                   rate_tick;
 
     // =============================================================================
@@ -50,16 +50,16 @@ module adc_interface #(
     // =============================================================================
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            rate_timer  <= 16'd0;
+            rate_timer  <= {DIV_WIDTH{1'b0}};
             rate_tick   <= 1'b0;
         end else begin
             rate_tick <= 1'b0;
 
             if (rate_timer >= sample_rate_div) begin
-                rate_timer <= 16'd0;
+                rate_timer <= {DIV_WIDTH{1'b0}};
                 rate_tick  <= 1'b1;  // Generate tick at target rate
             end else begin
-                rate_timer <= rate_timer + 16'd1;
+                rate_timer <= rate_timer + 1'b1;
             end
         end
     end

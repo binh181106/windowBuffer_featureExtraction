@@ -4,17 +4,17 @@
 // Window Buffer Module - 50% Overlap Circular Buffer
 // =============================================================================
 // Application: ECG R-peak detection
-// Sample Rate: 500 Hz
+// Sample Rate: 360 Hz
 //
 // Overlap Strategy:
 // - Shift Register chứa 512 samples mới nhất
-// - Mỗi 256 samples (512ms) → output window với 50% overlap
+// - Mỗi 256 samples (711ms) → output window với 50% overlap
 // - R-peaks không bị miss vì overlap đủ rộng (1/2 beat)
 //
 // Timing:
 //   - ECG ~60-120 bpm = 1-2 beats/second
-//   - R-peak width ~100ms = 50 samples @ 500Hz
-//   - 256 samples overlap = 512ms = đủ để capture R-peak
+//   - R-peak width ~100ms = 36 samples @ 360Hz
+//   - 256 samples overlap = 711ms = đủ để capture R-peak
 // =============================================================================
 
 module window_buffer #(

@@ -1,8 +1,8 @@
 # Top Level
 
-## Module: top_ppg_classifier.v
+## Module: top_ecg_classifier.v
 
-**Lưu ý:** Tên file là `top_ppg_classifier.v` (tên lịch sử), dự án thật là ECG.
+**Lưu ý:** Trước đây tên file là `top_ppg_classifier.v`; đã đổi thành `top_ecg_classifier.v` cho khớp với dự án ECG.
 
 ## Chức năng
 Tích hợp toàn bộ hệ thống ECG classification SoC.
@@ -16,7 +16,7 @@ ADC → [Window Buffer] → [Feature Extraction] → [AI Classifier] → [UART T
 ## Ports
 
 ### Clock & Reset
-- sys_clk: 100 MHz system clock
+- sys_clk: 50.4 MHz system clock
 - sys_rst_n: active-low reset
 
 ### APB Interface
@@ -36,9 +36,9 @@ ADC → [Window Buffer] → [Feature Extraction] → [AI Classifier] → [UART T
 - status_led[3:0]: debug LEDs
 
 ## Sample Rate
-- Default: 500 Hz (ECG)
-- Configurable via `sample_rate_div`
+- Default: 360 Hz (ECG) — `sample_rate_div` = 140000
+- Configurable via `sample_rate_div` (18-bit)
 
 ## Xem thêm
-- Testbench: `tb/tb_top_ppg_classifier.sv`
+- Testbench: `tb/tb_top_ecg_classifier.sv`
 - Interface contract: `docs/interfaces.md`

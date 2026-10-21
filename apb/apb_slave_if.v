@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 // =============================================================================
-// APB Slave Interface for PPG Classifier
+// APB Slave Interface for ECG Classifier
 // =============================================================================
 module apb_slave_if #(
     parameter ADDR_WIDTH = 8,
@@ -19,7 +19,7 @@ module apb_slave_if #(
     output reg               pslverr,
     output reg               sys_enable,
     output reg               sys_start,
-    output reg  [15:0]      ppg_threshold,
+    output reg  [15:0]      ecg_threshold,
     output reg  [15:0]      baud_div,
     output reg               ble_enable,
     output reg               uart_enable,
@@ -37,7 +37,7 @@ module apb_slave_if #(
     localparam ADDR_RESULT  = 8'h10;
     localparam ADDR_VERSION = 8'h14;
     localparam ADDR_CONFIG  = 8'h18;
-    localparam VERSION = 16'h0100;
+    localparam VERSION = 16'h0200;
 
     reg [DATA_WIDTH-1:0] ctrl_reg;
     reg [DATA_WIDTH-1:0] thresh_reg;
@@ -49,12 +49,12 @@ module apb_slave_if #(
         if (!presetn) begin
             ctrl_reg   <= 32'h0;
             thresh_reg <= 32'h00000050;
-            baud_reg   <= 32'h00000358;
+            baud_reg   <= 32'h000001B5;
             config_reg <= 32'h0;
             sys_enable    <= 1'b0;
             sys_start     <= 1'b0;
-            ppg_threshold <= 16'd80;
-            baud_div      <= 16'd856;
+            ecg_threshold <= 16'd80;
+            baud_div      <= 16'd437;
             ble_enable    <= 1'b0;
             uart_enable   <= 1'b1;
             soft_reset    <= 1'b0;
@@ -71,7 +71,7 @@ module apb_slave_if #(
                     end
                     ADDR_THRESH: begin
                         thresh_reg <= pwdata;
-                        ppg_threshold <= pwdata[15:0];
+                        ecg_threshold <= pwdata[15:0];
                     end
                     ADDR_BAUD: begin
                         baud_reg <= pwdata;

@@ -4,7 +4,7 @@
 // Testbench for PPG Classifier Top Level
 // =============================================================================
 
-module tb_top_ppg_classifier;
+module tb_top_ecg_classifier;
 
     // =============================================================================
     // Clock and Reset
@@ -47,7 +47,7 @@ module tb_top_ppg_classifier;
     // =============================================================================
     // Instantiate DUT
     // =============================================================================
-    top_ppg_classifier dut (
+    top_ecg_classifier dut (
         .sys_clk(sys_clk),
         .sys_rst_n(sys_rst_n),
         .paddr(paddr),
@@ -65,11 +65,11 @@ module tb_top_ppg_classifier;
     );
 
     // =============================================================================
-    // Clock Generation (100 MHz)
+    // Clock Generation (50.4 MHz)
     // =============================================================================
     initial begin
         sys_clk = 0;
-        forever #5 sys_clk = ~sys_clk;  // 10 ns period = 100 MHz
+        forever #9.92 sys_clk = ~sys_clk;  // 19.84 ns period = 50.4 MHz
     end
 
     // =============================================================================
@@ -219,8 +219,8 @@ module tb_top_ppg_classifier;
     // Waveform Dump
     // =============================================================================
     initial begin
-        $dumpfile("tb_top_ppg_classifier.vcd");
-        $dumpvars(0, tb_top_ppg_classifier);
+        $dumpfile("tb_top_ecg_classifier.vcd");
+        $dumpvars(0, tb_top_ecg_classifier);
     end
 
     // =============================================================================

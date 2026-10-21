@@ -1,7 +1,7 @@
 @echo off
 cd /d %~dp0
 echo ========================================
-echo PPG Classifier RTL Test Suite
+echo ECG Classifier RTL Test Suite
 echo ========================================
 echo.
 

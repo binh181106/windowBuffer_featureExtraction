@@ -389,12 +389,12 @@ Gửi classification result **ECG** qua UART đến module BLE (HC-05).
 
 ---
 
-## 10. Module: `top_ppg_classifier` (`top/top_ppg_classifier.v`)
+## 10. Module: `top_ecg_classifier` (`top/top_ecg_classifier.v`)
 
 ### 10.1 Nhiệm vụ
 Top-level SoC tích hợp tất cả module: APB, ADC, Window Buffer, Feature Extraction, AI Classifier, Control FSM, UART TX.
 
-**Lưu ý:** Tên file `top_ppg_classifier.v` là tên lịch sử. Có thể đổi tên thành `top_ecg_classifier.v` trong PR sau (cần cập nhật cả `docs/interfaces.md`).
+**Lưu ý:** Đã đổi tên từ `top_ppg_classifier.v` → `top_ecg_classifier.v` (module `top_ecg_classifier`, tb `tb/tb_top_ecg_classifier.sv`).
 
 ### 10.2 Cách hoạt động
 - Kết nối tất cả instance theo data flow.
@@ -542,18 +542,27 @@ Top-level SoC tích hợp tất cả module: APB, ADC, Window Buffer, Feature Ex
 
 ### KHÔNG thay đổi trong PR này:
 - ❌ `weight.hex` - do người phụ trách AI cập nhật sau khi retrain với data 360 Hz
-- ❌ Tên file `top_ppg_classifier.v` - đổi tên file cần PR riêng (cần cập nhật cả `docs/interfaces.md` và `tb/Makefile`)
+
+### Đổi tên file top level (PR này):
+- ✅ `top/top_ppg_classifier.v` → `top/top_ecg_classifier.v` (module `top_ecg_classifier`)
+- ✅ `tb/tb_top_ppg_classifier.sv` → `tb/tb_top_ecg_classifier.sv` (module `tb_top_ecg_classifier`)
+- ✅ `sim/tb_top.sv` → `sim/tb_top_ecg.sv`
+- ✅ Cập nhật: `tb/Makefile`, `tb/run_all.sh`, `tb/run_all.bat`, `tb/README.md`,
+  `synthesis/run_synth.tcl`, `docs/interfaces.md`, `AGENTS.md`, `README.md`, các `README.md` trong folder
 
 ### Checklist cập nhật code:
-- [ ] `top/top_ppg_classifier.v`: `sample_rate_div = 140000`, đổi `ppg_threshold` → `ecg_threshold`
-- [ ] `uart/uart_tx.v`: `CLKS_PER_BIT = 437`
-- [ ] `apb/apb_slave_if.v`: baud default 437, `ppg_threshold` → `ecg_threshold`
-- [ ] `feature/feature_extraction.v`: `ppg_threshold` → `ecg_threshold`
-- [ ] `adc/adc_interface.v`: bỏ port `mode_ppg_ecg`
-- [ ] `tb/tb_*.sv`: clock period 19.84ns
-- [ ] `synthesis/run_synth.tcl`: timing constraint 50.4 MHz
-- [ ] `docs/interfaces.md`: cập nhật spec mới
-- [ ] `README.md` (root và mỗi folder): cập nhật thông số
+- [x] `top/top_ecg_classifier.v`: `sample_rate_div = 140000` (18-bit), đổi `ppg_threshold` → `ecg_threshold`
+- [x] `uart/uart_tx.v`: `CLKS_PER_BIT = 437`
+- [x] `apb/apb_slave_if.v`: baud default 437, `ppg_threshold` → `ecg_threshold`, VERSION 0x0200
+- [x] `feature/feature_extraction.v`: `ppg_threshold` → `ecg_threshold`
+- [x] `adc/adc_interface.v`: bỏ port `mode_ppg_ecg`, `sample_rate_div` mở rộng 16 → 18 bit
+- [x] `tb/tb_*.sv`: clock period 19.84ns
+- [x] `synthesis/run_synth.tcl`: timing constraint 50.4 MHz (19.84 ns)
+- [x] `docs/interfaces.md`: cập nhật spec mới
+- [x] `README.md` (root và mỗi folder): cập nhật thông số
+
+**Ghi chú:** `sample_rate_div` phải mở rộng từ 16 → 18 bit vì 140000 > 65535
+(giá trị cũ `16'd200000` cũng đã bị truncate âm thầm).
 
 ---
 

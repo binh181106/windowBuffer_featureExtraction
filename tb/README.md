@@ -14,7 +14,7 @@ Mỗi module có testbench riêng trong folder này.
 | tb_control_fsm.sv | control_fsm | 10-state FSM |
 | tb_uart_tx.sv | uart_tx | Serial transmission |
 | tb_ai_classifier.sv | ai_classifier | MLP inference |
-| tb_top_ppg_classifier.sv | top_ppg_classifier | Full system |
+| tb_top_ecg_classifier.sv | top_ecg_classifier | Full system |
 
 ## Chạy tests
 

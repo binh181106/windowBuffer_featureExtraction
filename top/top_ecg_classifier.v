@@ -3,17 +3,18 @@
 // =============================================================================
 // Top Level ECG Classifier SoC
 // =============================================================================
-// Module: top_ppg_classifier
+// Module: top_ecg_classifier
 // Description: Complete ECG classification system with APB interface
-// Sample Rate: 500 Hz (ECG standard)
+// Sample Rate: 360 Hz (ECG standard, MIT-BIH)
+// System Clock: 50.4 MHz
 // Target: FPGA/ASIC implementation
 // =============================================================================
 
-module top_ppg_classifier (
+module top_ecg_classifier (
     // =============================================================================
     // Clock and Reset
     // =============================================================================
-    input  wire              sys_clk,         // System clock (100MHz)
+    input  wire              sys_clk,         // System clock (50.4MHz)
     input  wire              sys_rst_n,       // Active-low reset
 
     // =============================================================================
@@ -69,7 +70,7 @@ module top_ppg_classifier (
 
     wire              sys_enable;
     wire              sys_start;
-    wire [15:0]      ppg_threshold;
+    wire [15:0]      ecg_threshold;
     wire [15:0]      baud_div;
     wire              ble_enable;
     wire              uart_enable;
@@ -85,7 +86,7 @@ module top_ppg_classifier (
     // =============================================================================
     wire [7:0]       adc_sample;
     wire              adc_sample_valid;
-    wire [15:0]      sample_rate_div;
+    wire [17:0]      sample_rate_div;
 
     // =============================================================================
     // Window Buffer Signals
@@ -176,7 +177,7 @@ module top_ppg_classifier (
         .p_irq(csr_irq),
         .sys_enable(sys_enable),
         .sys_start(sys_start),
-        .ppg_threshold(ppg_threshold),
+        .ecg_threshold(ecg_threshold),
         .baud_div(baud_div),
         .ble_enable(ble_enable),
         .uart_enable(uart_enable),
@@ -191,12 +192,12 @@ module top_ppg_classifier (
     // ADC Interface
     // =============================================================================
     adc_interface #(
-        .DATA_WIDTH(8)
+        .DATA_WIDTH(8),
+        .DIV_WIDTH(18)
     ) u_adc_if (
         .clk(clk),
         .rst_n(rst_n),
         .sample_rate_div(sample_rate_div),
-        .mode_ppg_ecg(1'b0),  // PPG mode
         .adc_data_in(adc_data),
         .adc_data_valid(adc_valid),
         .adc_clk(1'b0),
@@ -206,7 +207,7 @@ module top_ppg_classifier (
         .sample_count()
     );
 
-    assign sample_rate_div = 16'd200000;  // 100MHz / 500Hz / 4 = 200000 (ECG 500Hz)
+    assign sample_rate_div = 18'd140000;  // 50.4MHz / 140000 = 360Hz (ECG 360Hz)
 
     // =============================================================================
     // Window Buffer
@@ -241,7 +242,7 @@ module top_ppg_classifier (
         .clk(clk),
         .rst_n(rst_n),
         .start_compute(feature_start),
-        .ppg_threshold(ppg_threshold),
+        .ecg_threshold(ecg_threshold),
         .read_enable(feature_read_en),
         .sample_addr(window_read_addr),
         .sample_in(window_frame_out),
@@ -310,7 +311,7 @@ module top_ppg_classifier (
     // UART TX Engine
     // =============================================================================
     uart_tx #(
-        .CLKS_PER_BIT(868)  // 115200 @ 100MHz
+        .CLKS_PER_BIT(437)  // 115200 @ 50.4MHz
     ) u_uart_tx (
         .clk(clk),
         .rst_n(rst_n),

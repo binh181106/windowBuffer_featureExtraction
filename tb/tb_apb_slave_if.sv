@@ -28,7 +28,7 @@ module tb_apb_slave_if;
     // =============================================================================
     wire sys_enable;
     wire sys_start;
-    wire [15:0] ppg_threshold;
+    wire [15:0] ecg_threshold;
     wire [15:0] baud_div;
     wire ble_enable;
     wire uart_enable;
@@ -59,7 +59,7 @@ module tb_apb_slave_if;
         .pslverr(pslverr),
         .sys_enable(sys_enable),
         .sys_start(sys_start),
-        .ppg_threshold(ppg_threshold),
+        .ecg_threshold(ecg_threshold),
         .baud_div(baud_div),
         .ble_enable(ble_enable),
         .uart_enable(uart_enable),
@@ -71,11 +71,11 @@ module tb_apb_slave_if;
     );
 
     // =============================================================================
-    // Clock Generation (50 MHz)
+    // Clock Generation (50.4 MHz)
     // =============================================================================
     initial begin
         pclk = 0;
-        forever #10 pclk = ~pclk;  // 20ns period = 50MHz
+        forever #9.92 pclk = ~pclk;  // 19.84ns period = 50.4MHz
     end
 
     // =============================================================================
@@ -164,26 +164,26 @@ module tb_apb_slave_if;
             $display("  FAIL: sys_enable expected 1, got %b", sys_enable);
         end
 
-        $display("\n[Test 2] Write to THRESH register");
+        $display("\n[Test 2] Write to ECG_THRESH register");
         test_count = test_count + 1;
         apb_write(32'h08, 32'h00000050);
         #50;
-        if (ppg_threshold == 16'h50) begin
-            $display("  PASS: ppg_threshold = 0x%h", ppg_threshold);
+        if (ecg_threshold == 16'h50) begin
+            $display("  PASS: ecg_threshold = 0x%h", ecg_threshold);
             pass_count = pass_count + 1;
         end else begin
-            $display("  FAIL: ppg_threshold expected 0x50, got 0x%h", ppg_threshold);
+            $display("  FAIL: ecg_threshold expected 0x50, got 0x%h", ecg_threshold);
         end
 
         $display("\n[Test 3] Write to BAUD register");
         test_count = test_count + 1;
-        apb_write(32'h0C, 32'h00000358);
+        apb_write(32'h0C, 32'h000001B5);
         #50;
-        if (baud_div == 16'h358) begin
+        if (baud_div == 16'h1B5) begin
             $display("  PASS: baud_div = %d", baud_div);
             pass_count = pass_count + 1;
         end else begin
-            $display("  FAIL: baud_div expected 856, got %d", baud_div);
+            $display("  FAIL: baud_div expected 437, got %d", baud_div);
         end
 
         $display("\n[Test 4] Read STATUS register");

@@ -9,7 +9,7 @@
 // =============================================================================
 
 module uart_tx #(
-    parameter CLKS_PER_BIT = 868  // 115200 @ 100MHz: 100000000/115200 = 868.055
+    parameter CLKS_PER_BIT = 437  // 115200 @ 50.4MHz: 50400000/115200 = 437.5
 ) (
     // Clock and Reset
     input  wire              clk,

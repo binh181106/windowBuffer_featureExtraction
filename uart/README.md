@@ -9,7 +9,7 @@ UART transmitter gửi classification result đến BLE module (HC-05).
 
 | Parameter | Default | Description |
 |-----------|---------|-------------|
-| CLKS_PER_BIT | 868 | Clocks per bit (115200 @ 100MHz) |
+| CLKS_PER_BIT | 437 | Clocks per bit (115200 @ 50.4MHz) |
 
 ## Ports
 

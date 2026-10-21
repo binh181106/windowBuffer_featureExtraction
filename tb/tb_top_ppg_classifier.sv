@@ -1,9 +1,9 @@
 `timescale 1ns / 1ps
 
 // =============================================================================
-// Testbench for Top-Level PPG Classifier
+// Testbench for Top-Level ECG Classifier
 // =============================================================================
-module tb_top_ppg_classifier;
+module tb_top_ecg_classifier;
 
     // =============================================================================
     // Clock and Reset
@@ -46,7 +46,7 @@ module tb_top_ppg_classifier;
     // =============================================================================
     // DUT
     // =============================================================================
-    top_ppg_classifier dut (
+    top_ecg_classifier dut (
         .sys_clk(sys_clk),
         .sys_rst_n(sys_rst_n),
         .paddr(paddr),
@@ -64,11 +64,11 @@ module tb_top_ppg_classifier;
     );
 
     // =============================================================================
-    // Clock Generation (100 MHz)
+    // Clock Generation (50.4 MHz)
     // =============================================================================
     initial begin
         sys_clk = 0;
-        forever #5 sys_clk = ~sys_clk;
+        forever #9.92 sys_clk = ~sys_clk;
     end
 
     // =============================================================================
@@ -115,14 +115,14 @@ module tb_top_ppg_classifier;
     // =============================================================================
     // ADC Data Generator Task
     // =============================================================================
-    task generate_ppg_samples;
+    task generate_ecg_samples;
         input integer num_samples;
         integer i;
         integer sample_val;
         begin
             for (i = 0; i < num_samples; i = i + 1) begin
                 @(posedge sys_clk);
-                // Generate PPG-like waveform (sine wave with DC offset)
+                // Generate ECG-like waveform (sine wave with DC offset)
                 sample_val = 128 + $rtoi($sin(i * 2 * 3.14159 / 64) * 40);
                 adc_data = 8'(sample_val);
                 adc_valid = 1;
@@ -217,7 +217,7 @@ module tb_top_ppg_classifier;
 
         // Feed 512 samples
         fork
-            generate_ppg_samples(512);
+            generate_ecg_samples(512);
         join
 
         #1000;
@@ -324,8 +324,8 @@ module tb_top_ppg_classifier;
     // Waveform Dump
     // =============================================================================
     initial begin
-        $dumpfile("tb_top_ppg_classifier.vcd");
-        $dumpvars(0, tb_top_ppg_classifier);
+        $dumpfile("tb_top_ecg_classifier.vcd");
+        $dumpvars(0, tb_top_ecg_classifier);
     end
 
 endmodule

@@ -26,7 +26,8 @@ Quy ước trạng thái:
 
 **Lưu ý quan trọng:**
 - Dự án **CHỈ** nhận tín hiệu ECG. Mọi tham chiếu PPG đã được bỏ.
-- Tên file `top_ppg_classifier.v` là tên lịch sử, không đổi trong PR này.
+- Tên file top level đã đổi: `top_ppg_classifier.v` → `top_ecg_classifier.v`
+  (module `top_ecg_classifier`, testbench `tb/tb_top_ecg_classifier.sv`).
 
 ## 2. Luồng dữ liệu
 
@@ -74,7 +75,7 @@ Trạng thái FSM: `IDLE → LOAD → NORM → FC1 → FC1_B → RELU → FC2 �
 |---|---|---|---|---|
 | clk | 1 | In | System clock (50.4 MHz) | ✅ |
 | rst_n | 1 | In | Reset active-low | ✅ |
-| sample_rate_div | 16 | In | Clock divider (= 140000 cho 360 Hz) | ✅ |
+| sample_rate_div | 18 | In | Clock divider (= 140000 cho 360 Hz; 18-bit vì 140000 > 65535) | ✅ |
 | **adc_data_in** | 8 | In | **Dữ liệu ADC ECG song song (đổi tên từ mode_ppg_ecg đã bỏ)** | ✅ |
 | adc_data_valid | 1 | In | Data valid strobe từ ADC | ✅ |
 | adc_clk | 1 | In | ADC conversion clock | ✅ |
@@ -144,7 +145,7 @@ Trạng thái FSM: `IDLE → LOAD → NORM → FC1 → FC1_B → RELU → FC2 �
 | Định dạng khung | 8N1 (8 data bits, no parity, 1 stop bit), LSB first | ✅ |
 | Đích | module BLE/HC-05 | ✅ |
 
-### 3.8 `top_ppg_classifier` (tên file lịch sử, dự án là ECG)
+### 3.8 `top_ecg_classifier`
 
 | Mục | Giá trị | TT |
 |---|---|---|

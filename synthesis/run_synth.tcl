@@ -1,5 +1,5 @@
 # =============================================================================
-# Gowin Synthesis Script for PPG Classifier
+# Gowin Synthesis Script for ECG Classifier
 # Target: GW5A-LV25UG324C2/I1
 # =============================================================================
 
@@ -7,7 +7,7 @@
 set_device -family GW5A -device GW5A-25 -package UG324 -speed C2
 
 # Set project name
-set_project -name ppg_classifier
+set_project -name ecg_classifier
 
 # =============================================================================
 # Design Files
@@ -36,18 +36,18 @@ add_file -format verilog rtl/control/control_fsm.v
 add_file -format verilog rtl/uart/uart_tx.v
 
 # Top Level
-add_file -format verilog rtl/top/top_ppg_classifier.v
+add_file -format verilog rtl/top/top_ecg_classifier.v
 
 # =============================================================================
 # Synthesis Options
 # =============================================================================
 
 # Set top module
-set_top top_ppg_classifier
+set_top top_ecg_classifier
 
 # Timing constraints
-# System clock: 100 MHz (10 ns period)
-create_clock -name sys_clk -period 10.0 [get_ports sys_clk]
+# System clock: 50.4 MHz (19.84 ns period)
+create_clock -name sys_clk -period 19.84 [get_ports sys_clk]
 
 # Input delays (from ADC)
 set_input_delay -clock sys_clk -value 2.0 [get_ports adc_data[*]]

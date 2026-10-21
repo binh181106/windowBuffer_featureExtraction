@@ -8,7 +8,7 @@ module tb_feature_extraction;
     reg clk;
     reg rst_n;
     reg start_compute;
-    reg [15:0] ppg_threshold;
+    reg [15:0] ecg_threshold;
     reg read_enable;
     wire [8:0] sample_addr;
     reg [7:0] sample_in;
@@ -26,7 +26,7 @@ module tb_feature_extraction;
         .NUM_SAMPLES(8)
     ) dut (
         .clk(clk), .rst_n(rst_n),
-        .start_compute(start_compute), .ppg_threshold(ppg_threshold),
+        .start_compute(start_compute), .ecg_threshold(ecg_threshold),
         .read_enable(read_enable), .sample_addr(sample_addr),
         .sample_in(sample_in),
         .f_rms(f_rms), .f_var(f_var), .f_peak(f_peak),
@@ -40,7 +40,7 @@ module tb_feature_extraction;
 
     initial begin
         clk = 0;
-        forever #5 clk = ~clk;
+        forever #9.92 clk = ~clk;  // 19.84ns period = 50.4MHz
     end
 
     integer test_count;
@@ -57,7 +57,7 @@ module tb_feature_extraction;
 
         rst_n = 0;
         start_compute = 0;
-        ppg_threshold = 16'd80;
+        ecg_threshold = 16'd80;
         sample_in = 0;
 
         #100;

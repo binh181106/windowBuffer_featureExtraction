@@ -37,7 +37,7 @@ Trích xuất 12 features từ 512 ECG samples.
 ### Input
 - clk, rst_n: clock và reset
 - start_compute: bắt đầu tính feature
-- ppg_threshold: ngưỡng R-peak detection
+- ecg_threshold: ngưỡng R-peak detection
 - read_enable, sample_addr, sample_in: đọc từ window buffer
 
 ### Output

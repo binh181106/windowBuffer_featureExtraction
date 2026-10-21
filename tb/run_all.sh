@@ -1,11 +1,11 @@
 @echo off
 REM =============================================================================
-REM Run all testbenches for PPG Classifier
+REM Run all testbenches for ECG Classifier
 REM Usage: run_all.bat
 REM =============================================================================
 
 echo ========================================
-echo PPG Classifier Testbench Runner
+echo ECG Classifier Testbench Runner
 echo ========================================
 echo.
 
@@ -91,7 +91,7 @@ echo.
 REM AI Classifier Test
 echo.
 echo [7/8] Running AI Classifier Test...
-set RTL_SOURCES=%RTL_DIR%\apb\apb_slave_if.v %RTL_DIR%\adc\adc_interface.v %RTL_DIR%\window\window_buffer.v %RTL_DIR%\feature\feature_extraction.v %RTL_DIR%\ai\ai_classifier.v %RTL_DIR%\ai\mlp_weights_rom.v %RTL_DIR%\control\control_fsm.v %RTL_DIR%\uart\uart_tx.v
+set RTL_SOURCES=%RTL_DIR%\apb\apb_slave_if.v %RTL_DIR%\adc\adc_interface.v %RTL_DIR%\window\window_buffer.v %RTL_DIR%\feature\feature_extraction.v %RTL_DIR%\ai\ai_classifier.v %RTL_DIR%\ai\mlp_weights_rom.v %RTL_DIR%\control\control_fsm.v %RTL_DIR%\uart\uart_tx.v %RTL_DIR%\top\top_ecg_classifier.v
 iverilog -g2005-sv -o tb_ai_classifier.vvp tb_ai_classifier.sv %RTL_SOURCES%
 if %ERRORLEVEL% NEQ 0 (
     echo FAILED: AI test compilation error
@@ -103,12 +103,12 @@ echo.
 REM Top-Level Test
 echo.
 echo [8/8] Running Top-Level Test...
-iverilog -g2005-sv -o tb_top_ppg_classifier.vvp tb_top_ppg_classifier.sv %RTL_SOURCES%
+iverilog -g2005-sv -o tb_top_ecg_classifier.vvp tb_top_ecg_classifier.sv %RTL_SOURCES%
 if %ERRORLEVEL% NEQ 0 (
     echo FAILED: Top test compilation error
     exit /b 1
 )
-vvp tb_top_ppg_classifier.vvp
+vvp tb_top_ecg_classifier.vvp
 echo.
 
 echo ========================================

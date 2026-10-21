@@ -15,7 +15,7 @@ AI Agent phải làm theo quy trình:
 ## Overview
 
 This is the RTL design for an ECG (Electrocardiogram) classification system with AI acceleration.
-- Sample Rate: 500 Hz
+- Sample Rate: 360 Hz
 - Window Size: 512 samples (1.024 seconds per window)
 - 50% overlap for R-peak detection
 
@@ -57,7 +57,7 @@ rtl/
 │
 ├── top/                  # Top Level
 │   └── README.md
-│   └── top_ppg_classifier.v  # Full SoC integration
+│   └── top_ecg_classifier.v  # Full SoC integration
 │
 ├── tb/                   # Testbenches
 │   └── Makefile
@@ -168,10 +168,11 @@ make top
 
 ## Timing
 
-- System Clock: 100 MHz
-- ECG Sample Rate: 500 Hz
-- Window: 512 samples = 1.024s
-- Overlap: 256 samples = 512ms
+- System Clock: 50.4 MHz
+- ECG Sample Rate: 360 Hz (`sample_rate_div` = 140000)
+- Window: 512 samples = 1.422s
+- Overlap: 256 samples = 711ms
 - Feature Extraction: ~512 cycles
 - MLP Inference: ~150 cycles
-- Total Latency: ~662 cycles (~6.6 μs)
+- Total Latency: ~662 cycles (~13.13 μs @ 50.4 MHz)
+- UART Baud: 115200 (`clks_per_bit` = 437)

@@ -14,8 +14,7 @@ module tb_adc_interface;
     // =============================================================================
     // Configuration
     // =============================================================================
-    reg [15:0] sample_rate_div;
-    reg mode_ppg_ecg;
+    reg [17:0] sample_rate_div;
 
     // =============================================================================
     // ADC Interface
@@ -36,12 +35,12 @@ module tb_adc_interface;
     // DUT
     // =============================================================================
     adc_interface #(
-        .DATA_WIDTH(8)
+        .DATA_WIDTH(8),
+        .DIV_WIDTH(18)
     ) dut (
         .clk(clk),
         .rst_n(rst_n),
         .sample_rate_div(sample_rate_div),
-        .mode_ppg_ecg(mode_ppg_ecg),
         .adc_data_in(adc_data_in),
         .adc_data_valid(adc_data_valid),
         .adc_clk(adc_clk),
@@ -52,11 +51,11 @@ module tb_adc_interface;
     );
 
     // =============================================================================
-    // Clock Generation (100 MHz)
+    // Clock Generation (50.4 MHz)
     // =============================================================================
     initial begin
         clk = 0;
-        forever #5 clk = ~clk;  // 10ns period = 100MHz
+        forever #9.92 clk = ~clk;  // 19.84ns period = 50.4MHz
     end
 
     // =============================================================================
@@ -84,8 +83,7 @@ module tb_adc_interface;
 
         // Initialize
         rst_n = 0;
-        sample_rate_div = 16'd100;  // Fast clock for testing
-        mode_ppg_ecg = 0;  // PPG mode
+        sample_rate_div = 18'd100;  // Fast clock for testing
         adc_data_in = 8'd0;
         adc_data_valid = 0;
 
@@ -188,7 +186,7 @@ module tb_adc_interface;
         end
 
         // ================================================================
-        // Test 5: Sine Wave Pattern (PPG simulation)
+        // Test 5: Sine Wave Pattern (ECG simulation)
         // ================================================================
         $display("\n[Test 5] Sine Wave Pattern");
         test_count = test_count + 1;

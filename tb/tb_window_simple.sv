@@ -39,7 +39,7 @@ module tb_window_simple;
 
     initial begin
         clk = 0;
-        forever #5 clk = ~clk;
+        forever #9.92 clk = ~clk;  // 19.84ns period = 50.4MHz
     end
 
     initial begin
