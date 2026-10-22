@@ -1,0 +1,48 @@
+==========================================================================================================
+                               KET QUA TINH TOAN 12 FEATURES - CUA SO 1
+==========================================================================================================
+ Pham vi mau       : [0 .. 511] (Tong cong 512 mau)
+ Thoi diem (time)  : 10530000 ns
+ Co tran (overflow): 0
+ Dinh dang du lieu : 16-bit Fixed-Point Q4.12 (Gia tri Float = Q4.12 / 4096.0)
+----------------------------------------------------------------------------------------------------------
+ STT | Ten Dac Trung  | Hex (16-bit) | Q4.12 Signed | Gia tri Thap phan (Float) | Y nghia / Don vi
+-----+----------------+--------------+--------------+---------------------------+---------------------------------
+  1  | f_rms          | 16'h210f     |         8463 |                    2.0662 | Root Mean Square
+  2  | f_var          | 16'h106e     |         4206 |                    1.0269 | Phuong sai (Variance)
+  3  | f_peak         | 16'h3000     |        12288 |                    3.0000 | Dinh tuyet doi (|x|max)
+  4  | f_zc           | 16'h0040     |           64 |                    0.0156 | Zero Crossing Rate
+  5  | f_ptp          | 16'h6000     |        24576 |                    6.0000 | Peak-to-Peak (Max - Min)
+  6  | f_crest        | 16'h173b     |         5947 |                    1.4519 | Crest Factor (Peak/RMS)
+  7  | f_half_ratio   | 16'h0c12     |         3090 |                    0.7544 | Half Ratio (RMS_h1/RMS_h2)
+  8  | f_max          | 16'h3000     |        12288 |                    3.0000 | Max Value (Co dau)
+  9  | f_rr           | 16'h0d11     |         3345 |                    0.8167 | RR Hien tai (Giay)
+ 10  | f_rr_prev      | 16'h0d11     |         3345 |                    0.8167 | RR Truoc do (Giay)
+ 11  | f_rr_ratio     | 16'h1000     |         4096 |                    1.0000 | RR Ratio (RR/RR_prev)
+ 12  | f_rr_diff      | 16'h0000     |            0 |                    0.0000 | RR Diff (RR - RR_prev, Giay)
+==========================================================================================================
+
+==========================================================================================================
+                               KET QUA TINH TOAN 12 FEATURES - CUA SO 2
+==========================================================================================================
+ Pham vi mau       : [256 .. 767] (Tong cong 512 mau)
+ Thoi diem (time)  : 21010000 ns
+ Co tran (overflow): 0
+ Dinh dang du lieu : 16-bit Fixed-Point Q4.12 (Gia tri Float = Q4.12 / 4096.0)
+----------------------------------------------------------------------------------------------------------
+ STT | Ten Dac Trung  | Hex (16-bit) | Q4.12 Signed | Gia tri Thap phan (Float) | Y nghia / Don vi
+-----+----------------+--------------+--------------+---------------------------+---------------------------------
+  1  | f_rms          | 16'h255c     |         9564 |                    2.3350 | Root Mean Square
+  2  | f_var          | 16'h115f     |         4447 |                    1.0857 | Phuong sai (Variance)
+  3  | f_peak         | 16'h3000     |        12288 |                    3.0000 | Dinh tuyet doi (|x|max)
+  4  | f_zc           | 16'h0040     |           64 |                    0.0156 | Zero Crossing Rate
+  5  | f_ptp          | 16'h6000     |        24576 |                    6.0000 | Peak-to-Peak (Max - Min)
+  6  | f_crest        | 16'h148e     |         5262 |                    1.2847 | Crest Factor (Peak/RMS)
+  7  | f_half_ratio   | 16'h0ff7     |         4087 |                    0.9978 | Half Ratio (RMS_h1/RMS_h2)
+  8  | f_max          | 16'h3000     |        12288 |                    3.0000 | Max Value (Co dau)
+  9  | f_rr           | 16'h0cd8     |         3288 |                    0.8027 | RR Hien tai (Giay)
+ 10  | f_rr_prev      | 16'h0d11     |         3345 |                    0.8167 | RR Truoc do (Giay)
+ 11  | f_rr_ratio     | 16'h0fba     |         4026 |                    0.9829 | RR Ratio (RR/RR_prev)
+ 12  | f_rr_diff      | 16'hffc8     |          -56 |                   -0.0137 | RR Diff (RR - RR_prev, Giay)
+==========================================================================================================
+
