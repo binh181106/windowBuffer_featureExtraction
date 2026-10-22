@@ -123,3 +123,41 @@ clean:
 	cd $(TB_DIR) && rm -f *.vvp *.vcd *.log
 
 # =============================================================================
+
+# =============================================================================
+# UVM targets (Questa / ModelSim)
+# -----------------------------------------------------------------------------
+# uvapb      - chay voi RTL hien tai (trong apb/)
+# uvapb_v30  - chay voi +define+APB_RTL_V30 (RTL v3.0: ecg_threshold,
+#              VERSION 0x0200, BAUD 437)
+#
+# Bien UVM_HOME tro toi thu muc src chua uvm_pkg.sv.
+# =============================================================================
+QUESTA_HOME ?= H:/altera/25.1std/questa_fse/win64
+QUESTA_BIN  ?= $(QUESTA_HOME)
+UVM_HOME    ?= H:/altera/25.1std/questa_fse/verilog_src/uvm-1.2/src
+VLOG  = $(QUESTA_BIN)/vlog
+VSIM  = $(QUESTA_BIN)/vsim
+UVM_INC = $(UVM_HOME)
+
+UVM_TB_SRCS = uvm/apb_slave_if_if.sv \
+              uvm/apb_slave_if_env_pkg.sv \
+              uvm/tb_apb_uvm.sv
+
+# RTL dung cho UVM: mac dinh la apb/ cua repo. Neu ban dich chay ngoai
+# apb/ thi dat bien APB_RTL_V30=1 de doi sang RTL v3.0.
+APB_RTL ?= $(RTL_DIR)/apb/apb_slave_if.v
+UVM_DEFS = $(if $(V30),+define+APB_RTL_V30,)
+
+uvapb:
+	@echo "=== Running APB UVM Test (RTL hien tai) ==="
+	cd $(TB_DIR) && $(VLOG) -sv -mfcu $(UVM_DEFS) \
+	  +incdir+$(UVM_INC) $(UVM_HOME)/uvm_pkg.sv \
+	  $(APB_RTL) $(UVM_TB_SRCS) && \
+	$(VSIM) -c -sv_seed 1 tb.tb_apb_uvm -do "run -all; quit -f"
+
+uvapb_v30:
+	@echo "=== Running APB UVM Test (spec v3.0) ==="
+	$(MAKE) uvapb V30=1
+
+.PHONY: uvapb uvapb_v30
