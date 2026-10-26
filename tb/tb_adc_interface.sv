@@ -31,6 +31,20 @@ module tb_adc_interface;
     wire adc_overflow;
     wire [31:0] sample_count;
 
+    // (fix tb) Latch bắt pulse 1-chu kỳ sample_valid (trước đây TB đọc
+    // sample_valid sau khi pulse đã hết -> "valid = 0" giả FAIL).
+    reg sv_seen;
+    reg [7:0] sv_data;
+    initial begin sv_seen = 1'b0; sv_data = 8'h00; end
+    always @(posedge clk) begin
+        if (!rst_n) begin
+            sv_seen <= 1'b0;
+        end else if (sample_valid) begin
+            sv_seen <= 1'b1;
+            sv_data <= sample_out;
+        end
+    end
+
     // =============================================================================
     // DUT
     // =============================================================================
@@ -106,11 +120,12 @@ module tb_adc_interface;
         // Wait for rate tick and data to be forwarded
         repeat(150) @(posedge clk);
 
-        if (sample_valid && sample_out == 8'h55) begin
-            $display("  PASS: sample_out = 0x%h", sample_out);
+        // (fix tb) dùng latch sv_seen/sv_data thay vì đọc pulse 1-chu kỳ
+        if (sv_seen && sv_data == 8'h55) begin
+            $display("  PASS: sample_out = 0x%h", sv_data);
             pass_count = pass_count + 1;
         end else begin
-            $display("  FAIL: sample_out = 0x%h, valid = %b", sample_out, sample_valid);
+            $display("  FAIL: sample_out = 0x%h, valid_seen = %b", sv_data, sv_seen);
         end
 
         // ================================================================

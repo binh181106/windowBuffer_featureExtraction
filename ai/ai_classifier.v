@@ -3,10 +3,12 @@
 // =============================================================================
 // AI Classifier Module (MLP Neural Network 12->8->4)
 // =============================================================================
-// Function: Classify PPG features into 4 categories
+// Function: Classify ECG features into 4 categories (Normal/Fast/Slow/Abnormal)
 // Architecture: 12 inputs -> 8 hidden (ReLU) -> 4 outputs -> Argmax
 // Format: 16-bit Q4.12 fixed-point arithmetic
 // Weights: Stored in internal ROM, initialized at startup
+// Fix v3.0: soft_reset, saturate MAC + overflow flag, tie-break ARGMAX
+//            giữ index thấp (đã đúng trong RTL)
 // =============================================================================
 
 module ai_classifier #(
@@ -17,6 +19,7 @@ module ai_classifier #(
     // Clock and Reset
     input  wire              clk,
     input  wire              rst_n,
+    input  wire              soft_reset,      // (fix v3.0) đưa FSM MLP về IDLE
 
     // Control
     input  wire              start,            // Start inference
@@ -168,13 +171,16 @@ module ai_classifier #(
     // Main FSM
     // =============================================================================
     reg signed [47:0] mac_temp;  // Temporary for MAC operations
+    reg                overflow_latch;  // (fix v3.0) latched MAC overflow
 
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            state    <= S_IDLE;
-            done     <= 1'b0;
-            overflow <= 1'b0;
-            cnt      <= 8'd0;
+            state      <= S_IDLE;
+            done       <= 1'b0;
+            overflow   <= 1'b0;
+            class_code <= 2'b0;      // (fix v3.0) trước đây bỏ sót -> xx sau reset
+            cnt        <= 8'd0;
+            overflow_latch <= 1'b0;
 
             for (i = 0; i < 12; i = i + 1)
                 features_norm[i] <= 32'd0;
@@ -188,8 +194,17 @@ module ai_classifier #(
                 fc2_out_raw[i] <= 32'd0;
             end
 
+        end else if (soft_reset) begin
+            // (fix v3.0) soft reset: đưa FSM MLP về IDLE, giữ weight/CSR
+            state          <= S_IDLE;
+            done           <= 1'b0;
+            cnt            <= 8'd0;
+            overflow       <= 1'b0;
+            overflow_latch <= 1'b0;
+
         end else begin
-            done <= 1'b0;
+            done     <= 1'b0;
+            overflow <= overflow_latch;   // (fix v3.0) port overflow theo latch
 
             case (state)
                 // =============================================================
@@ -198,6 +213,7 @@ module ai_classifier #(
                 S_IDLE: begin
                     cnt <= 8'd0;
                     if (start && enable) begin
+                        overflow_latch <= 1'b0;   // clear trước inference mới
                         state <= S_LOAD;
                     end
                 end
@@ -238,14 +254,27 @@ module ai_classifier #(
                         for (i = 0; i < HIDDEN_NEURONS; i = i + 1)
                             fc1_out_raw[i] <= 32'd0;
                     end else if (cnt <= 8'd96) begin
-                        // MAC operation
+                        // MAC operation (fix v3.0: saturate về 32-bit,
+                        // set overflow_latch khi carry thật sự xảy ra)
                         // cnt-1 = 0..95, corresponds to weight index
-                        // neuron = (cnt-1) / 12
-                        // feature = (cnt-1) % 12
-                        mac_temp = $signed(features_norm[(cnt-1)%12]) *
-                                   $signed(fc1_weights[cnt-1]);
-                        fc1_out_raw[(cnt-1)/12] <= fc1_out_raw[(cnt-1)/12] +
-                            (mac_temp >>> 12);
+                        // neuron = (cnt-1) / 12, feature = (cnt-1) % 12
+                        begin
+                            reg signed [47:0] mac_prod;
+                            reg signed [47:0] mac_next;
+                            mac_prod = $signed(features_norm[(cnt-1)%12]) *
+                                       $signed(fc1_weights[cnt-1]);
+                            mac_next = fc1_out_raw[(cnt-1)/12] + (mac_prod >>> 12);
+                            // saturate 32-bit
+                            if (mac_next > 48'sd2147483647) begin
+                                fc1_out_raw[(cnt-1)/12] <= 32'h7FFFFFFF;
+                                overflow_latch <= 1'b1;
+                            end else if (mac_next < -48'sd2147483648) begin
+                                fc1_out_raw[(cnt-1)/12] <= 32'h80000000;
+                                overflow_latch <= 1'b1;
+                            end else begin
+                                fc1_out_raw[(cnt-1)/12] <= mac_next[31:0];
+                            end
+                        end
                     end else begin
                         cnt <= 8'd0;
                         state <= S_FC1_B;
@@ -295,10 +324,23 @@ module ai_classifier #(
                         for (i = 0; i < OUTPUT_NEURONS; i = i + 1)
                             fc2_out_raw[i] <= 32'd0;
                     end else if (cnt <= 8'd32) begin
-                        mac_temp = $signed(hidden_out[(cnt-1)%8]) *
-                                   $signed(fc2_weights[cnt-1]);
-                        fc2_out_raw[(cnt-1)/8] <= fc2_out_raw[(cnt-1)/8] +
-                            (mac_temp >>> 12);
+                        // MAC (fix v3.0: saturate + overflow latch)
+                        begin
+                            reg signed [47:0] mac_prod;
+                            reg signed [47:0] mac_next;
+                            mac_prod = $signed(hidden_out[(cnt-1)%8]) *
+                                       $signed(fc2_weights[cnt-1]);
+                            mac_next = fc2_out_raw[(cnt-1)/8] + (mac_prod >>> 12);
+                            if (mac_next > 48'sd2147483647) begin
+                                fc2_out_raw[(cnt-1)/8] <= 32'h7FFFFFFF;
+                                overflow_latch <= 1'b1;
+                            end else if (mac_next < -48'sd2147483648) begin
+                                fc2_out_raw[(cnt-1)/8] <= 32'h80000000;
+                                overflow_latch <= 1'b1;
+                            end else begin
+                                fc2_out_raw[(cnt-1)/8] <= mac_next[31:0];
+                            end
+                        end
                     end else begin
                         cnt <= 8'd0;
                         state <= S_FC2_B;

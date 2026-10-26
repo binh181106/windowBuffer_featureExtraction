@@ -75,6 +75,25 @@ module tb_window_buffer;
     integer i;
     reg window_ready_seen;
 
+    // (fix tb) Latch đếm số lần window_ready (0->1) để verify đúng số cửa sổ,
+    // và sample trong settle region (#1 sau posedge) vì window_ready là pulse
+    // 1 chu kỳ set bởi non-blocking của DUT. Chấm trong active-region (trước
+    // đây) đọc giá trị cũ -> "never asserted".
+    reg wr_prev;
+    integer wr_count;
+    initial begin
+        wr_prev = 0; wr_count = 0;
+    end
+    always @(posedge clk) begin
+        if (!rst_n) begin
+            wr_prev  = 0;
+            wr_count = 0;   // reset cùng DUT để count "từ đầu" mỗi test
+        end else begin
+            if (window_ready && !wr_prev) wr_count = wr_count + 1;
+            wr_prev = window_ready;
+        end
+    end
+
     initial begin
         $display("========================================");
         $display("Window Buffer Testbench");
@@ -102,8 +121,11 @@ module tb_window_buffer;
         // ================================================================
         $display("\n[Test 1] Basic Buffering (512 samples)");
         test_count = test_count + 1;
-        window_ready_seen = 0;
 
+        // (fix tb) dùng wr_count (latch đếm cạnh 0->1 trong settle region) thay vì
+        // read window_ready trong active region (race với NBA của DUT).
+        // Kỳ vọng (RTL v3.0): window_ready đầu tiên phát đúng khi ĐỦ 512 mẫu
+        // (total=512), KHÔNG phải 256.
         enable = 1;
         for (i = 0; i < 512; i = i + 1) begin
             @(posedge clk);
@@ -111,17 +133,15 @@ module tb_window_buffer;
             sample_valid = 1;
             @(posedge clk);
             sample_valid = 0;
-            if (window_ready) begin
-                window_ready_seen = 1;
-            end
         end
+        #20;   // settle
 
-        if (window_ready_seen) begin
-            $display("  PASS: window_ready asserted during 512 samples");
-            $display("  samples_collected = %d", samples_collected);
+        $display("  samples_collected = %d, wr_count = %d", samples_collected, wr_count);
+        if (wr_count == 1) begin
+            $display("  PASS: window_ready asserted exactly once at 512 samples");
             pass_count = pass_count + 1;
         end else begin
-            $display("  FAIL: window_ready never asserted");
+            $display("  FAIL: window_ready asserted %0d times, expected 1", wr_count);
         end
 
         // ================================================================
@@ -164,8 +184,10 @@ module tb_window_buffer;
         // ================================================================
         $display("\n[Test 4] 50%% Overlap (768 samples)");
         test_count = test_count + 1;
-        window_ready_seen = 0;
 
+        // (fix tb) Từ sau reset của Test 3, wr_count = 0. Feed 768 mẫu ->
+        // total = 768. RTL phát window_ready ở total=512 và total=768
+        // (overlap 256 mẫu) -> kỳ vọng wr_count = 2 (cửa sổ 2nd = overlap).
         enable = 1;
         for (i = 0; i < 768; i = i + 1) begin
             @(posedge clk);
@@ -173,16 +195,15 @@ module tb_window_buffer;
             sample_valid = 1;
             @(posedge clk);
             sample_valid = 0;
-            if (window_ready) begin
-                window_ready_seen = 1;
-            end
         end
+        #20;   // settle
 
-        if (window_ready_seen) begin
-            $display("  PASS: Second window ready (overlap detected)");
+        $display("  samples_collected = %d, wr_count = %d", samples_collected, wr_count);
+        if (wr_count == 2) begin
+            $display("  PASS: Second window ready (overlap detected), wr_count = 2");
             pass_count = pass_count + 1;
         end else begin
-            $display("  FAIL: window_ready not asserted");
+            $display("  FAIL: window_ready asserted %0d times, expected 2", wr_count);
         end
 
         // ================================================================
@@ -191,22 +212,32 @@ module tb_window_buffer;
         $display("\n[Test 5] Disable Buffering");
         test_count = test_count + 1;
 
-        enable = 0;
-        repeat(5) @(posedge clk);
-        for (i = 0; i < 100; i = i + 1) begin
-            @(posedge clk);
-            sample_in = 8'hFF;
-            sample_valid = 1;
-            @(posedge clk);
-            sample_valid = 0;
-        end
+        // (fix tb) Counter là CUMULATIVE (Test 1+4 đã nạp ~1280 mẫu),
+        // nên không thể kiểm tra "< 200". Thay bằng: khi enable=0,
+        // counter KHÔNG TĂNG thêm. Snapshot giá trị trước, feed 100 mẫu
+        // với enable=0, rồi kiểm tra counter đứng yên.
+        begin
+            reg [31:0] before_count;
+            before_count = samples_collected;
 
-        #100;
-        if (samples_collected < 200) begin
-            $display("  PASS: Buffering disabled");
-            pass_count = pass_count + 1;
-        end else begin
-            $display("  FAIL: samples_collected = %d", samples_collected);
+            enable = 0;
+            repeat(5) @(posedge clk);
+            for (i = 0; i < 100; i = i + 1) begin
+                @(posedge clk);
+                sample_in = 8'hFF;
+                sample_valid = 1;
+                @(posedge clk);
+                sample_valid = 0;
+            end
+            #20;
+
+            if (samples_collected == before_count) begin
+                $display("  PASS: Buffering disabled (counter steady at %d)", before_count);
+                pass_count = pass_count + 1;
+            end else begin
+                $display("  FAIL: counter moved %d -> %d with enable=0",
+                         before_count, samples_collected);
+            end
         end
 
         $display("\n========================================");

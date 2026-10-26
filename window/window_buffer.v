@@ -94,11 +94,21 @@ module window_buffer #(
 
                 samples_collected <= samples_collected + 32'd1;
 
-                // Overlap trigger: Output window every OVERLAP (256) samples
-                // when we have at least WINDOW_SIZE samples
-                // Triggers at sample_cnt = 255, 511, 767...
-                if (sample_cnt >= OVERLAP - 1 &&
-                    (sample_cnt - (OVERLAP - 1)) % OVERLAP == 0) begin
+                // Overlap trigger: cửa sổ đầy đủ WINDOW_SIZE (512) mẫu, phát lại
+                // mỗi OVERLAP (256) mẫu.
+                //
+                // Dùng TỔNG số mẫu đã ghi (samples_collected + 1) làm chu kỳ,
+                // KHÔNG dùng sample_cnt vì sample_cnt bão hòa ở ADDR_MAX (511)
+                // nên điều kiện cũ "sample_cnt % 256 == 0" bắn liên tục mỗi
+                // cycle từ mẫu 511 trở đi (và bắn sớm ở mẫu 255 khi cửa sổ
+                // mới nửa đầy).
+                //
+                // Với total = số mẫu sau khi ghi mẫu hiện tại:
+                //   total = 512  -> cửa sổ 1 đầy (512 mẫu)
+                //   total = 768  -> cửa sổ 2 (overlap 256 mẫu)
+                //   total = 1024 -> cửa sổ 3 ...
+                if ((samples_collected + 32'd1) >= WINDOW_SIZE &&
+                    ((samples_collected + 32'd1) - WINDOW_SIZE) % OVERLAP == 0) begin
                     window_ready <= 1'b1;
                     ready_bank <= 1'b1;
                 end
@@ -126,13 +136,19 @@ module window_buffer #(
     wire [ADDR_W-1:0] actual_read_addr;
     assign actual_read_addr = (oldest_addr + read_addr) % WINDOW_SIZE;
 
-    // Latched address for RAM read
-    reg [ADDR_W-1:0] latched_addr;
-    always @(posedge clk) begin
-        if (read_en)
-            latched_addr <= actual_read_addr;
-    end
-
-    assign frame_out = ram[latched_addr];
+    // Read data (combinational):
+    // frame_out = ram[read_addr + oldest] TRỰC TIẾP theo read_addr.
+    // Ghi chú (fix v3.0): trước đây dùng latched_addr (registered read) ->
+    // frame_out trễ 1 cycle so với read_addr; trong top, feature_extraction
+    // drive read_addr và đọc sample_in cùng chu kỳ, nên registered read làm
+    // dữ liệu lệch 1 mẫu. Read combinational khớp với mẫu 0 = oldest,
+    // mẫu 511 = newest như tài liệu mô tả.
+    // read_en không tham gia đóng khung địa chỉ nữa (giữ port để debug).
+    //
+    // Collision (write mà feature đang đọc address cùng chu kỳ): BRAM trên
+    // Gowin có chế độ first-write-first-read -> data cũ được đọc (hợp lệ
+    // cho circular window). Chu kỳ đọc 512 clock (~10us) ngắn hơn nhiều so
+    // với chu kỳ mẫu mới 2.78ms nên xung đột chỉ là trường hợp biên.
+    assign frame_out = ram[actual_read_addr];
 
 endmodule

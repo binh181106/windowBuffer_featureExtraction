@@ -1,10 +1,10 @@
 `timescale 1ns / 1ps
 
 // =============================================================================
-// Testbench for PPG Classifier Top Level
+// Testbench for ECG Classifier Top Level (sim - spec v3.0: 50.4 MHz/360 Hz)
 // =============================================================================
 
-module tb_top_ecg_classifier;
+module tb_top_ecg_sim;
 
     // =============================================================================
     // Clock and Reset
@@ -137,13 +137,14 @@ module tb_top_ecg_classifier;
         #100;
 
         forever begin
-            // Generate PPG-like waveform (sine wave approximation)
+            // Generate ECG-like waveform (sine approximation)
             sample_counter = sample_counter + 8'd1;
             adc_data = 128 + $signed($sin(sample_counter * 2 * 3.14159 / 64) * 50);
             adc_valid = 1;
-            #20000;  // 250 Hz sample rate (4 ms)
+            // ECG @360 Hz: chu kỳ mẫu = 1/360 s = 2.7778 ms = 2,777,800 ns
+            // (timescale 1ns/1ps nên đơn vị là ns)
+            #2777800;
             adc_valid = 0;
-            #20000;
         end
     end
 
@@ -153,7 +154,7 @@ module tb_top_ecg_classifier;
     reg [31:0] read_data;
     initial begin
         $display("=================================================");
-        $display("PPG Classifier Testbench Started");
+        $display("ECG Classifier Testbench Started");
         $display("=================================================");
 
         // Wait for reset
@@ -166,11 +167,11 @@ module tb_top_ecg_classifier;
 
         // Configure system
         #100;
-        $display("[%t] Configuring PPG threshold...", $time);
+        $display("[%t] Configuring ECG threshold...", $time);
         apb_write(32'h08, 32'h00000050);  // Threshold = 80
 
         $display("[%t] Configuring UART baud rate...", $time);
-        apb_write(32'h0C, 32'h00000358);  // 115200 @ 100MHz
+        apb_write(32'h0C, 32'h000001B5);  // 115200 @ 50.4 MHz: clks_per_bit = 437
 
         $display("[%t] Enabling system...", $time);
         apb_write(32'h00, 32'h00000001);  // Enable
@@ -220,7 +221,7 @@ module tb_top_ecg_classifier;
     // =============================================================================
     initial begin
         $dumpfile("tb_top_ecg_classifier.vcd");
-        $dumpvars(0, tb_top_ecg_classifier);
+        $dumpvars(0, tb_top_ecg_sim);
     end
 
     // =============================================================================

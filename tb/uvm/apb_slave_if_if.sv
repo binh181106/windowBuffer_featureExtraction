@@ -53,9 +53,8 @@ interface apb_slave_if_if (input logic pclk);
   endclocking
 
   // ---- Clocking block cho monitor ----------------------------------------
-  // Lay mau o canh xuong (negedge) de gia tri da duoc DUT cap nhat o canh
-  // len truoc do (sau NBA) - neu mau o posedge se doc prdata cu.
-  clocking mon_cb @(negedge pclk);
+  // input #1step: mau lay sau canh clock, dung cho pha SETUP (quet dia chi).
+  clocking mon_cb @(posedge pclk);
     default input #1step;
     input paddr, pwrite, pwdata, psel, penable;
     input prdata, pready, pslverr;

@@ -17,6 +17,7 @@ module apb_slave_if #(
     output reg  [DATA_WIDTH-1:0] prdata,
     output reg               pready,
     output reg               pslverr,
+    output reg               p_irq,          // Interrupt (done & irq_en), added v3.0
     output reg               sys_enable,
     output reg               sys_start,
     output reg  [15:0]      ecg_threshold,
@@ -43,7 +44,6 @@ module apb_slave_if #(
     reg [DATA_WIDTH-1:0] thresh_reg;
     reg [DATA_WIDTH-1:0] baud_reg;
     reg [DATA_WIDTH-1:0] config_reg;
-    reg p_irq;
 
     always @(posedge pclk or negedge presetn) begin
         if (!presetn) begin

@@ -127,11 +127,13 @@ clean:
 # =============================================================================
 # UVM targets (Questa / ModelSim)
 # -----------------------------------------------------------------------------
-# uvapb      - chay voi RTL hien tai (trong apb/)
-# uvapb_v30  - chay voi +define+APB_RTL_V30 (RTL v3.0: ecg_threshold,
-#              VERSION 0x0200, BAUD 437)
+# uvapb      - chay voi RTL legacy (uvm/apb_slave_if_legacy.v: port
+#              ppg_threshold, VERSION 0x0100, BAUD 856)
+# uvapb_v30  - chay voi RTL v3.0 trong apb/ (port ecg_threshold,
+#              VERSION 0x0200, BAUD 437) bang +define+APB_RTL_V30
 #
 # Bien UVM_HOME tro toi thu muc src chua uvm_pkg.sv.
+# Tren may nay khong co thu muc mti_bin/, vlog/vsim nam trong QUESTA_HOME.
 # =============================================================================
 QUESTA_HOME ?= H:/altera/25.1std/questa_fse/win64
 QUESTA_BIN  ?= $(QUESTA_HOME)
@@ -144,16 +146,22 @@ UVM_TB_SRCS = uvm/apb_slave_if_if.sv \
               uvm/apb_slave_if_env_pkg.sv \
               uvm/tb_apb_uvm.sv
 
-# RTL dung cho UVM: mac dinh la apb/ cua repo. Neu ban dich chay ngoai
-# apb/ thi dat bien APB_RTL_V30=1 de doi sang RTL v3.0.
-APB_RTL ?= $(RTL_DIR)/apb/apb_slave_if.v
+# RTL dung cho UVM.
+#   Khong define  -> uvm/apb_slave_if_legacy.v (port ppg_threshold,
+#                    VERSION 0x0100, BAUD 856) - snapshot cua apb/ truoc khi
+#                    len v3.0. Can ban legacy de bien thich khop voi RTL.
+#   Co define    -> apb/apb_slave_if.v (port ecg_threshold, VERSION 0x0200,
+#                    BAUD 437) - RTL hien tai cua repo.
+APB_RTL_LEGACY = uvm/apb_slave_if_legacy.v
+APB_RTL_V30    = $(RTL_DIR)/apb/apb_slave_if.v
 UVM_DEFS = $(if $(V30),+define+APB_RTL_V30,)
+UVM_RTL  = $(if $(V30),$(APB_RTL_V30),$(APB_RTL_LEGACY))
 
 uvapb:
-	@echo "=== Running APB UVM Test (RTL hien tai) ==="
+	@echo "=== Running APB UVM Test ($(if $(V30),spec v3.0,RTL legacy)) ==="
 	cd $(TB_DIR) && $(VLOG) -sv -mfcu $(UVM_DEFS) \
 	  +incdir+$(UVM_INC) $(UVM_HOME)/uvm_pkg.sv \
-	  $(APB_RTL) $(UVM_TB_SRCS) && \
+	  $(UVM_RTL) $(UVM_TB_SRCS) && \
 	$(VSIM) -c -sv_seed 1 tb.tb_apb_uvm -do "run -all; quit -f"
 
 uvapb_v30:
