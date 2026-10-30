@@ -39,6 +39,7 @@ module tb_apb_slave_if;
     reg sys_done;
     reg [1:0] sys_class_code;
     reg sys_overflow;
+    wire p_irq;   // (fix v3.0) port mới của apb_slave_if
 
     // =============================================================================
     // DUT
@@ -57,6 +58,7 @@ module tb_apb_slave_if;
         .prdata(prdata),
         .pready(pready),
         .pslverr(pslverr),
+        .p_irq(p_irq),
         .sys_enable(sys_enable),
         .sys_start(sys_start),
         .ecg_threshold(ecg_threshold),
@@ -203,11 +205,14 @@ module tb_apb_slave_if;
         test_count = test_count + 1;
         apb_read(32'h14, read_data);
         #50;
-        if (read_data[15:0] == 16'h0100) begin
+        // (fix tb, v3.0) VERSION register = 0x0200 theo RTL/spec v3.0
+        // (docs/MODULE_REPORT: version 0x0100 -> 0x0200 khi lên 50.4MHz/360Hz).
+        // Kỳ vọng cũ 0x0100 là của spec legacy -> sửa, không phải RTL sai.
+        if (read_data[15:0] == 16'h0200) begin
             $display("  PASS: VERSION = 0x%h", read_data[15:0]);
             pass_count = pass_count + 1;
         end else begin
-            $display("  FAIL: VERSION expected 0x0100, got 0x%h", read_data[15:0]);
+            $display("  FAIL: VERSION expected 0x0200, got 0x%h", read_data[15:0]);
         end
 
         $display("\n[Test 6] Write to CONFIG register");
@@ -228,7 +233,9 @@ module tb_apb_slave_if;
         pwdata = 32'h00000003;
         @(posedge pclk);
         psel = 1; pwrite = 1; penable = 0;
-        @(posedge pclk);  // SETUP phase - sys_start set here
+        @(posedge pclk);  // SETUP phase - sys_start set here (NB)
+        #1;               // (fix tb) chờ NB settlement trước khi sample pulse
+                           // (trước đây check cùng active-region -> đọc 0 -> FAIL giả)
         if (sys_start == 1) begin
             $display("  PASS: sys_start pulse detected");
             pass_count = pass_count + 1;

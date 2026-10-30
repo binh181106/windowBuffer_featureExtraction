@@ -48,6 +48,12 @@ module adc_interface #(
     // =============================================================================
     // Sample Rate Generator
     // =============================================================================
+    // Chu kỳ tick = sample_rate_div clock (không phải div+1).
+    //   sample_rate_div = 140000 @ 50.4 MHz  ->  50.4e6 / 140000 = 360 Hz
+    //
+    // Điều kiện cũ "rate_timer >= sample_rate_div" cho counter chạy 0..140000
+    // (140001 giá trị) => chu kỳ 140001 clock => 359.997 Hz (lệch ~0.0007%).
+    // Điều kiện mới ">= (div-1)" cho counter chạy 0..139999 => đúng 140000 clock.
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             rate_timer  <= {DIV_WIDTH{1'b0}};
@@ -55,7 +61,7 @@ module adc_interface #(
         end else begin
             rate_tick <= 1'b0;
 
-            if (rate_timer >= sample_rate_div) begin
+            if (rate_timer >= (sample_rate_div - 1'b1)) begin
                 rate_timer <= {DIV_WIDTH{1'b0}};
                 rate_tick  <= 1'b1;  // Generate tick at target rate
             end else begin

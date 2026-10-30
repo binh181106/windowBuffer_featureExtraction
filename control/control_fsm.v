@@ -1,11 +1,20 @@
-`timescale 1ns / 1ps
+`timescale 1ns / 1 ps
 
 // =============================================================================
 // Control FSM - 10-State Master Controller
 // =============================================================================
-// Function: Orchestrates the entire PPG classification pipeline
-// States: IDLE -> LOAD -> NORMALIZE -> FC1 -> FC1_B -> RELU -> FC2 -> FC2_B -> ARGMAX -> DONE_S
-// Critical: Explicit clear at IDLE to eliminate mathematical residue
+// Function: Orchestrates the entire ECG classification pipeline
+// States: IDLE -> LOAD -> NORMALIZE -> FC1 -> FC1_B -> RELU -> FC2 -> FC2_B -> ARGMAX -> DONE
+//
+// Fix v3.0 (BƯỚC 2):
+//  - window_en: giữ =1 khi hệ thống được enable (SYS_ENABLE) để window_buffer
+//    liên tục gom mẫu. Trước đây window_en chỉ =1 trong state LOAD -> buffer
+//    không bao giờ đầy 512 mẫu -> window_ready không bao giờ fire.
+//  - feature_start chỉ phát khi có window_ready (cửa sổ 512 mẫu đầy), thay vì
+//    phát ngay khi start -> feature đọc cửa sổ rỗng.
+//  - Thêm handshake mlp_done từ ai_classifier: các state FC1..ARGMAX chờ
+//    mlp_done (kèm timeout) -> không deadlock nếu MLP không hoàn tất.
+//  - Thêm soft_reset: đưa FSM về IDLE ngay lập tức.
 // =============================================================================
 
 module control_fsm (
@@ -15,8 +24,11 @@ module control_fsm (
 
     // Control Inputs
     input  wire              start,          // Start classification
-    input  wire              feat_valid,      // Features ready from Feature Engine
-    input  wire              apb_enable,      // Enable from APB CSR
+    input  wire              feat_valid,     // Features ready from Feature Engine
+    input  wire              apb_enable,     // Enable from APB CSR
+    input  wire              window_ready,   // Window buffer has a full 512-sample window
+    input  wire              mlp_done,       // AI classifier finished inference
+    input  wire              soft_reset,     // Soft reset -> force back to IDLE
 
     // Control Outputs
     output reg               fsm_idle,        // FSM in IDLE state
@@ -50,6 +62,13 @@ module control_fsm (
     localparam S_ARGMAX    = 4'd8;
     localparam S_DONE      = 4'd9;
 
+    // Timeout cho state LOAD (đợi window_ready + feat_valid) và state FC1
+    // (đợi mlp_done). Giá trị lớn hơn thời gian thực tế để không cắt ngang:
+    //   LOAD : 512 mẫu @360Hz ~ 1.42 s = ~71.6e6 chu kỳ -> dùng 100e6 (cần 27 bit)
+    //   FC1  : MLP ~161 chu kỳ -> dùng 10000
+    localparam [27:0] LOAD_TIMEOUT = 28'd100_000_000;
+    localparam [27:0] MLP_TIMEOUT  = 28'd10_000;
+
     // =============================================================================
     // State Registers
     // =============================================================================
@@ -57,17 +76,36 @@ module control_fsm (
     reg [3:0] next_state;
 
     // Counter for multi-cycle operations
-    reg [9:0] cnt;           // 10-bit counter for timing
-    reg       cnt_enable;     // Counter enable
+    reg [9:0]  cnt;          // 10-bit counter for timing
+    reg        cnt_enable;   // Counter enable
+    reg [27:0] timeout_cnt;  // Timeout counter (no deadlock)
+
+    // (fix v3.0) Đã phát feature_start, đang chờ feat_valid -> không re-trigger
+    // khi window_ready phát lại (overlap buffer) trong khi feature đang tính.
+    reg        feat_started;
 
     // =============================================================================
     // FSM Sequential Logic
+    //
+    // (fix v3.1) next_state được tính bằng BLOCKING trong cùng cycle, state
+    // được commit NBA MỘT LẦN sau endcase.
+    //
+    // Trước đây (v3.0): "state <= next_state;" đặt TRƯỚC case, cả 2 đều NBA
+    // trong cùng block -> state_k = f(state_{k-2}): FSM trễ 2 chu kỳ so với
+    // chính logic của nó. Hậu quả: FSM dao động IDLE<->LOAD mỗi clock và BỎ
+    // LỖI pulse 1-chu kỳ (feat_valid, window_ready, mlp_done) -> không bao
+    // giờ đến FC1/DONE -> không có IRQ (đã capture bằng trace: LOAD->IDLE
+    // xuất hiện dù sft=0, winR=0, featV=0, timeout!=0 - bất hợp lệ theo
+    // logic case, chỉ giải thích được bằng trễ 2 chu kỳ).
     // =============================================================================
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             state          <= S_IDLE;
+            next_state     = S_IDLE;
             cnt            <= 10'd0;
             cnt_enable     <= 1'b0;
+            timeout_cnt    <= 28'd0;
+            feat_started   <= 1'b0;
             current_state  <= S_IDLE;
 
             // Clear all control signals
@@ -76,9 +114,9 @@ module control_fsm (
             feature_start   <= 1'b0;
             feature_read_en <= 1'b0;
             mlp_start       <= 1'b0;
-            mlp_valid      <= 1'b0;
-            uart_send      <= 1'b0;
-            done           <= 1'b0;
+            mlp_valid       <= 1'b0;
+            uart_send       <= 1'b0;
+            done            <= 1'b0;
 
         end else begin
             current_state <= state;
@@ -90,15 +128,16 @@ module control_fsm (
                 cnt <= 10'd0;
             end
 
-            // State transition
-            state <= next_state;
+            // Timeout counter: chỉ chạy ở state đang chờ tín hiệu ngoài
+            if (timeout_cnt != 28'd0)
+                timeout_cnt <= timeout_cnt - 28'd1;
 
             // Default outputs
             fsm_idle        <= 1'b0;
             feature_start   <= 1'b0;
             feature_read_en <= 1'b0;
-            uart_send      <= 1'b0;
-            cnt_enable     <= 1'b0;
+            uart_send       <= 1'b0;
+            cnt_enable      <= 1'b0;
 
             case (state)
                 // =============================================================
@@ -106,167 +145,178 @@ module control_fsm (
                 // =============================================================
                 S_IDLE: begin
                     fsm_idle        <= 1'b1;
-                    window_en       <= 1'b0;
                     mlp_start       <= 1'b0;
                     mlp_valid       <= 1'b0;
                     done            <= 1'b0;
                     cnt_enable      <= 1'b0;
 
-                    if (start && apb_enable) begin
-                        next_state <= S_LOAD;
+                    // Buffer gom mẫu liên tục khi hệ thống được enable
+                    window_en       <= apb_enable;
+
+                    if (soft_reset) begin
+                        next_state = S_IDLE;
+                    end else if (start && apb_enable) begin
+                        timeout_cnt <= LOAD_TIMEOUT;
+                        next_state = S_LOAD;
                     end else begin
-                        next_state <= S_IDLE;
+                        next_state = S_IDLE;
                     end
                 end
 
                 // =============================================================
-                // LOAD: Load features from Feature Engine
+                // LOAD: Wait for a full window, run feature extraction, wait
+                //       for features, then hand over to the MLP stage.
                 // =============================================================
                 S_LOAD: begin
-                    window_en       <= 1'b1;
-                    feature_start   <= 1'b1;
-                    cnt_enable      <= 1'b1;
+                    window_en     <= 1'b1;   // giữ buffer chạy trong suốt pipeline
+                    mlp_valid     <= 1'b0;
 
-                    if (cnt == 10'd1) begin
-                        feature_start <= 1'b0;
-                    end
-
-                    // Wait for features to be ready
-                    if (feat_valid) begin
-                        next_state <= S_NORM;
-                        cnt_enable <= 1'b0;
+                    if (soft_reset) begin
+                        next_state = S_IDLE;
+                    end else if (!feat_started && window_ready) begin
+                        // Cửa sổ 512 mẫu đã đầy -> phát feature_start (1 chu kỳ).
+                        // feat_started chặn re-trigger khi window_ready phát lại
+                        // (overlap buffer) trong lúc feature đang tính.
+                        feature_start <= 1'b1;
+                        feat_started  <= 1'b1;
+                        timeout_cnt   <= LOAD_TIMEOUT;
+                        next_state = S_LOAD;
+                    end else if (feat_valid) begin
+                        // Features đã sẵn sàng -> sang stage MLP
+                        feat_started <= 1'b0;
+                        timeout_cnt  <= LOAD_TIMEOUT;
+                        next_state = S_NORM;
+                    end else if (timeout_cnt == 28'd0) begin
+                        // Timeout: không có feature -> quay về IDLE (không deadlock)
+                        feat_started <= 1'b0;
+                        next_state = S_IDLE;
                     end else begin
-                        next_state <= S_LOAD;
+                        next_state = S_LOAD;
                     end
                 end
 
                 // =============================================================
-                // NORMALIZE: Normalize features with mean and scale
+                // NORMALIZE: features are being normalized inside ai_classifier
                 // =============================================================
                 S_NORM: begin
-                    mlp_valid <= 1'b1;   // Features are valid for MLP
-                    cnt_enable <= 1'b1;
+                    window_en     <= 1'b1;
+                    mlp_valid     <= 1'b1;   // Features are valid for MLP
+                    cnt_enable    <= 1'b1;
 
-                    // Normalization takes 1 cycle per feature (12 features)
-                    if (cnt == 10'd12) begin
-                        next_state <= S_FC1;
+                    if (soft_reset) begin
+                        next_state = S_IDLE;
+                    end else if (cnt == 10'd12) begin
+                        next_state = S_FC1;
                         cnt_enable <= 1'b0;
                     end else begin
-                        next_state <= S_NORM;
+                        next_state = S_NORM;
                     end
                 end
 
                 // =============================================================
-                // FC1: Fully Connected Layer 1 (12 inputs -> 8 outputs)
-                // MAC operations: 96 cycles
+                // FC1: Start MLP inference and wait for mlp_done
                 // =============================================================
+                // Ghi chú kiến trúc: ai_classifier có FSM nội bộ riêng thực sự
+                // tính toán (LOAD->NORM->FC1->FC1_B->RELU->FC2->FC2_B->ARGMAX).
+                // control_fsm giữ đúng chuỗi 10 trạng thái để debug/trace và
+                // chỉ dùng mlp_done làm điều kiện thoát -> không deadlock.
                 S_FC1: begin
-                    mlp_start   <= 1'b1;
-                    cnt_enable  <= 1'b1;
+                    window_en     <= 1'b1;
+                    mlp_valid     <= 1'b1;
 
-                    if (cnt == 10'd96) begin
-                        next_state <= S_FC1_B;
-                        cnt_enable <= 1'b0;
+                    if (soft_reset) begin
+                        // soft reset: hạ mlp_start để ai_classifier không re-trigger
+                        mlp_start  <= 1'b0;
+                        next_state = S_IDLE;
+                    end else if (mlp_start == 1'b0) begin
+                        // Chu kỳ đầu trong S_FC1 (chưa phát start): phát mlp_start.
+                        // ai_classifier (đang IDLE) nhận start && enable, chạy FSM
+                        // nội bộ ~161 chu kỳ; mlp_done phát 1 chu kỳ khi ai.done.
+                        mlp_start  <= 1'b1;
+                        next_state = S_FC1;
+                    end else if (mlp_done || timeout_cnt == 28'd0) begin
+                        // MLP xong (hoặc timeout) -> hạ mlp_start, đi tiếp qua các
+                        // state trung gian rồi tới DONE.
+                        mlp_start  <= 1'b0;
+                        if (mlp_done == 1'b0)
+                            $display("[control_fsm] TIMEOUT waiting for mlp_done");
+                        next_state = S_FC1_B;
                     end else begin
-                        next_state <= S_FC1;
+                        next_state = S_FC1;
                     end
                 end
 
                 // =============================================================
-                // FC1_B: Add biases to FC1 outputs
+                // FC1_B .. ARGMAX: pass-through states (giữ chuỗi 10 trạng thái)
                 // =============================================================
                 S_FC1_B: begin
-                    cnt_enable <= 1'b1;
-
-                    if (cnt == 10'd8) begin
-                        next_state <= S_RELU;
-                        cnt_enable <= 1'b0;
-                    end else begin
-                        next_state <= S_FC1_B;
-                    end
+                    window_en  <= 1'b1;
+                    mlp_valid  <= 1'b1;
+                    if (soft_reset) next_state = S_IDLE;
+                    else            next_state = S_RELU;
                 end
 
-                // =============================================================
-                // RELU: Apply ReLU activation
-                // =============================================================
                 S_RELU: begin
-                    cnt_enable <= 1'b1;
-
-                    if (cnt == 10'd8) begin
-                        next_state <= S_FC2;
-                        cnt_enable <= 1'b0;
-                    end else begin
-                        next_state <= S_RELU;
-                    end
+                    window_en  <= 1'b1;
+                    mlp_valid  <= 1'b1;
+                    if (soft_reset) next_state = S_IDLE;
+                    else            next_state = S_FC2;
                 end
 
-                // =============================================================
-                // FC2: Fully Connected Layer 2 (8 inputs -> 4 outputs)
-                // MAC operations: 32 cycles
-                // =============================================================
                 S_FC2: begin
-                    cnt_enable <= 1'b1;
-
-                    if (cnt == 10'd32) begin
-                        next_state <= S_FC2_B;
-                        cnt_enable <= 1'b0;
-                    end else begin
-                        next_state <= S_FC2;
-                    end
+                    window_en  <= 1'b1;
+                    mlp_valid  <= 1'b1;
+                    if (soft_reset) next_state = S_IDLE;
+                    else            next_state = S_FC2_B;
                 end
 
-                // =============================================================
-                // FC2_B: Add biases to FC2 outputs
-                // =============================================================
                 S_FC2_B: begin
-                    cnt_enable <= 1'b1;
-
-                    if (cnt == 10'd4) begin
-                        next_state <= S_ARGMAX;
-                        cnt_enable <= 1'b0;
-                    end else begin
-                        next_state <= S_FC2_B;
-                    end
+                    window_en  <= 1'b1;
+                    mlp_valid  <= 1'b1;
+                    if (soft_reset) next_state = S_IDLE;
+                    else            next_state = S_ARGMAX;
                 end
 
-                // =============================================================
-                // ARGMAX: Find maximum output
-                // =============================================================
                 S_ARGMAX: begin
-                    cnt_enable <= 1'b1;
-
-                    if (cnt == 10'd4) begin
-                        next_state <= S_DONE;
-                        cnt_enable <= 1'b0;
-                    end else begin
-                        next_state <= S_ARGMAX;
-                    end
+                    window_en  <= 1'b1;
+                    mlp_valid  <= 1'b1;
+                    if (soft_reset) next_state = S_IDLE;
+                    else            next_state = S_DONE;
                 end
 
                 // =============================================================
                 // DONE: Classification complete, send result
                 // =============================================================
                 S_DONE: begin
+                    window_en <= 1'b1;
                     done       <= 1'b1;
                     uart_send  <= 1'b1;
 
                     // Return to IDLE after done is acknowledged
-                    if (!start) begin
-                        next_state <= S_IDLE;
+                    if (soft_reset) begin
+                        next_state = S_IDLE;
+                    end else if (!start) begin
+                        next_state = S_IDLE;
                     end else begin
-                        next_state <= S_DONE;
+                        next_state = S_DONE;
                     end
                 end
 
-                default: next_state <= S_IDLE;
+                default: next_state = S_IDLE;
             endcase
+
+            // (fix v3.1) commit state MỘT LẦN, sau khi next_state đã tính bằng
+            // blocking (giá trị mới nhất, không trễ) -> state_{k+1} = f(state_k).
+            state <= next_state;
         end
     end
 
     // =============================================================================
     // Read Address Generation (for Window Buffer)
     // =============================================================================
-    assign read_addr = (state == S_LOAD) ? cnt[8:0] : 9'd0;
+    // Ghi chú: ai_classifier dùng FSM nội bộ riêng, control_fsm không điều khiển
+    // địa chỉ đọc. read_addr giữ nguyên để tương thích (luôn 0).
+    assign read_addr = 9'd0;
 
     // =============================================================================
     // Next State Debug Output

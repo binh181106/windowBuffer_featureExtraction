@@ -16,6 +16,7 @@ module tb_ai_classifier;
     // =============================================================================
     reg start;
     reg enable;
+    reg soft_reset;
 
     // =============================================================================
     // Feature Input (12 features x 16-bit)
@@ -45,8 +46,10 @@ module tb_ai_classifier;
     wire [1:0] class_code;
     wire done;
     wire overflow;
-    wire [31:0] fc1_out [0:7];
-    wire [31:0] fc2_out [0:3];
+    // (fix tb) DUT port fc1_out/fc2_out là SIGNED (MAC Q4.12 có dấu) ->
+    // wire phải signed để khớp (baseline: elaboration fail vì unsigned).
+    wire signed [31:0] fc1_out [0:7];
+    wire signed [31:0] fc2_out [0:3];
 
     // =============================================================================
     // DUT
@@ -58,6 +61,7 @@ module tb_ai_classifier;
     ) dut (
         .clk(clk),
         .rst_n(rst_n),
+        .soft_reset(soft_reset),   // (fix v3.0) port mới
         .start(start),
         .enable(enable),
         .features(features),
@@ -109,6 +113,7 @@ module tb_ai_classifier;
         rst_n = 0;
         start = 0;
         enable = 0;
+        soft_reset = 0;
 
         for (i = 0; i < 12; i = i + 1) begin
             features_int[i] = 16'h0000;
@@ -169,7 +174,7 @@ module tb_ai_classifier;
         $display("\n[Test 3] Positive Features");
         test_count = test_count + 1;
 
-        // Typical Normal PPG features
+        // Typical Normal ECG features
         features_int[0]  = 16'h0100;  // RMS = 1.0
         features_int[1]  = 16'h0010;  // VAR = 0.0625
         features_int[2]  = 16'h0080;  // Peak = 0.5

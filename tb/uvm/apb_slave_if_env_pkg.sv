@@ -33,40 +33,58 @@ package apb_slave_if_env_pkg;
 
   // ---------------------------------------------------------------------------
   // Gia tri reset / ky vong theo phien ban RTL
+  //   Reset cua apb_slave_if.v:
+  //     ctrl_reg=0, thresh_reg=0x50, baud_reg=<theo phien ban>,
+  //     config_reg=0, ecg/ppg_threshold=80, baud_div=<theo phien ban>,
+  //     sys_enable=0, ble_enable=0, uart_enable=1
   // ---------------------------------------------------------------------------
 `ifdef APB_RTL_V30
-  localparam bit [15:0] RESET_VERSION     = 16'h0200;
-  localparam bit [31:0] RESET_BAUD_REG    = 32'h0000_01B5;  // 437
-  localparam bit [15:0] RESET_BAUD_DIV    = 16'd437;
-  localparam bit [15:0] WRITE_BAUD_VALUE  = 16'h01B5;
+  localparam bit [15:0] RESET_VERSION    = 16'h0200;
+  localparam bit [31:0] RESET_BAUD_REG   = 32'h0000_01B5;  // 437
+  localparam bit [15:0] RESET_BAUD_DIV   = 16'd437;
+  localparam bit [31:0] WRITE_BAUD_VALUE = 32'h0000_01B5;  // 437
 `else
-  localparam bit [15:0] RESET_VERSION     = 16'h0100;
-  localparam bit [31:0] RESET_BAUD_REG    = 32'h0000_0358;  // 856
-  localparam bit [15:0] RESET_BAUD_DIV    = 16'd856;
-  localparam bit [15:0] WRITE_BAUD_VALUE  = 16'h0358;
+  localparam bit [15:0] RESET_VERSION    = 16'h0100;
+  localparam bit [31:0] RESET_BAUD_REG   = 32'h0000_0358;  // 856
+  localparam bit [15:0] RESET_BAUD_DIV   = 16'd856;
+  localparam bit [31:0] WRITE_BAUD_VALUE = 32'h0000_0358;  // 856
 `endif
-  localparam bit [31:0] RESET_THRESH_REG  = 32'h0000_0050;
-  localparam bit [15:0] RESET_THRESH_OUT  = 16'd80;
-  localparam bit [31:0] RESET_CTRL_REG    = 32'h0000_0000;
-  localparam bit [31:0] RESET_CONFIG_REG  = 32'h0000_0000;
+  localparam bit [31:0] RESET_THRESH_REG = 32'h0000_0050;
+  localparam bit [15:0] RESET_THRESH_OUT = 16'd80;
+  localparam bit [31:0] RESET_CTRL_REG   = 32'h0000_0000;
+  localparam bit [31:0] RESET_CONFIG_REG = 32'h0000_0000;
+
+  // Gia tri ghi trong apb_reg_seq
+  localparam bit [31:0] WRITE_CTRL_VALUE   = 32'h0000_0001;
+  localparam bit [31:0] WRITE_THRESH_VALUE = 32'h0000_00A0;
 
   // ---------------------------------------------------------------------------
   // Cau hinh ky vong
   // ---------------------------------------------------------------------------
   class apb_cfg extends uvm_object;
 
+    `uvm_object_utils_begin(apb_cfg)
+    `uvm_object_utils_end
+
     uvm_active_passive_enum is_active = UVM_ACTIVE;
 
-    bit [15:0] expected_version     = RESET_VERSION;
-    bit [31:0] expected_baud_reg    = RESET_BAUD_REG;
-    bit [15:0] expected_baud_div    = RESET_BAUD_DIV;
-    bit [31:0] expected_thresh_reg  = RESET_THRESH_REG;
-    bit [15:0] expected_thresh_out  = RESET_THRESH_OUT;
-    bit [31:0] expected_ctrl_reg    = RESET_CTRL_REG;
-    bit [31:0] expected_config_reg  = RESET_CONFIG_REG;
+    bit [15:0] expected_version;
+    bit [31:0] expected_baud_reg;
+    bit [15:0] expected_baud_div;
+    bit [31:0] expected_thresh_reg;
+    bit [15:0] expected_thresh_out;
+    bit [31:0] expected_ctrl_reg;
+    bit [31:0] expected_config_reg;
 
     function new(string name = "apb_cfg");
       super.new(name);
+      expected_version    = RESET_VERSION;
+      expected_baud_reg   = RESET_BAUD_REG;
+      expected_baud_div   = RESET_BAUD_DIV;
+      expected_thresh_reg = RESET_THRESH_REG;
+      expected_thresh_out = RESET_THRESH_OUT;
+      expected_ctrl_reg   = RESET_CTRL_REG;
+      expected_config_reg = RESET_CONFIG_REG;
     endfunction
 
   endclass : apb_cfg
@@ -82,12 +100,12 @@ package apb_slave_if_env_pkg;
 
     bit [31:0] rdata;
     bit        ready;
-    bit        err;
+    bit        err_flag;
     bit        completed;
     string     op_name;
     int unsigned latency;
 
-    // Gia tri quan sat tren DUT tai canh ACCESS (monitor latch).
+    // Gia tri quan sat tren DUT tai pha ACCESS (do monitor latch).
     // Dung de kiem tra side-effect cua ghi thanh ghi.
     bit        obs_enable;
     bit        obs_start;
@@ -101,19 +119,21 @@ package apb_slave_if_env_pkg;
     bit        obs_overflow;
     bit [1:0]  obs_class_code;
 
+    // Chi dinh bien threshold nao thuc su duoc DUT giu (gia tri khong X).
+    bit        obs_thresh_is_ecg;
+
     `uvm_object_utils_begin(apb_item)
-      `uvm_field_int(paddr,   UVM_ALL_ON)
-      `uvm_field_int(pwdata,  UVM_ALL_ON)
-      `uvm_field_int(pwrite,  UVM_ALL_ON)
-      `uvm_field_int(rdata,   UVM_ALL_ON)
-      `uvm_field_int(ready,   UVM_ALL_ON)
-      `uvm_field_int(err,     UVM_ALL_ON)
+      `uvm_field_int(paddr,     UVM_ALL_ON)
+      `uvm_field_int(pwdata,    UVM_ALL_ON)
+      `uvm_field_int(pwrite,    UVM_ALL_ON)
+      `uvm_field_int(rdata,     UVM_ALL_ON)
+      `uvm_field_int(ready,     UVM_ALL_ON)
+      `uvm_field_int(err_flag,  UVM_ALL_ON)
       `uvm_field_string(op_name, UVM_ALL_ON)
     `uvm_object_utils_end
 
     constraint c_addr  { paddr[7:0] inside {[ADDR_CTRL:ADDR_CONFIG]}; paddr[1:0] == 0; }
     constraint c_write { pwrite dist { 1 := 60, 0 := 40 }; }
-    constraint c_data  { pwrite -> pwdata[1:0] == 0; }
 
     function new(string name = "apb_item");
       super.new(name);
@@ -142,8 +162,13 @@ package apb_slave_if_env_pkg;
   // ---------------------------------------------------------------------------
   // Driver: dieu khien bus APB dung 2 phase AMBA3
   //   SETUP  (psel=1, penable=0) -> ACCESS (psel=1, penable=1)
-  //   -> cho pready (co guard chong treo) -> ket thuc (psel=0, penable=0)
+  //   -> cho pready (guard chong treo) -> ket thuc (psel=0, penable=0)
   // Chi doc prdata khi pwrite = 0.
+  //
+  // Luu y clocking block: output #1step => tin hieu duoc dat sau canh clock.
+  // Do do DUT nhin thay pha SETUP o canh clock ke tie sau canh dat psel.
+  // Gia tri pready duoc DUT ghi thanh ghi (pready <= psel && penable) nen
+  // canh do pready=1 xuat hien o canh clock sau ACCESS.
   // ---------------------------------------------------------------------------
   class apb_driver extends uvm_driver #(apb_item);
 
@@ -188,7 +213,7 @@ package apb_slave_if_env_pkg;
       @(vif.drv_cb);
       vif.drv_cb.penable <= 1'b1;
 
-      // ---- Cho pready ----
+      // ---- Cho pready (guard chong treo) ----
       guard = 0;
       do begin
         @(vif.drv_cb);
@@ -203,7 +228,7 @@ package apb_slave_if_env_pkg;
       // Chi doc du lieu khi giao dich doc
       if (!req.pwrite) req.rdata = vif.drv_cb.prdata;
       req.ready     = vif.drv_cb.pready;
-      req.err       = vif.drv_cb.pslverr;
+      req.err_flag  = vif.drv_cb.pslverr;
       req.completed = 1;
 
       // ---- Ket thuc transfer ----
@@ -218,7 +243,12 @@ package apb_slave_if_env_pkg;
   // Monitor
   //   - Vong lap phat hien SETUP (psel=1, penable=0) -> tao giao dich moi
   //   - Vong lap phat hien ACCESS (psel=1, penable=1) -> latch gia tri DUT
-  //     va phat giao dich khi pready = 1
+  //     (dung cho kiem tra side-effect)
+  //   - Hoan tat giao dich khi pready = 1
+  //
+  // Clocking block mon_cb dung input #1step => gia tri mau lay DUNG canh clock
+  // ma DUT nhin thay. Nho vay cac xung 1 chu ky (sys_start, soft_reset) duoc
+  // tao o pha SETUP se duoc bat dung o pha ACCESS ngay sau do.
   // ---------------------------------------------------------------------------
   class apb_monitor extends uvm_monitor;
 
@@ -267,7 +297,7 @@ package apb_slave_if_env_pkg;
         else if (seen_setup && vif.mon_cb.psel && vif.mon_cb.penable) begin
           // ---- ACCESS phase: latch gia tri quan sat tren DUT ----
           if (!latched) begin
-            latched      = 1;
+            latched = 1;
             tr.rdata      = vif.mon_cb.prdata;
             tr.obs_enable = vif.mon_cb.sys_enable;
             tr.obs_start  = vif.mon_cb.sys_start;
@@ -275,12 +305,19 @@ package apb_slave_if_env_pkg;
             tr.obs_ble_enable  = vif.mon_cb.ble_enable;
             tr.obs_uart_enable = vif.mon_cb.uart_enable;
             tr.obs_baud_div    = vif.mon_cb.baud_div;
+
             // RTL moi dung ecg_threshold, RTL cu dung ppg_threshold.
-            // Bien khong noi vao DUT se giu gia tri X -> bo qua qua do.
-            if (vif.mon_cb.ecg_threshold !== 16'hxxxx)
-              tr.obs_thresh_out = vif.mon_cb.ecg_threshold;
-            else
-              tr.obs_thresh_out = vif.mon_cb.ppg_threshold;
+            // Bien khong noi vao DUT giu gia tri X -> phat hien de chon
+            // dung bien dang thuc su co gia tri.
+            if (vif.mon_cb.ecg_threshold !== 16'hxxxx) begin
+              tr.obs_thresh_out  = vif.mon_cb.ecg_threshold;
+              tr.obs_thresh_is_ecg = 1'b1;
+            end
+            else begin
+              tr.obs_thresh_out  = vif.mon_cb.ppg_threshold;
+              tr.obs_thresh_is_ecg = 1'b0;
+            end
+
             tr.obs_busy       = vif.mon_cb.sys_busy;
             tr.obs_done       = vif.mon_cb.sys_done;
             tr.obs_overflow   = vif.mon_cb.sys_overflow;
@@ -289,7 +326,7 @@ package apb_slave_if_env_pkg;
 
           if (vif.mon_cb.pready) begin
             tr.ready     = 1;
-            tr.err       = vif.mon_cb.pslverr;
+            tr.err_flag  = vif.mon_cb.pslverr;
             tr.completed = 1;
             tr.op_name   = reg_name(tr.paddr);
             tr.latency   = ticks - t_setup;
@@ -354,6 +391,14 @@ package apb_slave_if_env_pkg;
 
   // ---------------------------------------------------------------------------
   // Scoreboard: mo hinh tham chieu 7 thanh ghi
+  //
+  // Ghi chu hanh vi that cua apb_slave_if.v:
+  //  - Chi ghi thanh ghi o pha SETUP (psel && pwrite && !penable).
+  //  - STATUS / RESULT / VERSION khong co nhanh ghi => ghi bi bo qua.
+  //  - prdata duoc latch o pha SETUP va pha ACCESS (dieu kien psel && !pwrite).
+  //  - ecg/ppg_threshold va baud_div chi nhan 16 bit thap cua pwdata.
+  //  - ctrl_reg / thresh_reg / baud_reg / config_reg giu du 32 bit.
+  //  - sys_start va soft_reset la xung 1 chu ky, sinh ra o pha SETUP.
   // ---------------------------------------------------------------------------
   class apb_scoreboard extends uvm_scoreboard;
 
@@ -401,17 +446,22 @@ package apb_slave_if_env_pkg;
             ctrl_reg = tr.pwdata;
             if (tr.obs_enable !== tr.pwdata[0])
               `uvm_error(get_type_name(),
-                $sformatf("CTRL: sys_enable=%b, mong doi %b", tr.obs_enable, tr.pwdata[0]))
+                $sformatf("CTRL: sys_enable=%b, mong doi %b",
+                          tr.obs_enable, tr.pwdata[0]))
+            // Xung 1 chu ky sinh ra o pha SETUP -> phai bat trong cung
+            // giao dich ghi, khong doc lai o giao dich sau.
             if (tr.pwdata[1] && (tr.obs_start !== 1'b1))
-              `uvm_error(get_type_name(), "CTRL: khong thay xung sys_start khi ghi bit[1]")
+              `uvm_error(get_type_name(),
+                "CTRL: khong thay xung sys_start khi ghi bit[1]")
             if (tr.pwdata[4] && (tr.obs_soft_reset !== 1'b1))
-              `uvm_error(get_type_name(), "CTRL: khong thay xung soft_reset khi ghi bit[4]")
+              `uvm_error(get_type_name(),
+                "CTRL: khong thay xung soft_reset khi ghi bit[4]")
           end
           ADDR_THRESH: begin
             thresh_reg = tr.pwdata;
             if (tr.obs_thresh_out !== tr.pwdata[15:0])
               `uvm_error(get_type_name(),
-                $sformatf("ECG_THRESH: output=%0h, mong doi %0h",
+                $sformatf("ECG_THRESH: output=0x%04h, mong doi 0x%04h",
                           tr.obs_thresh_out, tr.pwdata[15:0]))
           end
           ADDR_BAUD: begin
@@ -425,10 +475,12 @@ package apb_slave_if_env_pkg;
             config_reg = tr.pwdata;
             if (tr.obs_ble_enable !== tr.pwdata[0])
               `uvm_error(get_type_name(),
-                $sformatf("CONFIG: ble_enable=%b, mong doi %b", tr.obs_ble_enable, tr.pwdata[0]))
+                $sformatf("CONFIG: ble_enable=%b, mong doi %b",
+                          tr.obs_ble_enable, tr.pwdata[0]))
             if (tr.obs_uart_enable !== tr.pwdata[1])
               `uvm_error(get_type_name(),
-                $sformatf("CONFIG: uart_enable=%b, mong doi %b", tr.obs_uart_enable, tr.pwdata[1]))
+                $sformatf("CONFIG: uart_enable=%b, mong doi %b",
+                          tr.obs_uart_enable, tr.pwdata[1]))
           end
           // STATUS / RESULT / VERSION: chi doc, ghi bi bo qua
           default: ;
@@ -499,7 +551,7 @@ package apb_slave_if_env_pkg;
         bins baud    = {ADDR_BAUD};
         bins result  = {ADDR_RESULT};
         bins version = {ADDR_VERSION};
-        bins cfg     = {ADDR_CONFIG};
+        bins cfg_reg = {ADDR_CONFIG};
         bins others  = default;
       }
       cp_op : coverpoint last_write {
@@ -519,11 +571,11 @@ package apb_slave_if_env_pkg;
       cg_apb = new();
     endfunction
 
-    function void write(apb_item tr);
-      if (!tr.completed) return;
-      last_addr     = tr.paddr[7:0];
-      last_write    = tr.pwrite;
-      ready_latency = tr.latency;
+    function void write(apb_item t);
+      if (!t.completed) return;
+      last_addr     = t.paddr[7:0];
+      last_write    = t.pwrite;
+      ready_latency = t.latency;
       cg_apb.sample();
     endfunction
 
@@ -556,14 +608,6 @@ package apb_slave_if_env_pkg;
       super.build_phase(phase);
 
       cfg = apb_cfg::type_id::create("cfg");
-      cfg.expected_version   = RESET_VERSION;
-      cfg.expected_baud_reg  = RESET_BAUD_REG;
-      cfg.expected_baud_div  = RESET_BAUD_DIV;
-      cfg.expected_thresh_reg = RESET_THRESH_REG;
-      cfg.expected_thresh_out = RESET_THRESH_OUT;
-      cfg.expected_ctrl_reg   = RESET_CTRL_REG;
-      cfg.expected_config_reg = RESET_CONFIG_REG;
-
       uvm_config_db#(apb_cfg)::set(this, "*", "cfg", cfg);
 
       if (!uvm_config_db#(virtual apb_slave_if_if)::get(this, "", "vif", vif))
@@ -598,9 +642,10 @@ package apb_slave_if_env_pkg;
       super.report_phase(phase);
       svr = uvm_report_server::get_server();
       `uvm_info("SUMMARY",
-        $sformatf("UVM_ERROR=%0d  UVM_FATAL=%0d",
+        $sformatf("UVM_ERROR=%0d  UVM_FATAL=%0d  UVM_WARNING=%0d",
                   svr.get_severity_count(UVM_ERROR),
-                  svr.get_severity_count(UVM_FATAL)), UVM_NONE)
+                  svr.get_severity_count(UVM_FATAL),
+                  svr.get_severity_count(UVM_WARNING)), UVM_NONE)
     endfunction
 
   endclass : apb_base_test
@@ -627,7 +672,7 @@ package apb_slave_if_env_pkg;
       addrs[5] = ADDR_VERSION;
       addrs[6] = ADDR_CONFIG;
 
-      // 1) Doc tat ca thanh ghi (kiem tra readback sau reset)
+      // 1) Doc tat ca thanh ghi (kiem tra readback ngay sau reset)
       foreach (addrs[i]) begin
         it = apb_item::type_id::create($sformatf("rd_%0d", i));
         start_item(it);
@@ -642,10 +687,10 @@ package apb_slave_if_env_pkg;
         start_item(it);
         it.pwrite = 1'b1;
         it.paddr  = addrs[i];
-        it.pwdata = (i == 0) ? 32'h0000_0003         // CTRL: enable + start
-               : (i == 2) ? 32'h0000_00A0             // ECG_THRESH
-               : (i == 3) ? {16'h0, WRITE_BAUD_VALUE} // BAUD
-               : (i == 6) ? 32'h0000_0003             // CONFIG: ble + uart
+        it.pwdata = (i == 0) ? WRITE_CTRL_VALUE
+               : (i == 2) ? WRITE_THRESH_VALUE
+               : (i == 3) ? WRITE_BAUD_VALUE
+               : (i == 6) ? 32'h0000_0003   // CONFIG: ble_en + uart_en
                           : 32'h0000_0000;
         finish_item(it);
 
@@ -660,7 +705,7 @@ package apb_slave_if_env_pkg;
   endclass : apb_reg_seq
 
   // ---------------------------------------------------------------------------
-  // Sequence 2: doc/ghi ngau nhien tren ca 7 thanh ghi
+  // Sequence 2: doc/ghi ngau nhien tren ca 7 dia chi
   // ---------------------------------------------------------------------------
   class apb_random_seq extends uvm_sequence #(apb_item);
 
@@ -688,6 +733,8 @@ package apb_slave_if_env_pkg;
 
   // ---------------------------------------------------------------------------
   // Sequence 3: dieu khien status roi doc STATUS va RESULT
+  // Trang thai duoc giu on dinh trong suot giao dich de scoreboard
+  // doi chieu duoc.
   // ---------------------------------------------------------------------------
   class apb_status_seq extends uvm_sequence #(apb_item);
 
@@ -699,14 +746,11 @@ package apb_slave_if_env_pkg;
       super.new(name);
     endfunction
 
-    function void build_phase(uvm_phase phase);
-      super.build_phase(phase);
-      if (!uvm_config_db#(virtual apb_slave_if_if)::get(this, "", "vif", vif))
-        `uvm_fatal(get_type_name(), "virtual interface 'vif' chua duoc set")
-    endfunction
-
     task body();
       apb_item it;
+
+      if (!uvm_config_db#(virtual apb_slave_if_if)::get(null, "", "vif", vif))
+        `uvm_fatal(get_type_name(), "virtual interface 'vif' chua duoc set")
 
       // busy = 1, done = 0
       vif.sys_busy       = 1'b1;
@@ -771,13 +815,13 @@ package apb_slave_if_env_pkg;
       reset_dut();
 
       reg_seq = apb_reg_seq::type_id::create("reg_seq");
-      reg_seq.start(this.sequencer);
+      reg_seq.start(agent.sequencer);
 
       status_seq = apb_status_seq::type_id::create("status_seq");
-      status_seq.start(this.sequencer);
+      status_seq.start(agent.sequencer);
 
       rnd_seq = apb_random_seq::type_id::create("rnd_seq");
-      rnd_seq.start(this.sequencer);
+      rnd_seq.start(agent.sequencer);
 
       #(200 * 1ns);
       phase.drop_objection(this);

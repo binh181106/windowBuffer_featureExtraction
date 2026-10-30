@@ -46,7 +46,16 @@ module tb_top_ecg_classifier;
     // =============================================================================
     // DUT
     // =============================================================================
-    top_ecg_classifier dut (
+    // (fix tb v3.0) Override SYS_SAMPLE_RATE_DIV để sim nhanh.
+    // Mặc định 140000 (360 Hz) -> 1 mẫu mỗi 2.78 ms; để đủ 512 mẫu cần
+    // ~1.42 s mô phỏng. Dùng div = 20 (mỗi mẫu ~20 clock) để TB chạy nhanh
+    // nhưng vẫn giữ đúng đường đi của datapath (rate gate -> window -> feature
+    // -> MLP). Giá trị 140000 vẫn là mặc định của RTL cho phần cứng.
+    localparam TB_SAMPLE_RATE_DIV = 20;
+
+    top_ecg_classifier #(
+        .SYS_SAMPLE_RATE_DIV(TB_SAMPLE_RATE_DIV)
+    ) dut (
         .sys_clk(sys_clk),
         .sys_rst_n(sys_rst_n),
         .paddr(paddr),
@@ -121,16 +130,30 @@ module tb_top_ecg_classifier;
         integer sample_val;
         begin
             for (i = 0; i < num_samples; i = i + 1) begin
+                // (fix tb v3.0) Chu kỳ đúng = SYS_SAMPLE_RATE_DIV clock
+                // (khớp rate gate của ADC). Trước đây chu kỳ 2 clock ->
+                // phần lớn mẫu bị bỏ qua vì rate gate chỉ tick 1 lần
+                // mỗi div clock -> cửa sổ không bao giờ đầy 512 mẫu.
                 @(posedge sys_clk);
                 // Generate ECG-like waveform (sine wave with DC offset)
                 sample_val = 128 + $rtoi($sin(i * 2 * 3.14159 / 64) * 40);
                 adc_data = 8'(sample_val);
                 adc_valid = 1;
-                @(posedge sys_clk);
+                repeat (3) @(posedge sys_clk);   // giữ valid 3 clock (latch chắc)
                 adc_valid = 0;
+                repeat (TB_SAMPLE_RATE_DIV - 4) @(posedge sys_clk); // đủ 1 chu kỳ tick
             end
         end
     endtask
+
+    // (fix tb) Latch bắt pulse 1-chu kỳ p_irq (p_irq = done & irq_en)
+    reg irq_seen;
+    initial begin
+        irq_seen = 1'b0;
+    end
+    always @(posedge sys_clk) begin
+        if (irq) irq_seen <= 1'b1;
+    end
 
     // =============================================================================
     // Test Sequence
@@ -142,7 +165,7 @@ module tb_top_ecg_classifier;
 
     initial begin
         $display("========================================");
-        $display("Top-Level PPG Classifier Testbench");
+        $display("Top-Level ECG Classifier Testbench");
         $display("========================================");
 
         test_count = 0;
@@ -183,8 +206,9 @@ module tb_top_ecg_classifier;
         $display("\n[Test 2] APB Configuration");
         test_count = test_count + 1;
 
-        apb_write(32'h08, 32'h00000050);  // Threshold
-        apb_write(32'h0C, 32'h00000358);  // Baud
+        apb_write(32'h08, 32'h00000050);  // ECG_THRESH
+        // (fix tb) Baud legacy 0x358=868 (100 MHz) -> v3.0: 0x1B5=437
+        apb_write(32'h0C, 32'h000001B5);  // Baud (437 = 115200 @ 50.4 MHz)
         apb_write(32'h18, 32'h00000003);  // Config (UART enable)
 
         #100;
@@ -203,25 +227,29 @@ module tb_top_ecg_classifier;
         apb_write(32'h00, 32'h00000001);  // Enable
 
         #50;
-        apb_write(32'h00, 32'h00000003);  // Enable + Start
+        // (fix tb) CTRL = 0x07: bit0 enable, bit1 start, bit2 irq_en
+        // (irq_en phải bật thì apb_slave_if mới tạo p_irq -> irq ở top).
+        apb_write(32'h00, 32'h00000007);  // Enable + Start + irq_enable
 
         $display("  System enabled and started");
         $display("  PASS: Start command issued");
         pass_count = pass_count + 1;
 
         // ================================================================
-        // Test 4: Feed PPG Samples
+        // Test 4: Feed ECG Samples
         // ================================================================
-        $display("\n[Test 4] Feed PPG Samples");
+        $display("\n[Test 4] Feed ECG Samples");
         test_count = test_count + 1;
 
-        // Feed 512 samples
+        // (fix tb v3.0) Feed 768 mẫu (mẫu 1 chu kỳ tick) -> đủ cửa sổ 512
+        // (window_ready đầu) + 1 cửa sổ overlap. Trước đây 512 mẫu feed
+        // liên tục 2 chu kỳ/mẫu -> rate gate (div) chỉ tick mỗi 20 clock ->
+        // cửa sổ không bao giờ đầy 512 mẫu.
         fork
-            generate_ecg_samples(512);
+            generate_ecg_samples(768);
         join
 
-        #1000;
-        $display("  512 samples fed");
+        $display("  768 samples fed");
         $display("  PASS: Sample feeding completed");
         pass_count = pass_count + 1;
 
@@ -231,15 +259,18 @@ module tb_top_ecg_classifier;
         $display("\n[Test 5] Wait for Classification");
         test_count = test_count + 1;
 
-        // Wait for interrupt or done
+        // (fix tb) p_irq là pulse 1 chu kỳ -> dùng latch irq_seen (bắt pulse
+        // trong always-block), không wait(irq==1) (có thể bỏ lỡ).
+        // Timeout ~10s mô phỏng = ~500k clock @div=20: đủ cho feature
+        // (512 chu kỳ) + MLP (~161 chu kỳ).
         fork
             begin
-                wait(irq == 1);
+                wait(irq_seen == 1'b1);
                 $display("  Interrupt received!");
             end
             begin
-                #50_000_000;  // 50ms timeout
-                $display("  Timeout!");
+                #10_000_000;
+                $display("  TIMEOUT: no interrupt");
             end
         join_any
 
@@ -247,7 +278,7 @@ module tb_top_ecg_classifier;
 
         #100;
         apb_read(32'h10, read_data);
-        $display("  Result: class_code = %b", read_data[1:0]);
+        $display("  Result: class_code = %b (irq_seen = %b)", read_data[1:0], irq_seen);
 
         case (read_data[1:0])
             2'b00: $display("  -> Normal (Healthy)");
@@ -256,11 +287,14 @@ module tb_top_ecg_classifier;
             2'b11: $display("  -> Abnormal (Arrhythmia)");
         endcase
 
-        if (read_data[1:0] !== 2'b00 || irq) begin
-            $display("  PASS: Classification completed");
+        // (fix tb) Điều kiện PASS đúng: pipeline phải chạy xong (irq_seen=1)
+        // và class_code phải là giá trị hợp lệ (0..3), không phải x.
+        if (irq_seen && read_data[1:0] !== 2'bxx) begin
+            $display("  PASS: Classification completed (class_code = %b)", read_data[1:0]);
             pass_count = pass_count + 1;
         end else begin
-            $display("  INFO: No classification (check feature extraction)");
+            $display("  FAIL: No classification (irq_seen=%b, class_code=%b)",
+                     irq_seen, read_data[1:0]);
         end
 
         // ================================================================
