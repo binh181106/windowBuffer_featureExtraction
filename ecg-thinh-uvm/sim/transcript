@@ -1,0 +1,7 @@
+# vsim -c tb_demo_rom -do "run 100us; examine -radix hex dut.feat_vec_debug; run -all; quit -f" "+SKIP_RUN2" 
+# Start time: 20:23:14 on Nov 05,2026
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Error: (vopt-2253) No module name found in command-line argument "C:\Users\Admin\AppData\Local\Temp\ecg_feat_vec_baseline_5978f2cefd344d8293683442e52a7303\work.tb_demo_rom"
+# Error loading design
+# End time: 20:23:15 on Nov 05,2026, Elapsed time: 0:00:01
+# Errors: 1, Warnings: 0

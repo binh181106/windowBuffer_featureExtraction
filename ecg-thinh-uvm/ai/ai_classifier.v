@@ -26,7 +26,7 @@ module ai_classifier #(
     input  wire              enable,           // Module enable
 
     // Feature Input (12 features x 16-bit)
-    input  wire signed [FEATURE_WIDTH-1:0] features [0:11],
+    input  signed [FEATURE_WIDTH] features [0:11],
 
     // Output
     output reg  [1:0]        class_code,      // Classification result
@@ -88,7 +88,13 @@ module ai_classifier #(
     // Scaler parameters (mean and inv_scale)
     reg signed [15:0] mean_vals [0:11];
     reg signed [15:0] inv_scale [0:11];
+    
+    
+    reg signed [47:0] mac_prod;
+    reg signed [47:0] mac_next;
 
+    reg signed [47:0] mac_prod;
+    reg signed [47:0] mac_next;
     // =============================================================================
     // ROM Initialization (Default values - should be loaded from file)
     // =============================================================================
@@ -259,8 +265,6 @@ module ai_classifier #(
                         // cnt-1 = 0..95, corresponds to weight index
                         // neuron = (cnt-1) / 12, feature = (cnt-1) % 12
                         begin
-                            reg signed [47:0] mac_prod;
-                            reg signed [47:0] mac_next;
                             mac_prod = $signed(features_norm[(cnt-1)%12]) *
                                        $signed(fc1_weights[cnt-1]);
                             mac_next = fc1_out_raw[(cnt-1)/12] + (mac_prod >>> 12);
@@ -332,8 +336,6 @@ module ai_classifier #(
                     end else if (cnt <= 8'd32) begin
                         // MAC (fix v3.0: saturate + overflow latch)
                         begin
-                            reg signed [47:0] mac_prod;
-                            reg signed [47:0] mac_next;
                             mac_prod = $signed(hidden_out[(cnt-1)%8]) *
                                        $signed(fc2_weights[cnt-1]);
                             mac_next = fc2_out_raw[(cnt-1)/8] + (mac_prod >>> 12);
