@@ -1,0 +1,84 @@
+$date
+	Thu Nov 05 13:50:07 2026
+$end
+$version
+	QuestaSim Version 10.7c
+$end
+$timescale
+	1ps
+$end
+
+$scope module tb_feature_simple $end
+
+$scope module dut $end
+$var wire 1 ! sample_in [7] $end
+$var wire 1 " sample_in [6] $end
+$var wire 1 # sample_in [5] $end
+$var wire 1 $ sample_in [4] $end
+$var wire 1 % sample_in [3] $end
+$var wire 1 & sample_in [2] $end
+$var wire 1 ' sample_in [1] $end
+$var wire 1 ( sample_in [0] $end
+$var reg 4 ) state [3:0] $end
+$var reg 32 * sum [31:0] $end
+$var reg 8 + peak_reg [7:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+b0 )
+b0 *
+b10000000 +
+0(
+0'
+0&
+0%
+0$
+0#
+0"
+0!
+$end
+#208320
+b1 )
+#228160
+b0 +
+#248000
+1(
+#267840
+0(
+1'
+b1 *
+b1 +
+#287680
+1(
+b11 *
+b10 +
+#307520
+0(
+0'
+1&
+b110 *
+b11 +
+#327360
+1(
+b1010 *
+b100 +
+#347200
+0(
+1'
+b1111 *
+b101 +
+#367040
+1(
+b10101 *
+b110 +
+b10 )
+#386880
+b11 )
+#406720
+b100 )
+#426560
+b110 )
+#446400
+b0 )

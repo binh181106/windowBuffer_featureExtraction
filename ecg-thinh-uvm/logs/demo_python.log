@@ -1,0 +1,9 @@
+PASS hand_computed_212 (neg + edges 0/2047/-1/-2048, both channels)
+PASS incomplete_group_rejected (ValueError, no silent truncate)
+PASS invalid_channel_raises
+PASS single_channel (n_channels=1)
+PASS MLII: n=650000 first=995==baseval 995, sum16=-22131==scale -22131 (0xA98D)
+PASS V5: n=650000 first=1011==baseval 1011, sum16=20052==scale 20052 (0x4E54)
+ALL 212 converter tests PASS
+PASS uart_decode self-test: 7 golden packets decoded, corrupt-checksum rejected, resync ok
+PASS uart_decode check cases: clean=PASS missing=FAIL reorder=FAIL badsum=FAIL strict-byte=FAIL masked-byte=reported

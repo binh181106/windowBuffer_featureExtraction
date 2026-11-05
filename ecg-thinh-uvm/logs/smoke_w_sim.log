@@ -1,0 +1,42 @@
+Reading H:/questasim64_10.7c/tcl/vsim/pref.tcl
+
+# 10.7c
+
+# vsim -c tb_window_simple -do "run -all; quit -f" 
+# Start time: 13:50:08 on Nov 05,2026
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_window_simple.sv(25): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 13, found 12.
+# ** Warning: H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_window_simple.sv(25): (vopt-2718) [TFMPC] - Missing connection for port 'sample_cnt'.
+# //  Questa Sim-64
+# //  Version 10.7c win64 Aug 18 2018
+# //
+# //  Copyright 1991-2018 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading sv_std.std
+# Loading work.tb_window_simple(fast)
+# run -all
+# Test: Write 10 samples
+# t=              169000 enable=1 valid=1 counter=  0
+# t=              208000 enable=1 valid=1 counter=  1
+# t=              248000 enable=1 valid=1 counter=  2
+# t=              288000 enable=1 valid=1 counter=  3
+# t=              327000 enable=1 valid=1 counter=  4
+# t=              367000 enable=1 valid=1 counter=  5
+# t=              407000 enable=1 valid=1 counter=  6
+# t=              446000 enable=1 valid=1 counter=  7
+# t=              486000 enable=1 valid=1 counter=  8
+# t=              526000 enable=1 valid=1 counter=  9
+# After 10 samples: counter=  9 samples=         9
+# ** Note: $finish    : H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_window_simple.sv(84)
+#    Time: 645600 ps  Iteration: 0  Instance: /tb_window_simple
+# End time: 13:50:09 on Nov 05,2026, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 2

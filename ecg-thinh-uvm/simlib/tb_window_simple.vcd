@@ -1,0 +1,81 @@
+$date
+	Thu Nov 05 13:50:09 2026
+$end
+$version
+	QuestaSim Version 10.7c
+$end
+$timescale
+	1ps
+$end
+
+$scope module tb_window_simple $end
+
+$scope module dut $end
+$var wire 1 ! enable $end
+$var wire 1 " sample_valid $end
+$var reg 1 # window_ready $end
+$var reg 9 $ write_ptr [8:0] $end
+$var wire 1 ! enable $end
+$var wire 1 " sample_valid $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+0#
+b0 $
+0!
+0"
+$end
+#150000
+1!
+#168640
+1"
+#188480
+0"
+b1 $
+#208320
+1"
+#228160
+0"
+b10 $
+#248000
+1"
+#267840
+0"
+b11 $
+#287680
+1"
+#307520
+0"
+b100 $
+#327360
+1"
+#347200
+0"
+b101 $
+#367040
+1"
+#386880
+0"
+b110 $
+#406720
+1"
+#426560
+0"
+b111 $
+#446400
+1"
+#466240
+0"
+b1000 $
+#486080
+1"
+#505920
+0"
+b1001 $
+#525760
+1"
+#545600
+0"
+b1010 $

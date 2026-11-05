@@ -1,0 +1,11 @@
+Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+Start time: 17:54:34 on Oct 25,2026
+vlog -sv -mfcu -work base_feature ../feature/feature_extraction.v tb_feature_extraction.sv 
+** Note: (vlog-220) 'H:/altera/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
+-- Compiling module feature_extraction
+-- Compiling module tb_feature_extraction
+
+Top level modules:
+	tb_feature_extraction
+End time: 17:54:34 on Oct 25,2026, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0

@@ -1,0 +1,9 @@
+apb/apb_slave_if.v
+adc/adc_interface.v
+window/window_buffer.v
+feature/feature_extraction.v
+ai/ai_classifier.v
+ai/mlp_weights_rom.v
+control/control_fsm.v
+uart/uart_tx.v
+top/top_ecg_classifier.v

@@ -1,0 +1,18 @@
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+Start time: 13:49:47 on Nov 05,2026
+vlog -sv -work work_reg H:/IC Design/Code/ECG/ecg-thinh-uvm/apb/apb_slave_if.v H:/IC Design/Code/ECG/ecg-thinh-uvm/adc/adc_interface.v H:/IC Design/Code/ECG/ecg-thinh-uvm/window/window_buffer.v H:/IC Design/Code/ECG/ecg-thinh-uvm/feature/feature_extraction.v H:/IC Design/Code/ECG/ecg-thinh-uvm/ai/ai_classifier.v H:/IC Design/Code/ECG/ecg-thinh-uvm/ai/mlp_weights_rom.v H:/IC Design/Code/ECG/ecg-thinh-uvm/control/control_fsm.v H:/IC Design/Code/ECG/ecg-thinh-uvm/uart/uart_tx.v H:/IC Design/Code/ECG/ecg-thinh-uvm/top/top_ecg_classifier.v 
+-- Compiling module apb_slave_if
+-- Compiling module adc_interface
+-- Compiling module window_buffer
+-- Compiling module feature_extraction
+-- Compiling module ai_classifier
+-- Compiling module mlp_weights_rom
+-- Compiling module control_fsm
+-- Compiling module uart_tx
+-- Compiling module top_ecg_classifier
+
+Top level modules:
+	mlp_weights_rom
+	top_ecg_classifier
+End time: 13:49:47 on Nov 05,2026, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0

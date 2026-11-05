@@ -1,0 +1,61 @@
+Reading pref.tcl
+
+# 2025.2
+
+# ** Note: (vsim-220) 'H:/altera/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
+# vsim -c -work base_apb_slave_if tb_apb_slave_if -do "run -all; quit -f" 
+# Start time: 17:56:59 on Oct 25,2026
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Note: (vopt-220) 'H:/altera/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
+# ** Warning: tb_apb_slave_if.sv(49): (vopt-2241) Connection width does not match width of port 'paddr'. The port definition is at: ../apb/apb_slave_if.v(12).
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# //  Questa Altera Starter FPGA Edition-64
+# //  Version 2025.2 win64 May 31 2025
+# //
+# // Unpublished work. Copyright 2025 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# Loading sv_std.std
+# Loading work.tb_apb_slave_if(fast)
+# run -all
+# ========================================
+# APB Slave Interface Testbench
+# ========================================
+# 
+# [Test 1] Write to CTRL register (enable)
+#   PASS: sys_enable = 1
+# 
+# [Test 2] Write to ECG_THRESH register
+#   PASS: ecg_threshold = 0x0050
+# 
+# [Test 3] Write to BAUD register
+#   PASS: baud_div =   437
+# 
+# [Test 4] Read STATUS register
+#   PASS: STATUS[0] (busy) = 1
+# 
+# [Test 5] Read VERSION register
+#   FAIL: VERSION expected 0x0100, got 0x0200
+# 
+# [Test 6] Write to CONFIG register
+#   PASS: ble_enable = 1, uart_enable = 1
+# 
+# [Test 7] Start pulse (write 1 to bit 1)
+#   Writing 0x03 to CTRL (enable=1, start=1)
+#   FAIL: sys_start not detected
+# 
+# ========================================
+# Test Summary:           5/          7 PASSED
+# ========================================
+# ** Note: $finish    : tb_apb_slave_if.sv(247)
+#    Time: 1062240 ps  Iteration: 0  Instance: /tb_apb_slave_if
+# End time: 17:57:00 on Oct 25,2026, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 1

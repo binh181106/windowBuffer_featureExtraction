@@ -1,0 +1,65 @@
+GowinSynthesis start
+Running parser ...
+Analyzing Verilog file 'H:\IC Design\Code\ECG\ecg-thinh-uvm\demo\ecg_rom.v'
+Analyzing Verilog file 'H:\IC Design\Code\ECG\ecg-thinh-uvm\demo\sample_pacer.v'
+Analyzing Verilog file 'H:\IC Design\Code\ECG\ecg-thinh-uvm\demo\demo_apb_seq.v'
+Analyzing Verilog file 'H:\IC Design\Code\ECG\ecg-thinh-uvm\demo\demo_uart_packetizer.v'
+Analyzing Verilog file 'H:\IC Design\Code\ECG\ecg-thinh-uvm\demo\top_ecg_rom_demo.v'
+Analyzing Verilog file 'H:\IC Design\Code\ECG\ecg-thinh-uvm\adc\adc_interface.v'
+Analyzing Verilog file 'H:\IC Design\Code\ECG\ecg-thinh-uvm\window\window_buffer.v'
+Analyzing Verilog file 'H:\IC Design\Code\ECG\ecg-thinh-uvm\feature\feature_extraction.v'
+Analyzing Verilog file 'H:\IC Design\Code\ECG\ecg-thinh-uvm\ai\ai_classifier.v'
+Analyzing Verilog file 'H:\IC Design\Code\ECG\ecg-thinh-uvm\ai\mlp_weights_rom.v'
+Analyzing Verilog file 'H:\IC Design\Code\ECG\ecg-thinh-uvm\control\control_fsm.v'
+Analyzing Verilog file 'H:\IC Design\Code\ECG\ecg-thinh-uvm\apb\apb_slave_if.v'
+Analyzing Verilog file 'H:\IC Design\Code\ECG\ecg-thinh-uvm\uart\uart_tx.v'
+Compiling module 'top_ecg_rom_demo'("H:\IC Design\Code\ECG\ecg-thinh-uvm\demo\top_ecg_rom_demo.v":29)
+Compiling module 'ecg_rom(ROM_HEX="demo\ecg_rom.hex")'("H:\IC Design\Code\ECG\ecg-thinh-uvm\demo\ecg_rom.v":17)
+Extracting RAM for identifier 'rom'("H:\IC Design\Code\ECG\ecg-thinh-uvm\demo\ecg_rom.v":31)
+WARN  (EX3858) : System task 'display' is ignored for synthesis("H:\IC Design\Code\ECG\ecg-thinh-uvm\demo\ecg_rom.v":40)
+Compiling module 'sample_pacer'("H:\IC Design\Code\ECG\ecg-thinh-uvm\demo\sample_pacer.v":35)
+Compiling module 'adc_interface(DIV_WIDTH=2)'("H:\IC Design\Code\ECG\ecg-thinh-uvm\adc\adc_interface.v":11)
+Compiling module 'window_buffer'("H:\IC Design\Code\ECG\ecg-thinh-uvm\window\window_buffer.v":20)
+Extracting RAM for identifier 'ram'("H:\IC Design\Code\ECG\ecg-thinh-uvm\window\window_buffer.v":60)
+WARN  (EX3791) : Expression size 32 truncated to fit in target size 8("H:\IC Design\Code\ECG\ecg-thinh-uvm\window\window_buffer.v":55)
+Compiling module 'feature_extraction'("H:\IC Design\Code\ECG\ecg-thinh-uvm\feature\feature_extraction.v":22)
+WARN  (EX3791) : Expression size 10 truncated to fit in target size 9("H:\IC Design\Code\ECG\ecg-thinh-uvm\feature\feature_extraction.v":254)
+Compiling module 'control_fsm'("H:\IC Design\Code\ECG\ecg-thinh-uvm\control\control_fsm.v":20)
+WARN  (EX3858) : System task 'display' is ignored for synthesis("H:\IC Design\Code\ECG\ecg-thinh-uvm\control\control_fsm.v":242)
+Compiling module 'ai_classifier'("H:\IC Design\Code\ECG\ecg-thinh-uvm\ai\ai_classifier.v":14)
+WARN  (EX1998) : Net 'fc1_weights[2][15]' does not have a driver("H:\IC Design\Code\ECG\ecg-thinh-uvm\ai\ai_classifier.v":77)
+WARN  (EX1998) : Net 'fc1_biases[2][15]' does not have a driver("H:\IC Design\Code\ECG\ecg-thinh-uvm\ai\ai_classifier.v":80)
+WARN  (EX1998) : Net 'fc2_weights[1][15]' does not have a driver("H:\IC Design\Code\ECG\ecg-thinh-uvm\ai\ai_classifier.v":83)
+WARN  (EX1998) : Net 'fc2_biases[1][15]' does not have a driver("H:\IC Design\Code\ECG\ecg-thinh-uvm\ai\ai_classifier.v":86)
+WARN  (EX1998) : Net 'rom_addr[7]' does not have a driver("H:\IC Design\Code\ECG\ecg-thinh-uvm\ai\ai_classifier.v":119)
+WARN  (EX1998) : Net 'rom_wdata[15]' does not have a driver("H:\IC Design\Code\ECG\ecg-thinh-uvm\ai\ai_classifier.v":120)
+WARN  (EX1998) : Net 'rom_we' does not have a driver("H:\IC Design\Code\ECG\ecg-thinh-uvm\ai\ai_classifier.v":121)
+Compiling module 'apb_slave_if'("H:\IC Design\Code\ECG\ecg-thinh-uvm\apb\apb_slave_if.v":6)
+WARN  (EX3670) : Actual bit length 32 differs from formal bit length 8 for port 'paddr'("H:\IC Design\Code\ECG\ecg-thinh-uvm\demo\top_ecg_rom_demo.v":250)
+Compiling module 'demo_apb_seq'("H:\IC Design\Code\ECG\ecg-thinh-uvm\demo\demo_apb_seq.v":32)
+WARN  (EX3670) : Actual bit length 32 differs from formal bit length 8 for port 'paddr'("H:\IC Design\Code\ECG\ecg-thinh-uvm\demo\top_ecg_rom_demo.v":276)
+Compiling module 'demo_uart_packetizer'("H:\IC Design\Code\ECG\ecg-thinh-uvm\demo\demo_uart_packetizer.v":28)
+Compiling module 'uart_tx'("H:\IC Design\Code\ECG\ecg-thinh-uvm\uart\uart_tx.v":11)
+WARN  (EX1998) : Net 'sys_busy' does not have a driver("H:\IC Design\Code\ECG\ecg-thinh-uvm\demo\top_ecg_rom_demo.v":105)
+WARN  (EX2565) : Input 'sys_overflow' on this instance is undriven. Assigning to 0, simulation mismatch possible. Please assign the input or remove the declaration("H:\IC Design\Code\ECG\ecg-thinh-uvm\demo\top_ecg_rom_demo.v":270)
+NOTE  (EX0101) : Current top module is "top_ecg_rom_demo"
+[5%] Running netlist conversion ...
+WARN  (CV0016) : Input uart_rxd is unused("H:\IC Design\Code\ECG\ecg-thinh-uvm\demo\top_ecg_rom_demo.v":49)
+Running device independent optimization ...
+[10%] Optimizing Phase 0 completed
+[15%] Optimizing Phase 1 completed
+[25%] Optimizing Phase 2 completed
+Running inference ...
+[30%] Inferring Phase 0 completed
+[40%] Inferring Phase 1 completed
+[50%] Inferring Phase 2 completed
+[55%] Inferring Phase 3 completed
+Running technical mapping ...
+[60%] Tech-Mapping Phase 0 completed
+[65%] Tech-Mapping Phase 1 completed
+[75%] Tech-Mapping Phase 2 completed
+[80%] Tech-Mapping Phase 3 completed
+[90%] Tech-Mapping Phase 4 completed
+[95%] Generate netlist file "H:\IC Design\Code\ECG\ecg-thinh-uvm\synthesis\demo_out\top_ecg_rom_demo" completed
+[100%] Generate report file "H:\IC Design\Code\ECG\ecg-thinh-uvm\synthesis\demo_out\top_ecg_rom_demo_syn.rpt.html" completed
+GowinSynthesis finish

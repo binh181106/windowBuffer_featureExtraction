@@ -1,0 +1,85 @@
+Reading H:/questasim64_10.7c/tcl/vsim/pref.tcl
+
+# 10.7c
+
+# vsim -c tb_wv -do "do "/h/IC Design/Code/ECG/ecg-thinh-uvm/simlib/zprobe.do"" 
+# Start time: 23:06:19 on Oct 30,2026
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# //  Questa Sim-64
+# //  Version 10.7c win64 Aug 18 2018
+# //
+# //  Copyright 1991-2018 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading sv_std.std
+# Loading work.tb_wv(fast)
+# do "/h/IC Design/Code/ECG/ecg-thinh-uvm/simlib/zprobe.do"
+# Cannot open macro file: /h/IC Design/Code/ECG/ecg-thinh-uvm/simlib/zprobe.do
+VSIM 2> # Attempting stack trace sig 11
+# Signal caught: signo [11]
+# vsim_stacktrace.vstf written
+# Current time Fri Oct 30 23:06:59 2026
+# Program = vsim
+# Id = "10.7c"
+# Version = "2018.08"
+# Date = "Aug 18 2018"
+# Platform = win64
+# Signature = eb049a7fc3dfaed99456aed2279d411d
+# End of Stack Trace
+
+
+** Fatal: (SIGSEGV) Bad pointer access. Closing vsimk.
+** Fatal: vsimk is exiting with code 211.
+Exit codes are defined in the "Error and Warning Messages"
+appendix of the QuestaSim User's Manual.
+# Attempting stack trace sig 11
+# Signal caught: signo [11]
+# vsim_stacktrace.vstf written
+# Current time Fri Oct 30 23:06:59 2026
+# Program = vsim
+# Id = "10.7c"
+# Version = "2018.08"
+# Date = "Aug 18 2018"
+# Platform = win64
+# Signature = eb049a7fc3dfaed99456aed2279d411d
+# End of Stack Trace
+
+
+** Fatal: (SIGSEGV) Bad pointer access. Closing vsimk.
+# Attempting stack trace sig 11
+# Signal caught: signo [11]
+# vsim_stacktrace.vstf written
+# Current time Fri Oct 30 23:06:59 2026
+# Program = vsim
+# Id = "10.7c"
+# Version = "2018.08"
+# Date = "Aug 18 2018"
+# Platform = win64
+# Signature = eb049a7fc3dfaed99456aed2279d411d
+# End of Stack Trace
+
+
+** Fatal: (SIGSEGV) Bad pointer access. Closing vsimk.
+# Attempting stack trace sig 11
+# Signal caught: signo [11]
+# vsim_stacktrace.vstf written
+# Current time Fri Oct 30 23:06:59 2026
+# Program = vsim
+# Id = "10.7c"
+# Version = "2018.08"
+# Date = "Aug 18 2018"
+# Platform = win64
+# Signature = eb049a7fc3dfaed99456aed2279d411d
+# End of Stack Trace
+
+
+U/I: Unexpected EOF on RPC channel sock000000000D224F80
+U/I: Unexpected EOF on RPC channel sock000000000D224D00

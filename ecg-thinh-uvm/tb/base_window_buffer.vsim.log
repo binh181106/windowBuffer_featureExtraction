@@ -1,0 +1,65 @@
+Reading pref.tcl
+
+# 2025.2
+
+# ** Note: (vsim-220) 'H:/altera/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
+# vsim -c -work base_window_buffer tb_window_buffer -do "run -all; quit -f" 
+# Start time: 17:57:04 on Oct 25,2026
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Note: (vopt-220) 'H:/altera/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
+# ** Warning: tb_window_buffer.sv(47): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 13, found 12.
+# ** Warning: tb_window_buffer.sv(47): (vopt-2718) [TFMPC] - Missing connection for port 'sample_cnt'.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=2.
+# //  Questa Altera Starter FPGA Edition-64
+# //  Version 2025.2 win64 May 31 2025
+# //
+# // Unpublished work. Copyright 2025 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# Loading sv_std.std
+# Loading work.tb_window_buffer(fast)
+# run -all
+# ========================================
+# Window Buffer Testbench
+# ========================================
+# 
+# [Test 1] Basic Buffering (512 samples)
+#   FAIL: window_ready never asserted
+# 
+# [Test 2] Read Back Data
+#   [          0] frame_out = 0x00
+#   [          1] frame_out = 0x00
+#   [          2] frame_out = 0x00
+#   [          3] frame_out = 0x00
+#   [          4] frame_out = 0x00
+#   [          5] frame_out = 0x00
+#   [          6] frame_out = 0x00
+#   [          7] frame_out = 0x00
+#   [          8] frame_out = 0x00
+#   [          9] frame_out = 0x00
+#   PASS: Read operation works
+# 
+# [Test 3] Reset Behavior
+#   PASS: Buffer reset properly
+# 
+# [Test 4] 50% Overlap (768 samples)
+#   FAIL: window_ready not asserted
+# 
+# [Test 5] Disable Buffering
+#   FAIL: samples_collected =        768
+# 
+# ========================================
+# Test Summary:           2/          5 PASSED
+# ========================================
+# ** Note: $finish    : tb_window_buffer.sv(217)
+#    Time: 55742080 ps  Iteration: 0  Instance: /tb_window_buffer
+# End time: 17:57:05 on Oct 25,2026, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 2

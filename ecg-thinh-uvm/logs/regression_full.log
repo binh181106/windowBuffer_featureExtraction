@@ -1,0 +1,61 @@
+Questa : H:/questasim64_10.7c
+vlog   : QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+vsim   : Questa Sim-64 vsim 10.7c Simulator 2018.08 Aug 18 2018
+
+== vlog: RTL (9 modules) -> work_reg
+Errors: 0, Warnings: 0
+
+== Unit testbenches ==
+  [PASS (5/5)              ] adc
+  [PASS (5/5)              ] window
+  [PASS (8/8)              ] feature
+  [PASS (6/6)              ] ai
+  [PASS (5/5)              ] ai_math
+  [PASS (7/7)              ] apb
+  [PASS (2/2)              ] uart
+  [PASS(markers)           ] control
+  [PASS (4/4)              ] control_tmo
+  [PASS (3/3)              ] rr_probe
+  [PASS(smoke)             ] smoke_f
+  [PASS(smoke)             ] smoke_w
+
+== Top-level E2E ==
+  [PASS (8/8)              ] top
+
+== UVM APB env ==
+  [PASS(smoke env)         ] uvm
+
+== Demo ROM (ROM -> pipeline -> UART, vs golden) ==
+  [PASS                    ] demo_python
+  [PASS                    ] demo_capture
+  [PASS(2/2)               ] demo_rom
+  [PASS(8/8)               ] demo_status
+  [PASS(5/5)               ] pacer_repre
+
+==================================================================
+  result                   | test | log
+------------------------------------------------------------------
+| adc | PASS (5/5) | /h/IC Design/Code/ECG/ecg-thinh-uvm/logs/adc.log |
+| window | PASS (5/5) | /h/IC Design/Code/ECG/ecg-thinh-uvm/logs/window.log |
+| feature | PASS (8/8) | /h/IC Design/Code/ECG/ecg-thinh-uvm/logs/feature.log |
+| ai | PASS (6/6) | /h/IC Design/Code/ECG/ecg-thinh-uvm/logs/ai.log |
+| ai_math | PASS (5/5) | /h/IC Design/Code/ECG/ecg-thinh-uvm/logs/ai_math.log |
+| apb | PASS (7/7) | /h/IC Design/Code/ECG/ecg-thinh-uvm/logs/apb.log |
+| uart | PASS (2/2) | /h/IC Design/Code/ECG/ecg-thinh-uvm/logs/uart.log |
+| control | PASS(markers) | /h/IC Design/Code/ECG/ecg-thinh-uvm/logs/control.log |
+| control_tmo | PASS (4/4) | /h/IC Design/Code/ECG/ecg-thinh-uvm/logs/control_tmo.log |
+| rr_probe | PASS (3/3) | /h/IC Design/Code/ECG/ecg-thinh-uvm/logs/rr_probe.log |
+| smoke_f | PASS(smoke) | /h/IC Design/Code/ECG/ecg-thinh-uvm/logs/smoke_f.log |
+| smoke_w | PASS(smoke) | /h/IC Design/Code/ECG/ecg-thinh-uvm/logs/smoke_w.log |
+| top | PASS (8/8) | /h/IC Design/Code/ECG/ecg-thinh-uvm/logs/top.log |
+| uvm | PASS(smoke env) | /h/IC Design/Code/ECG/ecg-thinh-uvm/logs/uvm.log |
+| demo_python | PASS | /h/IC Design/Code/ECG/ecg-thinh-uvm/logs/demo_python.log |
+| demo_capture | PASS | /h/IC Design/Code/ECG/ecg-thinh-uvm/logs/demo_rom.log |
+| demo_rom | PASS(2/2) | /h/IC Design/Code/ECG/ecg-thinh-uvm/logs/demo_rom.log |
+| demo_status | PASS(8/8) | /h/IC Design/Code/ECG/ecg-thinh-uvm/logs/demo_status.log |
+| pacer_repre | PASS(5/5) | /h/IC Design/Code/ECG/ecg-thinh-uvm/logs/pacer_repre.log |
+==================================================================
+Passed: 19 / 19
+
+Exit code: 0 (0 = all pass, 1 = at least one non-pass)
+Logs:      /h/IC Design/Code/ECG/ecg-thinh-uvm/logs

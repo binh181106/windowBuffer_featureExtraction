@@ -1,0 +1,11 @@
+Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+Start time: 17:54:25 on Oct 25,2026
+vlog -sv -mfcu -work base_apb ../apb/apb_slave_if.v tb_apb_slave_if.sv 
+** Note: (vlog-220) 'H:/altera/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
+-- Compiling module apb_slave_if
+-- Compiling module tb_apb_slave_if
+
+Top level modules:
+	tb_apb_slave_if
+End time: 17:54:25 on Oct 25,2026, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0

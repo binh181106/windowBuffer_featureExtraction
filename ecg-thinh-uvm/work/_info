@@ -1,0 +1,298 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dH:/IC Design/Code/ECG/ecg-thinh-uvm
+vadc_interface
+Z1 DXx6 sv_std 3 std 0 22 d=_JfHTnXCN[H5FjiaJJc0
+Z2 !s110 1793413949
+!i10b 1
+!s100 Oim?6BWH[<N:dd]XBIYW<2
+IF@mJO?9DKOJe<2^jTOal22
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+!s105 adc_interface_v_unit
+S1
+R0
+w1792929950
+8adc/adc_interface.v
+Fadc/adc_interface.v
+Z4 L0 11
+Z5 OL;L;10.7c;67
+r1
+!s85 0
+31
+Z6 !s108 1793413949.000000
+!s107 uart/uart_tx.v|apb/apb_slave_if.v|control/control_fsm.v|ai/ai_classifier.v|feature/feature_extraction.v|window/window_buffer.v|adc/adc_interface.v|demo/top_ecg_rom_demo.v|demo/demo_uart_packetizer.v|demo/demo_apb_seq.v|demo/sample_pacer.v|demo/ecg_rom.v|
+Z7 !s90 -sv|demo/ecg_rom.v|demo/sample_pacer.v|demo/demo_apb_seq.v|demo/demo_uart_packetizer.v|demo/top_ecg_rom_demo.v|adc/adc_interface.v|window/window_buffer.v|feature/feature_extraction.v|ai/ai_classifier.v|control/control_fsm.v|apb/apb_slave_if.v|uart/uart_tx.v|
+!i113 0
+Z8 o-sv -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z9 tCvgOpt 0
+vai_classifier
+R1
+R2
+!i10b 1
+!s100 SGJfAeN@be=oXA:9JnOoW1
+Icl@:eM@Nc1b[X0EAjNnSe2
+R3
+!s105 ai_classifier_v_unit
+S1
+R0
+w1793373256
+8ai/ai_classifier.v
+Fai/ai_classifier.v
+L0 14
+R5
+r1
+!s85 0
+31
+R6
+Z10 !s107 uart/uart_tx.v|apb/apb_slave_if.v|control/control_fsm.v|ai/ai_classifier.v|feature/feature_extraction.v|window/window_buffer.v|adc/adc_interface.v|demo/top_ecg_rom_demo.v|demo/demo_uart_packetizer.v|demo/demo_apb_seq.v|demo/sample_pacer.v|demo/ecg_rom.v|
+R7
+!i113 0
+R8
+R9
+vapb_slave_if
+R1
+R2
+!i10b 1
+!s100 V1V`IX3miLL:4RgF;@hYo3
+IV7ebWQ=LY_RC=;KZc]TO=0
+R3
+!s105 apb_slave_if_v_unit
+S1
+R0
+w1792930057
+8apb/apb_slave_if.v
+Fapb/apb_slave_if.v
+L0 6
+R5
+r1
+!s85 0
+31
+R6
+R10
+R7
+!i113 0
+R8
+R9
+vcontrol_fsm
+R1
+R2
+!i10b 1
+!s100 kZMPP`I@0Sl@WK54eJAhR1
+IUg]1OBCHUL^hjgaoS5B9a0
+R3
+!s105 control_fsm_v_unit
+S1
+R0
+w1793005710
+8control/control_fsm.v
+Fcontrol/control_fsm.v
+Z11 L0 20
+R5
+r1
+!s85 0
+31
+R6
+R10
+R7
+!i113 0
+R8
+R9
+vdemo_apb_seq
+R1
+R2
+!i10b 1
+!s100 S^JE=D?<nRY;L@923;>fz2
+Io;kC4EYk?>>HV9S^ORK3S2
+R3
+!s105 demo_apb_seq_v_unit
+S1
+R0
+w1793413830
+8demo/demo_apb_seq.v
+Fdemo/demo_apb_seq.v
+L0 30
+R5
+r1
+!s85 0
+31
+R6
+R10
+R7
+!i113 0
+R8
+R9
+vdemo_uart_packetizer
+R1
+R2
+!i10b 1
+!s100 Id=3FX49VPMbTid<kJWaB3
+IO]HB[1a:;6JbCHDWn8`W@2
+R3
+!s105 demo_uart_packetizer_v_unit
+S1
+R0
+w1793413641
+8demo/demo_uart_packetizer.v
+Fdemo/demo_uart_packetizer.v
+L0 28
+R5
+r1
+!s85 0
+31
+R6
+R10
+R7
+!i113 0
+R8
+R9
+vecg_rom
+R1
+R2
+!i10b 1
+!s100 PlCNl`BUGPbTEE]3lN>SR2
+IlCBJ`TaZ0BXGk3l2b;6163
+R3
+!s105 ecg_rom_v_unit
+S1
+R0
+w1793381665
+8demo/ecg_rom.v
+Fdemo/ecg_rom.v
+L0 17
+R5
+r1
+!s85 0
+31
+R6
+R10
+R7
+!i113 0
+R8
+R9
+vfeature_extraction
+R1
+R2
+!i10b 1
+!s100 U=1o950^5ILk=nDQ_;nBC3
+IFbDWbQoo;<Sic^MBN=[LQ2
+R3
+!s105 feature_extraction_v_unit
+S1
+R0
+w1793369386
+8feature/feature_extraction.v
+Ffeature/feature_extraction.v
+L0 22
+R5
+r1
+!s85 0
+31
+R6
+R10
+R7
+!i113 0
+R8
+R9
+vsample_pacer
+R1
+R2
+!i10b 1
+!s100 Z;lSYg1V`6gfV<<fDXOSl1
+IK;?KaW`G1[ZOIF;kBRmBm3
+R3
+!s105 sample_pacer_v_unit
+S1
+R0
+w1793413354
+8demo/sample_pacer.v
+Fdemo/sample_pacer.v
+L0 35
+R5
+r1
+!s85 0
+31
+R6
+R10
+R7
+!i113 0
+R8
+R9
+vtop_ecg_rom_demo
+R1
+R2
+!i10b 1
+!s100 _G39of2Z;Mlzm@L4`jZmY3
+IT7V=`EYC7<WV>0ncBRmNo0
+R3
+!s105 top_ecg_rom_demo_v_unit
+S1
+R0
+w1793413822
+8demo/top_ecg_rom_demo.v
+Fdemo/top_ecg_rom_demo.v
+L0 29
+R5
+r1
+!s85 0
+31
+R6
+R10
+R7
+!i113 0
+R8
+R9
+vuart_tx
+R1
+R2
+!i10b 1
+!s100 dlmNjZ4:LZI:ZWJR2mcc52
+I2OgWWk1512mcKI;02S@UJ2
+R3
+!s105 uart_tx_v_unit
+S1
+R0
+w1792663069
+8uart/uart_tx.v
+Fuart/uart_tx.v
+R4
+R5
+r1
+!s85 0
+31
+R6
+R10
+R7
+!i113 0
+R8
+R9
+vwindow_buffer
+R1
+R2
+!i10b 1
+!s100 nf[zSjYBlL6`Qeg[K8Y9H0
+I[X0WWV>I><eLN>C=?mVAV0
+R3
+!s105 window_buffer_v_unit
+S1
+R0
+w1792930680
+8window/window_buffer.v
+Fwindow/window_buffer.v
+R11
+R5
+r1
+!s85 0
+31
+R6
+R10
+R7
+!i113 0
+R8
+R9

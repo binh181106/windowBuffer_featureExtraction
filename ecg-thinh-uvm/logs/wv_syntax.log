@@ -1,0 +1,50 @@
+Reading H:/questasim64_10.7c/tcl/vsim/pref.tcl
+
+# 10.7c
+
+# vsim -c tb_wv -do "run 100; puts "CLK<<[examine tb_wv.clk]>>"; puts "STATE<<[examine tb_wv.state]>>"; puts "PAY<<[examine tb_wv.payload]>>"; puts "BAD<<[examine tb_wv.nothing]>>"; wave add tb_wv.clk; wave add tb_wv.state; wave group "GRP" {tb_wv.state tb_wv.bigcnt}; radix 10; wave zoom 0ns 100ns; puts "WAVESYNTAX_OK"; quit -f" 
+# Start time: 22:34:17 on Oct 30,2026
+# ** Note: (vsim-3812) Design is being optimized...
+# //  Questa Sim-64
+# //  Version 10.7c win64 Aug 18 2018
+# //
+# //  Copyright 1991-2018 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading sv_std.std
+# Loading work.tb_wv(fast)
+# run 100
+#  puts "CLK<<[examine tb_wv.clk]>>"
+# ** Error: (vish-4014) No objects found matching 'tb_wv.clk'.
+# 
+#  puts "STATE<<[examine tb_wv.state]>>"
+# ** Error: (vish-4014) No objects found matching 'tb_wv.state'.
+# 
+#  puts "PAY<<[examine tb_wv.payload]>>"
+# ** Error: (vish-4014) No objects found matching 'tb_wv.payload'.
+# 
+#  puts "BAD<<[examine tb_wv.nothing]>>"
+# ** Error: (vish-4014) No objects found matching 'tb_wv.nothing'.
+# 
+#  wave add tb_wv.clk
+# wave addcursor not supported in batch mode
+#  wave add tb_wv.state
+# wave addcursor not supported in batch mode
+#  wave group "GRP" {tb_wv.state tb_wv.bigcnt}
+#  radix 10
+# decimal
+#  wave zoom 0ns 100ns
+# unknown or ambiguous subcommand "0ns": must be cursor, full, in, last, out, or range
+#  puts "WAVESYNTAX_OK"
+WAVESYNTAX_OK
+#  quit -f
+# End time: 22:34:18 on Oct 30,2026, Elapsed time: 0:00:01
+# Errors: 5, Warnings: 0

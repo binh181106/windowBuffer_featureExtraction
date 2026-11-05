@@ -1,0 +1,16 @@
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+Start time: 20:32:10 on Oct 30,2026
+vlog -sv -mfcu -work work_reg H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_feature_simple.sv 
+-- Compiling module tb_feature_simple
+
+Top level modules:
+	tb_feature_simple
+End time: 20:32:10 on Oct 30,2026, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0
+Reading H:/questasim64_10.7c/tcl/vsim/pref.tcl
+
+# 10.7c
+
+# ** Error: (vish-3296) Unknown option '-mfcu'.
+# Use the -help option for complete vsim usage.
+Error loading design

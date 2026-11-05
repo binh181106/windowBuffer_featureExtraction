@@ -1,0 +1,41 @@
+Reading H:/questasim64_10.7c/tcl/vsim/pref.tcl
+
+# 10.7c
+
+# vsim -c tb_wv -do "onerror {continue}; puts "--- real path ---"; wave add tb_wv.clk; puts "--- bad path ---"; wave add tb_wv.does_not_exist; puts "--- group real ---"; wave group "G" {tb_wv.clk tb_wv.state}; puts "DONE"; quit -f" 
+# Start time: 22:34:45 on Oct 30,2026
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# //  Questa Sim-64
+# //  Version 10.7c win64 Aug 18 2018
+# //
+# //  Copyright 1991-2018 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading sv_std.std
+# Loading work.tb_wv(fast)
+# onerror {continue}
+#  Warning: onerror command for use within macro
+#  puts "--- real path ---"
+--- real path ---
+#  wave add tb_wv.clk
+# wave addcursor not supported in batch mode
+#  puts "--- bad path ---"
+--- bad path ---
+#  wave add tb_wv.does_not_exist
+# wave addcursor not supported in batch mode
+#  puts "--- group real ---"
+--- group real ---
+#  wave group "G" {tb_wv.clk tb_wv.state}
+#  puts "DONE"
+DONE
+#  quit -f
+# End time: 22:34:45 on Oct 30,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0

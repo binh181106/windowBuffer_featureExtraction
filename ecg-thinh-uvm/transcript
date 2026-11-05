@@ -1,0 +1,7 @@
+# vsim -c tb_demo_rom -do "run -all; quit -f" 
+# Start time: 22:50:43 on Oct 31,2026
+# ** Error (suppressible): (vsim-19) Failed to access library 'work_demo' at "work_demo".
+# No such file or directory. (errno = ENOENT)
+# Error loading design
+# End time: 22:50:44 on Oct 31,2026, Elapsed time: 0:00:01
+# Errors: 1, Warnings: 0

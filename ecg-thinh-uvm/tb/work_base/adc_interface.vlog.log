@@ -1,0 +1,11 @@
+Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+Start time: 17:51:29 on Oct 25,2026
+vlog -sv -mfcu -work work_base ../adc/adc_interface.v tb_adc_interface.sv 
+** Note: (vlog-220) 'H:/altera/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
+-- Compiling module adc_interface
+-- Compiling module tb_adc_interface
+
+Top level modules:
+	tb_adc_interface
+End time: 17:51:29 on Oct 25,2026, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0

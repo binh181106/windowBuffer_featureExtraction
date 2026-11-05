@@ -1,0 +1,6 @@
+1 7 uvm_pkg 4 fast 43 H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/work 0 0 29753344 0 153676 0
+1 20 apb_slave_if_env_pkg 4 fast 43 H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/work 0 0 2473984 29753344 5890 0
+1 15 apb_slave_if_if 5 synth 43 H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/work 0 0 0 0 0 0
+1 15 apb_slave_if_if 7 fast__2 43 H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/work 0 0 131072 0 519 0
+1 12 apb_slave_if 4 fast 43 H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/work 0 0 0 0 286 0
+1 10 tb_apb_uvm 4 fast 43 H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/work 0 0 262144 30801920 903 0

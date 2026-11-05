@@ -1,0 +1,310 @@
+m255
+K4
+z2
+!s11f vlog 2025.2 2025.05, May 31 2025
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dH:/IC Design/Code/ECG/ecg-thinh-uvm/tb
+vadc_interface
+Z1 2../adc/adc_interface.v|tb_adc_interface.sv
+Z2 DXx6 sv_std 3 std 0 22 @5XbY]_OacJl=`ToSm<M^0
+Z3 !s110 1792925489
+!i10b 1
+!s100 ^_h5XI;mdeW=C[ZClXfW@3
+IQ5e>`Uz@Oa@^c:03z4QSC0
+S1
+R0
+Z4 w1792663069
+8../adc/adc_interface.v
+F../adc/adc_interface.v
+!i122 1
+L0 11 112
+Z5 VDg1SIo80bB@j0V0VzS_@n1
+Z6 OL;L;2025.2;82
+r1
+!s85 0
+31
+Z7 !s108 1792925489.000000
+Z8 !s107 tb_adc_interface.sv|../adc/adc_interface.v|
+Z9 !s90 -sv|-mfcu|-work|work_base|../adc/adc_interface.v|tb_adc_interface.sv|
+!i113 0
+Z10 o-sv -mfcu -work work_base -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z11 tCvgOpt 0 defaultOptions 1085333592
+vapb_slave_if
+Z12 2../apb/apb_slave_if.v|tb_apb_slave_if.sv
+R2
+Z13 !s110 1792925486
+!i10b 1
+!s100 lAllFk^H0>VgRVfME>@HN3
+IlFWn]3D7MR8ZozeE5^43h0
+S1
+R0
+R4
+8../apb/apb_slave_if.v
+F../apb/apb_slave_if.v
+!i122 0
+L0 6 123
+R5
+R6
+r1
+!s85 0
+31
+Z14 !s108 1792925485.000000
+Z15 !s107 tb_apb_slave_if.sv|../apb/apb_slave_if.v|
+Z16 !s90 -sv|-mfcu|-work|work_base|../apb/apb_slave_if.v|tb_apb_slave_if.sv|
+!i113 0
+R10
+R11
+vcontrol_fsm
+Z17 2../control/control_fsm.v|tb_control_fsm.sv
+R2
+Z18 !s110 1792925498
+!i10b 1
+!s100 8G9kMz4HfN;z3Um`00nOB1
+I6c7EAc:kDhX^G9J<:TJLH1
+S1
+R0
+R4
+8../control/control_fsm.v
+F../control/control_fsm.v
+!i122 4
+L0 11 268
+R5
+R6
+r1
+!s85 0
+31
+Z19 !s108 1792925498.000000
+Z20 !s107 tb_control_fsm.sv|../control/control_fsm.v|
+Z21 !s90 -sv|-mfcu|-work|work_base|../control/control_fsm.v|tb_control_fsm.sv|
+!i113 0
+R10
+R11
+vfeature_extraction
+Z22 2../feature/feature_extraction.v|tb_feature_extraction.sv
+R2
+Z23 !s110 1792925495
+!i10b 1
+!s100 zYH2?NE_PL:hfkEId2OUJ3
+IZl>NJU9Ci71EDh`VF`PKg1
+S1
+R0
+R4
+8../feature/feature_extraction.v
+F../feature/feature_extraction.v
+!i122 3
+L0 13 274
+R5
+R6
+r1
+!s85 0
+31
+Z24 !s108 1792925495.000000
+Z25 !s107 tb_feature_extraction.sv|../feature/feature_extraction.v|
+Z26 !s90 -sv|-mfcu|-work|work_base|../feature/feature_extraction.v|tb_feature_extraction.sv|
+!i113 0
+R10
+R11
+vtb_adc_interface
+R1
+R2
+R3
+!i10b 1
+!s100 RHa4N7EJT7Ba?SUDX_XQQ2
+IYIQKUD3[YCKgeH>1`]^7K2
+S1
+R0
+R4
+8tb_adc_interface.sv
+Ftb_adc_interface.sv
+!i122 1
+L0 6 222
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+vtb_apb_slave_if
+R12
+R2
+R13
+!i10b 1
+!s100 >KVXPP3o``b`iza0aoH8N3
+IDXBY5ZY=:?e5zVD^Xlea=3
+S1
+R0
+R4
+8tb_apb_slave_if.sv
+Ftb_apb_slave_if.sv
+!i122 0
+L0 6 253
+R5
+R6
+r1
+!s85 0
+31
+R14
+R15
+R16
+!i113 0
+R10
+R11
+vtb_control_fsm
+R17
+R2
+R18
+!i10b 1
+!s100 ^`:PN37OS>4947RY9BT6L2
+INPem84D04BT^RzDWMCfFJ0
+S1
+R0
+R4
+8tb_control_fsm.sv
+Ftb_control_fsm.sv
+!i122 4
+L0 3 70
+R5
+R6
+r1
+!s85 0
+31
+R19
+R20
+R21
+!i113 0
+R10
+R11
+vtb_feature_extraction
+R22
+R2
+R23
+!i10b 1
+!s100 5hi3P<0H[=R82_D5Cd`M>3
+I8D<TA^hD=A<jzaIQW@fLX0
+S1
+R0
+R4
+8tb_feature_extraction.sv
+Ftb_feature_extraction.sv
+!i122 3
+L0 6 166
+R5
+R6
+r1
+!s85 0
+31
+R24
+R25
+R26
+!i113 0
+R10
+R11
+vtb_uart_tx
+Z27 2../uart/uart_tx.v|tb_uart_tx.sv
+R2
+Z28 !s110 1792925501
+!i10b 1
+!s100 Q_F65UJIOZL0]?PmOkk`^1
+I;O56JTLkC28Ro:G[I[X]=2
+S1
+R0
+R4
+8tb_uart_tx.sv
+Ftb_uart_tx.sv
+!i122 5
+L0 3 61
+R5
+R6
+r1
+!s85 0
+31
+Z29 !s108 1792925501.000000
+!s107 tb_uart_tx.sv|../uart/uart_tx.v|
+Z30 !s90 -sv|-mfcu|-work|work_base|../uart/uart_tx.v|tb_uart_tx.sv|
+!i113 0
+R10
+R11
+vtb_window_buffer
+Z31 2../window/window_buffer.v|tb_window_buffer.sv
+R2
+Z32 !s110 1792925492
+!i10b 1
+!s100 zNj]<YgO5^joz_DBnWhYg3
+IEHSldGmjVl6DP<^lG3OWD0
+S1
+R0
+R4
+8tb_window_buffer.sv
+Ftb_window_buffer.sv
+!i122 2
+L0 6 223
+R5
+R6
+r1
+!s85 0
+31
+Z33 !s108 1792925492.000000
+Z34 !s107 tb_window_buffer.sv|../window/window_buffer.v|
+Z35 !s90 -sv|-mfcu|-work|work_base|../window/window_buffer.v|tb_window_buffer.sv|
+!i113 0
+R10
+R11
+vuart_tx
+R27
+R2
+R28
+!i10b 1
+!s100 >^mR3S77gm:M^VSDeM?Sa3
+IeT?Uh73VMfTP5Fa_<4eXa1
+S1
+R0
+R4
+8../uart/uart_tx.v
+F../uart/uart_tx.v
+!i122 5
+L0 11 158
+R5
+R6
+r1
+!s85 0
+31
+R29
+Z36 !s107 tb_uart_tx.sv|../uart/uart_tx.v|
+R30
+!i113 0
+R10
+R11
+vwindow_buffer
+R31
+R2
+R32
+!i10b 1
+!s100 o<WfbUWNmQW]G@6XMdP9I2
+IGLznazNfW=]l2fTz2PKU10
+S1
+R0
+R4
+8../window/window_buffer.v
+F../window/window_buffer.v
+!i122 2
+L0 20 119
+R5
+R6
+r1
+!s85 0
+31
+R33
+R34
+R35
+!i113 0
+R10
+R11

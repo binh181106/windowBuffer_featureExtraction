@@ -1,0 +1,261 @@
+m255
+K4
+z2
+!s11f vlog 2025.2 2025.05, May 31 2025
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dH:/IC Design/Code/ECG/ecg-thinh-uvm/tb
+vadc_interface
+Z1 2../apb/apb_slave_if.v|../adc/adc_interface.v|../window/window_buffer.v|../feature/feature_extraction.v|../ai/ai_classifier.v|../ai/mlp_weights_rom.v|../control/control_fsm.v|../uart/uart_tx.v|../top/top_ecg_classifier.v|tb_top_ppg_classifier.sv
+Z2 DXx6 sv_std 3 std 0 22 @5XbY]_OacJl=`ToSm<M^0
+Z3 !s110 1792927076
+!i10b 1
+!s100 ^_h5XI;mdeW=C[ZClXfW@3
+I;V?10;B5A5?`Q8;L7eKnn0
+S1
+R0
+Z4 w1792663069
+8../adc/adc_interface.v
+F../adc/adc_interface.v
+!i122 0
+L0 11 112
+Z5 VDg1SIo80bB@j0V0VzS_@n1
+Z6 OL;L;2025.2;82
+r1
+!s85 0
+31
+Z7 !s108 1792927076.000000
+!s107 tb_top_ppg_classifier.sv|../top/top_ecg_classifier.v|../uart/uart_tx.v|../control/control_fsm.v|../ai/mlp_weights_rom.v|../ai/ai_classifier.v|../feature/feature_extraction.v|../window/window_buffer.v|../adc/adc_interface.v|../apb/apb_slave_if.v|
+Z8 !s90 -sv|-mfcu|-work|base_top|../apb/apb_slave_if.v|../adc/adc_interface.v|../window/window_buffer.v|../feature/feature_extraction.v|../ai/ai_classifier.v|../ai/mlp_weights_rom.v|../control/control_fsm.v|../uart/uart_tx.v|../top/top_ecg_classifier.v|tb_top_ppg_classifier.sv|
+!i113 0
+Z9 o-sv -mfcu -work base_top -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z10 tCvgOpt 0 defaultOptions 1085333592
+vai_classifier
+R1
+R2
+R3
+!i10b 1
+!s100 N2jmENT2YIPKSKGXCRT>R0
+IDzEQSILJ<U83:7Bn;`RXB3
+S1
+R0
+R4
+8../ai/ai_classifier.v
+F../ai/ai_classifier.v
+!i122 0
+L0 12 351
+R5
+R6
+r1
+!s85 0
+31
+R7
+Z11 !s107 tb_top_ppg_classifier.sv|../top/top_ecg_classifier.v|../uart/uart_tx.v|../control/control_fsm.v|../ai/mlp_weights_rom.v|../ai/ai_classifier.v|../feature/feature_extraction.v|../window/window_buffer.v|../adc/adc_interface.v|../apb/apb_slave_if.v|
+R8
+!i113 0
+R9
+R10
+vapb_slave_if
+R1
+R2
+R3
+!i10b 1
+!s100 lAllFk^H0>VgRVfME>@HN3
+IcT_X68LomoG8k0U^iQDlZ3
+S1
+R0
+R4
+8../apb/apb_slave_if.v
+F../apb/apb_slave_if.v
+!i122 0
+L0 6 123
+R5
+R6
+r1
+!s85 0
+31
+R7
+R11
+R8
+!i113 0
+R9
+R10
+vcontrol_fsm
+R1
+R2
+R3
+!i10b 1
+!s100 8G9kMz4HfN;z3Um`00nOB1
+Ii_3LISJk2kTXXcUgk<>@`0
+S1
+R0
+R4
+8../control/control_fsm.v
+F../control/control_fsm.v
+!i122 0
+L0 11 268
+R5
+R6
+r1
+!s85 0
+31
+R7
+R11
+R8
+!i113 0
+R9
+R10
+vfeature_extraction
+R1
+R2
+R3
+!i10b 1
+!s100 zYH2?NE_PL:hfkEId2OUJ3
+IecVP:0H>MCgSi_dGD@?OD3
+S1
+R0
+R4
+8../feature/feature_extraction.v
+F../feature/feature_extraction.v
+!i122 0
+L0 13 274
+R5
+R6
+r1
+!s85 0
+31
+R7
+R11
+R8
+!i113 0
+R9
+R10
+vmlp_weights_rom
+R1
+R2
+R3
+!i10b 1
+!s100 @dPiRg1AV`:QLal65I?9:0
+I1e5D=2SCCBXXhY]WEmlU>0
+S1
+R0
+R4
+8../ai/mlp_weights_rom.v
+F../ai/mlp_weights_rom.v
+!i122 0
+L0 11 76
+R5
+R6
+r1
+!s85 0
+31
+R7
+R11
+R8
+!i113 0
+R9
+R10
+vtb_top_ecg_classifier
+R1
+R2
+R3
+!i10b 1
+!s100 b2KKKIlXjAL6jNXV?fVkY3
+IgbX5B?aj=J;hhk>A]2T@X1
+S1
+R0
+R4
+8tb_top_ppg_classifier.sv
+Ftb_top_ppg_classifier.sv
+!i122 0
+L0 6 326
+R5
+R6
+r1
+!s85 0
+31
+R7
+R11
+R8
+!i113 0
+R9
+R10
+vtop_ecg_classifier
+R1
+R2
+R3
+!i10b 1
+!s100 9lz`ME>nlCOclco2056E03
+I_iXWDf]_BhEK^aeJ[IR311
+S1
+R0
+R4
+8../top/top_ecg_classifier.v
+F../top/top_ecg_classifier.v
+!i122 0
+L0 13 332
+R5
+R6
+r1
+!s85 0
+31
+R7
+R11
+R8
+!i113 0
+R9
+R10
+vuart_tx
+R1
+R2
+R3
+!i10b 1
+!s100 >^mR3S77gm:M^VSDeM?Sa3
+IlkHC4ZJ8Y3OVG5SkSlRiI1
+S1
+R0
+R4
+8../uart/uart_tx.v
+F../uart/uart_tx.v
+!i122 0
+L0 11 158
+R5
+R6
+r1
+!s85 0
+31
+R7
+R11
+R8
+!i113 0
+R9
+R10
+vwindow_buffer
+R1
+R2
+R3
+!i10b 1
+!s100 o<WfbUWNmQW]G@6XMdP9I2
+IAEfWd7^_M7cmU9zk5k>`L0
+S1
+R0
+R4
+8../window/window_buffer.v
+F../window/window_buffer.v
+!i122 0
+L0 20 119
+R5
+R6
+r1
+!s85 0
+31
+R7
+R11
+R8
+!i113 0
+R9
+R10

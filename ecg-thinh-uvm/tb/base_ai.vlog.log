@@ -1,0 +1,13 @@
+Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+Start time: 18:15:27 on Oct 25,2026
+vlog -sv -mfcu -work base_ai ../ai/ai_classifier.v ../ai/mlp_weights_rom.v tb_ai_classifier.sv 
+** Note: (vlog-220) 'H:/altera/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
+-- Compiling module ai_classifier
+-- Compiling module mlp_weights_rom
+-- Compiling module tb_ai_classifier
+
+Top level modules:
+	mlp_weights_rom
+	tb_ai_classifier
+End time: 18:15:27 on Oct 25,2026, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0

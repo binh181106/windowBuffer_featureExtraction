@@ -1,0 +1,142 @@
+windows: 7  (T = 512..2048 step 256)
+raw seg: min=0 max=255  ->  8bit min=0 max=255  post-baseline min=0 max=86
+w1: rms=19 var=15544 peak=65 zc=0 ptp=65 crest_rtl=215 (spec 14012) half=4096 max=65 rr=0/0 chk=0xDF
+w2: rms=28 var=-17187 peak=76 zc=0 ptp=76 crest_rtl=-585 (spec 11117) half=4096 max=76 rr=0/0 chk=0x8C
+w3: rms=71 var=24470 peak=86 zc=0 ptp=86 crest_rtl=346 (spec 4961) half=4096 max=86 rr=299/0 chk=0x31
+w4: rms=73 var=-31286 peak=86 zc=0 ptp=86 crest_rtl=336 (spec 4825) half=4096 max=86 rr=43/0 chk=0x82
+w5: rms=63 var=-5822 peak=76 zc=0 ptp=76 crest_rtl=-260 (spec 4941) half=4096 max=76 rr=0/0 chk=0x8A
+w6: rms=64 var=-3913 peak=77 zc=0 ptp=77 crest_rtl=-192 (spec 4928) half=4096 max=77 rr=0/0 chk=0x50
+w7: rms=66 var=4180 peak=83 zc=0 ptp=83 crest_rtl=186 (spec 5151) half=4096 max=83 rr=463/0 chk=0x3D
+wrote H:\IC Design\Code\ECG\ecg-thinh-uvm\demo\golden\expected_packets.json
+wrote H:\IC Design\Code\ECG\ecg-thinh-uvm\demo\golden\expected_packets.sv
+** Warning: (vlib-34) Library already exists at "H:/IC Design/Code/ECG/ecg-thinh-uvm/simlib/work_demo".
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+Start time: 13:50:14 on Nov 05,2026
+vlog -sv -work work_demo ../demo/ecg_rom.v ../demo/sample_pacer.v ../demo/demo_apb_seq.v ../demo/demo_uart_packetizer.v ../demo/top_ecg_rom_demo.v ../adc/adc_interface.v ../window/window_buffer.v ../feature/feature_extraction.v ../ai/ai_classifier.v ../control/control_fsm.v ../apb/apb_slave_if.v ../uart/uart_tx.v ../tb/tb_demo_rom.sv "+incdir+.." 
+-- Compiling module ecg_rom
+-- Compiling module sample_pacer
+-- Compiling module demo_apb_seq
+-- Compiling module demo_uart_packetizer
+-- Compiling module top_ecg_rom_demo
+-- Compiling module adc_interface
+-- Compiling module window_buffer
+-- Compiling module feature_extraction
+-- Compiling module ai_classifier
+-- Compiling module control_fsm
+-- Compiling module apb_slave_if
+-- Compiling module uart_tx
+-- Compiling module tb_demo_rom
+
+Top level modules:
+	tb_demo_rom
+End time: 13:50:14 on Nov 05,2026, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0
+Reading H:/questasim64_10.7c/tcl/vsim/pref.tcl
+
+# 10.7c
+
+# vsim -c tb_demo_rom -do "run -all; quit -f" "+CAPTURE=H:/IC Design/Code/ECG/ecg-thinh-uvm/simlib/capture_run1.bin" 
+# Start time: 13:50:14 on Nov 05,2026
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# //  Questa Sim-64
+# //  Version 10.7c win64 Aug 18 2018
+# //
+# //  Copyright 1991-2018 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading sv_std.std
+# Loading work.tb_demo_rom(fast)
+# Loading work.ai_classifier(fast)
+# run -all
+# [ecg_rom] $readmemh("../demo/ecg_rom.hex"): loaded 2048 words
+# [tb_demo_rom] capture ->                                                                                                                                                                                                      H:/IC Design/Code/ECG/ecg-thinh-uvm/simlib/capture_run1.bin
+# ========================================
+# Demo ROM TB  TARGET_HZ=33333 gap=1500 ROM=2048 golden=7
+# ========================================
+#   DBGP pkt0[0] got=0xe7 exp=0xe7         
+#   DBGP pkt0[1] got=0xa5 exp=0xa5         
+#   DBGP pkt0[2] got=0x01 exp=0x01         
+#   DBGP pkt0[3] got=0x1c exp=0x1c         
+#   DBGP pkt0[4] got=0x01 exp=0x01         
+#   DBGP pkt0[5] got=0x00 exp=0x00         
+#   DBGP pkt0[6] got=0x13 exp=0x13         
+#   DBGP pkt0[7] got=0x00 exp=0x00         
+#   DBGP pkt0[8] got=0xb8 exp=0xb8         
+#   DBGP pkt0[9] got=0x3c exp=0x3c         
+#   DBGP pkt0[10] got=0x41 exp=0x41         
+#   DBGP pkt0[11] got=0x00 exp=0x00         
+#   DBGP pkt0[12] got=0x00 exp=0x00         
+#   DBGP pkt0[13] got=0x00 exp=0x00         
+#   DBGP pkt0[14] got=0x41 exp=0x41         
+#   DBGP pkt0[15] got=0x00 exp=0x00         
+#   DBGP pkt0[16] got=0xd7 exp=0xd7         
+#   DBGP pkt0[17] got=0x00 exp=0x00         
+#   DBGP pkt0[18] got=0x00 exp=0x00         
+#   DBGP pkt0[19] got=0x10 exp=0x10         
+#   DBGP pkt0[20] got=0x41 exp=0x41         
+#   DBGP pkt0[21] got=0x00 exp=0x00         
+#   DBGP pkt0[22] got=0x00 exp=0x00         
+#   DBGP pkt0[23] got=0x00 exp=0x00         
+#   DBGP pkt0[24] got=0x00 exp=0x00         
+#   DBGP pkt0[25] got=0x00 exp=0x00         
+#   DBGP pkt0[26] got=0x00 exp=0x00         
+#   DBGP pkt0[27] got=0x10 exp=0x10         
+#   DBGP pkt0[28] got=0x00 exp=0x00         
+#   DBGP pkt0[29] got=0x00 exp=0x00         
+#   DBGP pkt0[30] got=0x00 exp=0x00         
+#   DBGP pkt0[31] got=0x00 exp=0x00         
+#   DBGP pkt0[32] got=0xdf exp=0xdf         
+#   R1FULL[0] e7 a5 01 1c 01 00 13 00 b8 3c 41 00 00 00 41 00 d7 00 00 10 41 00 00 00 00 00 00 10 00 00 00 00 df
+#   R1FULL[1] e7 a5 01 1c 02 00 1c 00 dd bc 4c 00 00 00 4c 00 db 06 00 10 4c 00 00 00 00 00 00 10 00 00 00 00 b9
+#   R1FULL[2] e7 a5 01 1c 03 00 47 00 96 5f 56 00 00 00 56 00 5a 01 00 10 56 00 2b 01 00 00 00 10 2b 01 00 00 31
+#   R1FULL[3] e7 a5 01 1c 04 00 49 00 ca 85 56 00 00 00 56 00 50 01 00 10 56 00 2b 00 00 00 00 10 2b 00 00 00 82
+#   R1FULL[4] e7 a5 01 1c 05 00 3f 00 42 e9 4c 00 00 00 4c 00 0c 03 00 10 4c 00 00 00 00 00 00 10 00 00 00 00 9f
+#   R1FULL[5] e7 a5 01 1c 06 00 40 00 b7 f0 4d 00 00 00 4d 00 40 03 00 10 4d 00 00 00 00 00 00 10 00 00 00 00 54
+#   R1FULL[6] e7 a5 01 1c 07 00 42 00 54 10 53 00 00 00 53 00 ba 00 00 10 53 00 cf 01 00 00 00 10 cf 01 00 00 3d
+#   R1pkt[0] widx=1 GOLDEN w1 open-delta=0
+#   R1pkt[1] widx=2 GOLDEN w2 open-delta=1
+#   R1pkt[2] widx=3 GOLDEN w3 open-delta=0
+#   R1pkt[3] widx=4 GOLDEN w4 open-delta=0
+#   R1pkt[4] widx=5 GOLDEN w5 open-delta=1
+#   R1pkt[5] widx=6 GOLDEN w6 open-delta=0
+#   R1pkt[6] widx=7 GOLDEN w7 open-delta=0
+# Run1: ncur=7 valid=7 winR=7 drop=0 eod=1 adc=2048
+# Run1: dbg_bytes=231 dbg_e7=7
+# PASS Run1: 7 valid packets match golden, single-pass
+# [tb_demo_rom] capture closed: 231 bytes
+# Run2: valid(replay)=15 winR_total=16 drop=0 eod=1
+# PASS Run2: reset+replay, 15 golden packets, no drop
+# ========================================
+# Demo ROM TB  Test Summary: 2/2 PASSED
+# ========================================
+# ** Note: $finish    : ../tb/tb_demo_rom.sv(453)
+#    Time: 192869140 ns  Iteration: 0  Instance: /tb_demo_rom
+# End time: 13:50:21 on Nov 05,2026, Elapsed time: 0:00:07
+# Errors: 0, Warnings: 0
+== capture check: H:\IC Design\Code\ECG\ecg-thinh-uvm\simlib\capture_run1.bin (231 bytes) ==
+     size 231 bytes = 7 x 33  OK
+     packet frames 7  OK
+     pkt#0 @0: framing + checksum 0xDF  OK
+     pkt#1 @33: framing + checksum 0xB9  OK
+     pkt#2 @66: framing + checksum 0x31  OK
+     pkt#3 @99: framing + checksum 0x82  OK
+     pkt#4 @132: framing + checksum 0x9F  OK
+     pkt#5 @165: framing + checksum 0x54  OK
+     pkt#6 @198: framing + checksum 0x3D  OK
+     window indices [1, 2, 3, 4, 5, 6, 7] in order  OK
+     pkt#0 @0: all 33 bytes match golden  OK
+     pkt#1 @33 MASKED difference (reported, not fatal): byte[16](f_crest[7:0]) expected 0xB7 actual 0xDB, byte[17](f_crest[15:8]) expected 0xFD actual 0x06, byte[32](checksum) expected 0x8C actual 0xB9
+     pkt#2 @66: all 33 bytes match golden  OK
+     pkt#3 @99: all 33 bytes match golden  OK
+     pkt#4 @132 MASKED difference (reported, not fatal): byte[16](f_crest[7:0]) expected 0xFC actual 0x0C, byte[17](f_crest[15:8]) expected 0xFE actual 0x03, byte[32](checksum) expected 0x8A actual 0x9F
+     pkt#5 @165 MASKED difference (reported, not fatal): byte[17](f_crest[15:8]) expected 0xFF actual 0x03, byte[32](checksum) expected 0x50 actual 0x54
+     pkt#6 @198: all 33 bytes match golden  OK
+CHECK RESULT: PASS

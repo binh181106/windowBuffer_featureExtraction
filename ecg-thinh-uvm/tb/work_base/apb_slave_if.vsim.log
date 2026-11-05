@@ -1,0 +1,7 @@
+Reading pref.tcl
+
+# 2025.2
+
+# ** UI-Msg (Error): (vish-3296) Unknown option '-sv'.
+# Use the -help option for complete vsim usage.
+Error loading design

@@ -1,0 +1,19 @@
+$date
+	Thu Nov 05 13:49:59 2026
+$end
+$version
+	QuestaSim Version 10.7c
+$end
+$timescale
+	1ps
+$end
+
+$scope module tb_uart_tx $end
+
+$scope task uart_read_byte $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+$end

@@ -1,0 +1,26 @@
+BEGIN 3:apb_slave_if_if:fast__2:work
+    pready :  1:tb_apb_uvm:fast:work
+    paddr :  1:tb_apb_uvm:fast:work
+    uart_enable :  1:tb_apb_uvm:fast:work
+    sys_start :  1:tb_apb_uvm:fast:work
+    soft_reset :  1:tb_apb_uvm:fast:work
+    prdata :  1:tb_apb_uvm:fast:work
+    sys_class_code :  1:tb_apb_uvm:fast:work
+    ble_enable :  1:tb_apb_uvm:fast:work
+    sys_enable :  1:tb_apb_uvm:fast:work
+    penable :  1:tb_apb_uvm:fast:work
+    sys_busy :  1:tb_apb_uvm:fast:work
+    sys_done :  1:tb_apb_uvm:fast:work
+    baud_div :  1:tb_apb_uvm:fast:work
+    pslverr :  1:tb_apb_uvm:fast:work
+    psel :  1:tb_apb_uvm:fast:work
+    sys_overflow :  1:tb_apb_uvm:fast:work
+    pwrite :  1:tb_apb_uvm:fast:work
+    ppg_threshold :  1:tb_apb_uvm:fast:work
+    pwdata :  1:tb_apb_uvm:fast:work
+    presetn :  1:tb_apb_uvm:fast:work
+END 
+BEGIN 3:apb_slave_if_if:fast__1:work
+    presetn :  1:apb_slave_if_env_pkg:fast:work
+    pclk :  1:apb_slave_if_env_pkg:fast:work
+END 

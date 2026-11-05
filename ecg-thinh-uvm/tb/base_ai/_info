@@ -1,0 +1,104 @@
+m255
+K4
+z2
+!s12c _opt
+Z0 !s99 nomlopt
+!s11f vlog 2025.2 2025.05, May 31 2025
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z1 dH:/IC Design/Code/ECG/ecg-thinh-uvm/tb
+T_opt
+!i145 1
+!i144 0
+!s110 1792926929
+VUOHX;fhlziZHg0ZW7J7A:2
+04 16 4 work tb_ai_classifier fast 0
+=1-94b609da484b-6adde4d1-4a-5d60
+R0
+!s12f OEM100
+!s12b OEM100
+!s124 OEM10U2 
+!s135 nogc
+o-quiet -auto_acc_if_foreign -work base_ai
+tCvgOpt 0 defaultOptions 1107585188
+n@_opt
+OL;O;2025.2;82
+vai_classifier
+Z2 2../ai/ai_classifier.v|../ai/mlp_weights_rom.v|tb_ai_classifier.sv
+Z3 DXx6 sv_std 3 std 0 22 @5XbY]_OacJl=`ToSm<M^0
+Z4 !s110 1792926927
+!i10b 1
+!s100 N2jmENT2YIPKSKGXCRT>R0
+I=cz[0;M0SaC5:HhjzQ`Q^0
+S1
+R1
+Z5 w1792663069
+8../ai/ai_classifier.v
+F../ai/ai_classifier.v
+!i122 0
+L0 12 351
+Z6 VDg1SIo80bB@j0V0VzS_@n1
+Z7 OL;L;2025.2;82
+r1
+!s85 0
+31
+Z8 !s108 1792926927.000000
+Z9 !s107 tb_ai_classifier.sv|../ai/mlp_weights_rom.v|../ai/ai_classifier.v|
+Z10 !s90 -sv|-mfcu|-work|base_ai|../ai/ai_classifier.v|../ai/mlp_weights_rom.v|tb_ai_classifier.sv|
+!i113 0
+Z11 o-sv -mfcu -work base_ai -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z12 tCvgOpt 0 defaultOptions 1085333592
+vmlp_weights_rom
+R2
+R3
+R4
+!i10b 1
+!s100 @dPiRg1AV`:QLal65I?9:0
+IBb<3N]FY<:>7AB>KmTVYB3
+S1
+R1
+R5
+8../ai/mlp_weights_rom.v
+F../ai/mlp_weights_rom.v
+!i122 0
+L0 11 76
+R6
+R7
+r1
+!s85 0
+31
+R8
+R9
+R10
+!i113 0
+R11
+R12
+vtb_ai_classifier
+R2
+R3
+R4
+!i10b 1
+!s100 ^WHGZjZPbOeh@looXm]@D3
+IUZiBc^i993c=<7oonLn9z3
+S1
+R1
+R5
+8tb_ai_classifier.sv
+Ftb_ai_classifier.sv
+!i122 0
+L0 6 289
+R6
+R7
+r1
+!s85 0
+31
+R8
+R9
+R10
+!i113 0
+R11
+R12

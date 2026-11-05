@@ -1,0 +1,79 @@
+m255
+K4
+z2
+!s12c _opt
+Z0 !s99 nomlopt
+!s11f vlog 2025.2 2025.05, May 31 2025
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z1 dH:/IC Design/Code/ECG/ecg-thinh-uvm/tb
+T_opt
+!i145 1
+!i144 0
+!s110 1792925825
+VSF?FEUGmT=CK9hXlVD;>R2
+04 16 4 work tb_window_buffer fast 0
+=1-94b609da484b-6adde080-2ea-5ed4
+R0
+!s12f OEM100
+!s12b OEM100
+!s124 OEM10U2 
+!s135 nogc
+o-quiet -auto_acc_if_foreign -work base_window_buffer
+tCvgOpt 0 defaultOptions 1107585188
+n@_opt
+OL;O;2025.2;82
+vtb_window_buffer
+Z2 2../window/window_buffer.v|tb_window_buffer.sv
+Z3 DXx6 sv_std 3 std 0 22 @5XbY]_OacJl=`ToSm<M^0
+Z4 !s110 1792925823
+!i10b 1
+!s100 zNj]<YgO5^joz_DBnWhYg3
+I^imVfC07?=lahOifO[deM2
+S1
+R1
+Z5 w1792663069
+8tb_window_buffer.sv
+Ftb_window_buffer.sv
+!i122 0
+L0 6 223
+Z6 VDg1SIo80bB@j0V0VzS_@n1
+Z7 OL;L;2025.2;82
+r1
+!s85 0
+31
+Z8 !s108 1792925823.000000
+Z9 !s107 tb_window_buffer.sv|../window/window_buffer.v|
+Z10 !s90 -sv|-mfcu|-work|base_window_buffer|../window/window_buffer.v|tb_window_buffer.sv|
+!i113 0
+Z11 o-sv -mfcu -work base_window_buffer -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z12 tCvgOpt 0 defaultOptions 1085333592
+vwindow_buffer
+R2
+R3
+R4
+!i10b 1
+!s100 o<WfbUWNmQW]G@6XMdP9I2
+IfP:e?31fUS_@<WJ^9EggD3
+S1
+R1
+R5
+8../window/window_buffer.v
+F../window/window_buffer.v
+!i122 0
+L0 20 119
+R6
+R7
+r1
+!s85 0
+31
+R8
+R9
+R10
+!i113 0
+R11
+R12
