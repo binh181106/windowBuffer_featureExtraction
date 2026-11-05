@@ -1,0 +1,43 @@
+=== capture checker: FAST capture (simlib/capture_run1.bin) ===
+== capture check: simlib\capture_run1.bin (231 bytes) ==
+     size 231 bytes = 7 x 33  OK
+     packet frames 7  OK
+     pkt#0 @0: framing + checksum 0xDF  OK
+     pkt#1 @33: framing + checksum 0xB9  OK
+     pkt#2 @66: framing + checksum 0x31  OK
+     pkt#3 @99: framing + checksum 0x82  OK
+     pkt#4 @132: framing + checksum 0x9F  OK
+     pkt#5 @165: framing + checksum 0x54  OK
+     pkt#6 @198: framing + checksum 0x3D  OK
+     window indices [1, 2, 3, 4, 5, 6, 7] in order  OK
+     pkt#0 @0: all 33 bytes match golden  OK
+     pkt#1 @33 MASKED difference (reported, not fatal): byte[16](f_crest[7:0]) expected 0xB7 actual 0xDB, byte[17](f_crest[15:8]) expected 0xFD actual 0x06, byte[32](checksum) expected 0x8C actual 0xB9
+     pkt#2 @66: all 33 bytes match golden  OK
+     pkt#3 @99: all 33 bytes match golden  OK
+     pkt#4 @132 MASKED difference (reported, not fatal): byte[16](f_crest[7:0]) expected 0xFC actual 0x0C, byte[17](f_crest[15:8]) expected 0xFE actual 0x03, byte[32](checksum) expected 0x8A actual 0x9F
+     pkt#5 @165 MASKED difference (reported, not fatal): byte[17](f_crest[15:8]) expected 0xFF actual 0x03, byte[32](checksum) expected 0x50 actual 0x54
+     pkt#6 @198: all 33 bytes match golden  OK
+CHECK RESULT: PASS
+exit=0
+
+=== capture checker: REPRE capture (simlib/capture_repre.bin) ===
+== capture check: simlib\capture_repre.bin (231 bytes) ==
+     size 231 bytes = 7 x 33  OK
+     packet frames 7  OK
+     pkt#0 @0: framing + checksum 0xDF  OK
+     pkt#1 @33: framing + checksum 0xB9  OK
+     pkt#2 @66: framing + checksum 0x31  OK
+     pkt#3 @99: framing + checksum 0x82  OK
+     pkt#4 @132: framing + checksum 0x9F  OK
+     pkt#5 @165: framing + checksum 0x54  OK
+     pkt#6 @198: framing + checksum 0x3D  OK
+     window indices [1, 2, 3, 4, 5, 6, 7] in order  OK
+     pkt#0 @0: all 33 bytes match golden  OK
+     pkt#1 @33 MASKED difference (reported, not fatal): byte[16](f_crest[7:0]) expected 0xB7 actual 0xDB, byte[17](f_crest[15:8]) expected 0xFD actual 0x06, byte[32](checksum) expected 0x8C actual 0xB9
+     pkt#2 @66: all 33 bytes match golden  OK
+     pkt#3 @99: all 33 bytes match golden  OK
+     pkt#4 @132 MASKED difference (reported, not fatal): byte[16](f_crest[7:0]) expected 0xFC actual 0x0C, byte[17](f_crest[15:8]) expected 0xFE actual 0x03, byte[32](checksum) expected 0x8A actual 0x9F
+     pkt#5 @165 MASKED difference (reported, not fatal): byte[17](f_crest[15:8]) expected 0xFF actual 0x03, byte[32](checksum) expected 0x50 actual 0x54
+     pkt#6 @198: all 33 bytes match golden  OK
+CHECK RESULT: PASS
+exit=0

@@ -1,0 +1,22 @@
+$date
+	Mon Oct 26 16:14:04 2026
+$end
+$version
+	Questa Altera Starter FPGA Edition Version 2025.2
+$end
+$timescale
+	1ps
+$end
+
+$scope module tb_apb_slave_if $end
+
+$scope task apb_write $end
+$upscope $end
+
+$scope task apb_read $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+$end

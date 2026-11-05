@@ -1,0 +1,4 @@
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+** Error (suppressible): (vlog-1902) Option "-c99" is either unknown, requires an argument, or was given with a bad argument.
+Use the -help option for complete vlog usage.
+Errors: 1, Warnings: 0

@@ -1,0 +1,89 @@
+Reading H:/questasim64_10.7c/tcl/vsim/pref.tcl
+
+# 10.7c
+
+# vsim -c tb_demo_rom -do "run -all; quit -f" "+SKIP_RUN2" "+CAPTURE=../simlib/capture_repre.bin" -gTARGET_HZ=360 
+# Start time: 18:52:05 on Nov 04,2026
+# ** Note: (vsim-3812) Design is being optimized...
+# //  Questa Sim-64
+# //  Version 10.7c win64 Aug 18 2018
+# //
+# //  Copyright 1991-2018 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading sv_std.std
+# Loading work.tb_demo_rom(fast)
+# Loading work.ai_classifier(fast)
+# run -all
+# [ecg_rom] $readmemh("../demo/ecg_rom.hex"): loaded 2048 words
+# [tb_demo_rom] capture ->                                                                                                                                                                                                                                      ../simlib/capture_repre.bin
+# ========================================
+# Demo ROM TB  TARGET_HZ=360 gap=138888 ROM=2048 golden=7
+# ========================================
+#   DBGP pkt0[0] got=0xe7 exp=0xe7         
+#   DBGP pkt0[1] got=0xa5 exp=0xa5         
+#   DBGP pkt0[2] got=0x01 exp=0x01         
+#   DBGP pkt0[3] got=0x1c exp=0x1c         
+#   DBGP pkt0[4] got=0x01 exp=0x01         
+#   DBGP pkt0[5] got=0x00 exp=0x00         
+#   DBGP pkt0[6] got=0x13 exp=0x13         
+#   DBGP pkt0[7] got=0x00 exp=0x00         
+#   DBGP pkt0[8] got=0xb8 exp=0xb8         
+#   DBGP pkt0[9] got=0x3c exp=0x3c         
+#   DBGP pkt0[10] got=0x41 exp=0x41         
+#   DBGP pkt0[11] got=0x00 exp=0x00         
+#   DBGP pkt0[12] got=0x00 exp=0x00         
+#   DBGP pkt0[13] got=0x00 exp=0x00         
+#   DBGP pkt0[14] got=0x41 exp=0x41         
+#   DBGP pkt0[15] got=0x00 exp=0x00         
+#   DBGP pkt0[16] got=0xd7 exp=0xd7         
+#   DBGP pkt0[17] got=0x00 exp=0x00         
+#   DBGP pkt0[18] got=0x00 exp=0x00         
+#   DBGP pkt0[19] got=0x10 exp=0x10         
+#   DBGP pkt0[20] got=0x41 exp=0x41         
+#   DBGP pkt0[21] got=0x00 exp=0x00         
+#   DBGP pkt0[22] got=0x00 exp=0x00         
+#   DBGP pkt0[23] got=0x00 exp=0x00         
+#   DBGP pkt0[24] got=0x00 exp=0x00         
+#   DBGP pkt0[25] got=0x00 exp=0x00         
+#   DBGP pkt0[26] got=0x00 exp=0x00         
+#   DBGP pkt0[27] got=0x10 exp=0x10         
+#   DBGP pkt0[28] got=0x00 exp=0x00         
+#   DBGP pkt0[29] got=0x00 exp=0x00         
+#   DBGP pkt0[30] got=0x00 exp=0x00         
+#   DBGP pkt0[31] got=0x00 exp=0x00         
+#   DBGP pkt0[32] got=0xdf exp=0xdf         
+#   R1FULL[0] e7 a5 01 1c 01 00 13 00 b8 3c 41 00 00 00 41 00 d7 00 00 10 41 00 00 00 00 00 00 10 00 00 00 00 df
+#   R1FULL[1] e7 a5 01 1c 02 00 1c 00 dd bc 4c 00 00 00 4c 00 db 06 00 10 4c 00 00 00 00 00 00 10 00 00 00 00 b9
+#   R1FULL[2] e7 a5 01 1c 03 00 47 00 96 5f 56 00 00 00 56 00 5a 01 00 10 56 00 2b 01 00 00 00 10 2b 01 00 00 31
+#   R1FULL[3] e7 a5 01 1c 04 00 49 00 ca 85 56 00 00 00 56 00 50 01 00 10 56 00 2b 00 00 00 00 10 2b 00 00 00 82
+#   R1FULL[4] e7 a5 01 1c 05 00 3f 00 42 e9 4c 00 00 00 4c 00 0c 03 00 10 4c 00 00 00 00 00 00 10 00 00 00 00 9f
+#   R1FULL[5] e7 a5 01 1c 06 00 40 00 b7 f0 4d 00 00 00 4d 00 40 03 00 10 4d 00 00 00 00 00 00 10 00 00 00 00 54
+#   R1FULL[6] e7 a5 01 1c 07 00 42 00 54 10 53 00 00 00 53 00 ba 00 00 10 53 00 cf 01 00 00 00 10 cf 01 00 00 3d
+#   R1pkt[0] widx=1 GOLDEN w1 open-delta=0
+#   R1pkt[1] widx=2 GOLDEN w2 open-delta=1
+#   R1pkt[2] widx=3 GOLDEN w3 open-delta=0
+#   R1pkt[3] widx=4 GOLDEN w4 open-delta=0
+#   R1pkt[4] widx=5 GOLDEN w5 open-delta=1
+#   R1pkt[5] widx=6 GOLDEN w6 open-delta=0
+#   R1pkt[6] widx=7 GOLDEN w7 open-delta=0
+# Run1: ncur=7 valid=7 winR=7 drop=0 eod=1 adc=2048
+# Run1: dbg_bytes=231 dbg_e7=7
+# PASS Run1: 7 valid packets match golden, single-pass
+# [tb_demo_rom] capture closed: 231 bytes
+# Run2: SKIPPED (+SKIP_RUN2)
+# ========================================
+# Demo ROM TB  Test Summary: 1/1 PASSED
+# ========================================
+# ** Note: $finish    : ../tb/tb_demo_rom.sv(453)
+#    Time: 5712319380 ns  Iteration: 0  Instance: /tb_demo_rom
+# End time: 18:53:47 on Nov 04,2026, Elapsed time: 0:01:42
+# Errors: 0, Warnings: 0

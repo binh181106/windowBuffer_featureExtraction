@@ -1,0 +1,86 @@
+Reading H:/questasim64_10.7c/tcl/vsim/pref.tcl
+
+# 10.7c
+
+# vsim -c tb_wv -do "do "H:/IC Design/Code/ECG/ecg-thinh-uvm/scripts/gui/wave_tb_top_ecg_classifier.do"; quit -f" 
+# Start time: 23:13:52 on Oct 30,2026
+# ** Note: (vsim-8009) Loading existing optimized design _opt1
+# //  Questa Sim-64
+# //  Version 10.7c win64 Aug 18 2018
+# //
+# //  Copyright 1991-2018 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading sv_std.std
+# Loading work.tb_wv(fast)
+# do "H:/IC Design/Code/ECG/ecg-thinh-uvm/scripts/gui/wave_tb_top_ecg_classifier.do"
+# 0
+# 0
+# /tb_top_ecg_classifier
+# 1
+# wave addcursor not supported in batch mode
+# 2
+# wave addcursor not supported in batch mode
+# 3
+# wave addcursor not supported in batch mode
+# 4
+# wave addcursor not supported in batch mode
+# 5
+# 6
+# 7
+# wave addcursor not supported in batch mode
+# 8
+# wave addcursor not supported in batch mode
+# 9
+# wave addcursor not supported in batch mode
+# 10
+# wave addcursor not supported in batch mode
+# 11
+# wave addcursor not supported in batch mode
+# 12
+# wave addcursor not supported in batch mode
+# 13
+# wave addcursor not supported in batch mode
+# 14
+# 15
+# 16
+# wave addcursor not supported in batch mode
+# 17
+# wave addcursor not supported in batch mode
+# 18
+# 19
+# 20
+# wave addcursor not supported in batch mode
+# 21
+# wave addcursor not supported in batch mode
+# 22
+# wave addcursor not supported in batch mode
+# 23
+# wave addcursor not supported in batch mode
+# 24
+# wave addcursor not supported in batch mode
+# 25
+# wave addcursor not supported in batch mode
+# 26
+# 27
+# wave addcursor not supported in batch mode
+# 28
+# 29
+# ** Error: wrong # args: should be "wave subcommand ?arg ...?"
+# Error in macro H:\IC Design\Code\ECG\ecg-thinh-uvm\scripts\gui\wave_tb_top_ecg_classifier.do line 83
+# wrong # args: should be "wave subcommand ?arg ...?"
+#     while executing
+# "wave"
+#     invoked from within
+# "puts "[wave] summary: $::wv_ok ok, $::wv_fail failed (see lines above).""
+#  quit -f
+# End time: 23:13:53 on Oct 30,2026, Elapsed time: 0:00:01
+# Errors: 3, Warnings: 0

@@ -1,0 +1,78 @@
+m255
+K4
+z2
+!s12c _opt
+Z0 !s99 nomlopt
+!s11f vlog 2025.2 2025.05, May 31 2025
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z1 dH:/IC Design/Code/ECG/ecg-thinh-uvm/tb
+T_opt
+!i145 1
+!i144 0
+!s110 1792925681
+V^kOc>BE;No4Id_OP:b?Vm2
+04 7 4 work uart_tx fast 0
+=1-94b609da484b-6adddff0-2fe-5b00
+R0
+!s12f OEM100
+!s12b OEM100
+!s124 OEM10U1 
+!s135 nogc
+o-quiet -auto_acc_if_foreign -work base_uart
+tCvgOpt 0 defaultOptions 1107585188
+n@_opt
+OL;O;2025.2;82
+vtb_uart_tx
+Z2 2../uart/uart_tx.v|tb_uart_tx.sv
+Z3 DXx6 sv_std 3 std 0 22 @5XbY]_OacJl=`ToSm<M^0
+Z4 !s110 1792925679
+!i10b 1
+!s100 Q_F65UJIOZL0]?PmOkk`^1
+IP@o?lJQm5fEI_0H0^EmEl1
+S1
+R1
+Z5 w1792663069
+8tb_uart_tx.sv
+Ftb_uart_tx.sv
+!i122 0
+L0 3 61
+Z6 VDg1SIo80bB@j0V0VzS_@n1
+Z7 OL;L;2025.2;82
+r1
+!s85 0
+31
+Z8 !s108 1792925679.000000
+Z9 !s107 tb_uart_tx.sv|../uart/uart_tx.v|
+Z10 !s90 -sv|-mfcu|-work|base_uart|../uart/uart_tx.v|tb_uart_tx.sv|
+!i113 0
+Z11 o-sv -mfcu -work base_uart -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z12 tCvgOpt 0 defaultOptions 1085333592
+vuart_tx
+R2
+R3
+R4
+!i10b 1
+!s100 >^mR3S77gm:M^VSDeM?Sa3
+IakDhUDF?`OBA97^jWzYF81
+S1
+R1
+R5
+8../uart/uart_tx.v
+F../uart/uart_tx.v
+!i122 0
+L0 11 158
+R6
+R7
+r1
+!s85 0
+31
+R8
+R9
+R10
+!i113 0
+R11
+R12

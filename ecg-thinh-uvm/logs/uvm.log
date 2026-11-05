@@ -1,0 +1,27 @@
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+Start time: 13:50:11 on Nov 05,2026
+vlog -sv -work work_uvm "+incdir+H:/questasim64_10.7c/verilog_src/uvm-1.2/src" H:/questasim64_10.7c/verilog_src/uvm-1.2/src/uvm_pkg.sv H:/IC Design/Code/ECG/ecg-thinh-uvm/apb/apb_slave_if.v H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/uvm/apb_slave_if_if.sv H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/uvm/apb_slave_if_env_pkg.sv H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/uvm/tb_apb_uvm.sv "+define+APB_RTL_V30" 
+-- Compiling package uvm_pkg (uvm-1.2 Built-in)
+-- Compiling module apb_slave_if
+-- Compiling interface apb_slave_if_if
+-- Compiling package apb_slave_if_env_pkg
+-- Importing package uvm_pkg (uvm-1.2 Built-in)
+-- Compiling module tb_apb_uvm
+-- Importing package apb_slave_if_env_pkg
+
+Top level modules:
+	tb_apb_uvm
+End time: 13:50:11 on Nov 05,2026, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0
+Reading H:/questasim64_10.7c/tcl/vsim/pref.tcl
+
+# 10.7c
+
+# vsim -c tb.tb_apb_uvm -do "run -all; quit -f" 
+# Start time: 13:50:12 on Nov 05,2026
+# ** Error (suppressible): (vsim-19) Failed to access library 'tb' at "tb".
+# No such file or directory. (errno = ENOENT)
+# Error loading design
+Error loading design
+# End time: 13:50:12 on Nov 05,2026, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 0

@@ -1,0 +1,11 @@
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+Start time: 20:54:03 on Oct 30,2026
+vlog -sv -work work_probe ../scripts/probe/tb_crest_probe.sv 
+-- Compiling module tb_crest_probe
+** Warning: ../scripts/probe/tb_crest_probe.sv(24): (vlog-2244) Variable 'wide' is implicitly static. You must either explicitly declare it as static or automatic
+or remove the initialization in the declaration of variable.
+** Warning: ../scripts/probe/tb_crest_probe.sv(25): (vlog-2244) Variable 'f_crest_fixed' is implicitly static. You must either explicitly declare it as static or automatic
+or remove the initialization in the declaration of variable.
+** Error: (vlog-13069) ../scripts/probe/tb_crest_probe.sv(25): near "[": syntax error, unexpected '[', expecting ';' or ','.
+End time: 20:54:03 on Oct 30,2026, Elapsed time: 0:00:00
+Errors: 1, Warnings: 2

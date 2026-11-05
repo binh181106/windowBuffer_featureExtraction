@@ -1,0 +1,68 @@
+Reading H:/questasim64_10.7c/tcl/vsim/pref.tcl
+
+# 10.7c
+
+# vsim -c tb_ai_classifier -do "run -all; quit -f" 
+# Start time: 13:49:53 on Nov 05,2026
+# ** Note: (vsim-3812) Design is being optimized...
+# //  Questa Sim-64
+# //  Version 10.7c win64 Aug 18 2018
+# //
+# //  Copyright 1991-2018 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading sv_std.std
+# Loading work.tb_ai_classifier(fast)
+# Loading work.ai_classifier(fast)
+# run -all
+# ========================================
+# AI Classifier Testbench
+# ========================================
+# 
+# [Test 1] Zero Features
+#   Classification: Normal (00)
+#   PASS: Classification completed
+# 
+# [Test 2] All Ones Features
+#   Classification: Normal (00)
+#   PASS: Classification completed
+# 
+# [Test 3] Positive Features
+#   Features:
+#     RMS=   256, VAR=    16, Peak=   128
+#     ZC=    32, PTP=   160, Crest=  5461
+#     RR=   800, RR_ratio=  4096
+#   Classification: Normal (00)
+#   PASS: Positive features classified
+# 
+# [Test 4] High Heart Rate (Fast)
+#   Classification: Normal (00)
+#   PASS: High HR classified
+# 
+# [Test 5] Low Heart Rate (Slow)
+#   Classification: Normal (00)
+#   PASS: Low HR classified
+# 
+# [Test 6] FC2 Output Values
+#   FC2 outputs:
+#     fc2_out[          0] =           0
+#     fc2_out[          1] =           0
+#     fc2_out[          2] =           0
+#     fc2_out[          3] =           0
+#   PASS: FC2 outputs valid
+# 
+# ========================================
+# Test Summary:           6/          6 PASSED
+# ========================================
+# ** Note: $finish    : H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_ai_classifier.sv(288)
+#    Time: 17549280 ps  Iteration: 0  Instance: /tb_ai_classifier
+# End time: 13:49:54 on Nov 05,2026, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0

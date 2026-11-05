@@ -1,0 +1,79 @@
+m255
+K4
+z2
+!s12c _opt
+Z0 !s99 nomlopt
+!s11f vlog 2025.2 2025.05, May 31 2025
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z1 dH:/IC Design/Code/ECG/ecg-thinh-uvm/tb
+T_opt
+!i145 1
+!i144 0
+!s110 1792925820
+V=XmUcQP74m0L2Dc=<[`WC3
+04 15 4 work tb_apb_slave_if fast 0
+=1-94b609da484b-6adde07b-2e5-60d0
+R0
+!s12f OEM100
+!s12b OEM100
+!s124 OEM10U2 
+!s135 nogc
+o-quiet -auto_acc_if_foreign -work base_apb_slave_if
+tCvgOpt 0 defaultOptions 1107585188
+n@_opt
+OL;O;2025.2;82
+vapb_slave_if
+Z2 2../apb/apb_slave_if.v|tb_apb_slave_if.sv
+Z3 DXx6 sv_std 3 std 0 22 @5XbY]_OacJl=`ToSm<M^0
+Z4 !s110 1792925818
+!i10b 1
+!s100 lAllFk^H0>VgRVfME>@HN3
+IN5dGOo`WT@ZNDca6Z:=2e0
+S1
+R1
+Z5 w1792663069
+8../apb/apb_slave_if.v
+F../apb/apb_slave_if.v
+!i122 0
+L0 6 123
+Z6 VDg1SIo80bB@j0V0VzS_@n1
+Z7 OL;L;2025.2;82
+r1
+!s85 0
+31
+Z8 !s108 1792925818.000000
+Z9 !s107 tb_apb_slave_if.sv|../apb/apb_slave_if.v|
+Z10 !s90 -sv|-mfcu|-work|base_apb_slave_if|../apb/apb_slave_if.v|tb_apb_slave_if.sv|
+!i113 0
+Z11 o-sv -mfcu -work base_apb_slave_if -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z12 tCvgOpt 0 defaultOptions 1085333592
+vtb_apb_slave_if
+R2
+R3
+R4
+!i10b 1
+!s100 >KVXPP3o``b`iza0aoH8N3
+I1YH0JYW1<KR=_NHcokJQY1
+S1
+R1
+R5
+8tb_apb_slave_if.sv
+Ftb_apb_slave_if.sv
+!i122 0
+L0 6 253
+R6
+R7
+r1
+!s85 0
+31
+R8
+R9
+R10
+!i113 0
+R11
+R12

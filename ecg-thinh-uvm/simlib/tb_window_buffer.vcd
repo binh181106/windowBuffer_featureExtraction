@@ -1,0 +1,16 @@
+$date
+	Thu Nov 05 13:49:50 2026
+$end
+$version
+	QuestaSim Version 10.7c
+$end
+$timescale
+	1ps
+$end
+
+$scope module tb_window_buffer $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+$end

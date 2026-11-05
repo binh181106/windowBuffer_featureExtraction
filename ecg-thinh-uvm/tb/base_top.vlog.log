@@ -1,0 +1,20 @@
+Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+Start time: 18:17:56 on Oct 25,2026
+vlog -sv -mfcu -work base_top ../apb/apb_slave_if.v ../adc/adc_interface.v ../window/window_buffer.v ../feature/feature_extraction.v ../ai/ai_classifier.v ../ai/mlp_weights_rom.v ../control/control_fsm.v ../uart/uart_tx.v ../top/top_ecg_classifier.v tb_top_ppg_classifier.sv 
+** Note: (vlog-220) 'H:/altera/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
+-- Compiling module apb_slave_if
+-- Compiling module adc_interface
+-- Compiling module window_buffer
+-- Compiling module feature_extraction
+-- Compiling module ai_classifier
+-- Compiling module mlp_weights_rom
+-- Compiling module control_fsm
+-- Compiling module uart_tx
+-- Compiling module top_ecg_classifier
+-- Compiling module tb_top_ecg_classifier
+
+Top level modules:
+	mlp_weights_rom
+	tb_top_ecg_classifier
+End time: 18:17:56 on Oct 25,2026, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0

@@ -1,0 +1,19 @@
+$date
+	Mon Oct 26 16:14:01 2026
+$end
+$version
+	Questa Altera Starter FPGA Edition Version 2025.2
+$end
+$timescale
+	1ps
+$end
+
+$scope module tb_ai_classifier $end
+
+$scope function get_class_name $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+$end

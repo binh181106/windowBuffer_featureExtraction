@@ -1,0 +1,30 @@
+Reading H:/questasim64_10.7c/tcl/vsim/pref.tcl
+
+# 10.7c
+
+# vsim -c tb_top_ecg_classifier -do "do "/h/IC Design/Code/ECG/ecg-thinh-uvm/simlib/wave_verify_top.do"" 
+# Start time: 22:19:21 on Oct 30,2026
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: H:/IC Design/Code/ECG/ecg-thinh-uvm/top/top_ecg_classifier.v(216): (vopt-2241) Connection width does not match width of port 'sample_rate_div'. The port definition is at: H:/IC Design/Code/ECG/ecg-thinh-uvm/adc/adc_interface.v(20).
+# ** Warning: H:/IC Design/Code/ECG/ecg-thinh-uvm/top/top_ecg_classifier.v(236): (vopt-2685) [TFMPC] - Too few port connections for 'u_window'.  Expected 13, found 12.
+# ** Warning: H:/IC Design/Code/ECG/ecg-thinh-uvm/top/top_ecg_classifier.v(236): (vopt-2718) [TFMPC] - Missing connection for port 'sample_cnt'.
+# //  Questa Sim-64
+# //  Version 10.7c win64 Aug 18 2018
+# //
+# //  Copyright 1991-2018 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading sv_std.std
+# Loading work.tb_top_ecg_classifier(fast)
+# Loading work.ai_classifier(fast)
+# do "/h/IC Design/Code/ECG/ecg-thinh-uvm/simlib/wave_verify_top.do"
+# Cannot open macro file: /h/IC Design/Code/ECG/ecg-thinh-uvm/simlib/wave_verify_top.do
+VSIM 2> 

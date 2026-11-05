@@ -1,0 +1,11 @@
+Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+Start time: 17:54:39 on Oct 25,2026
+vlog -sv -mfcu -work base_uart ../uart/uart_tx.v tb_uart_tx.sv 
+** Note: (vlog-220) 'H:/altera/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
+-- Compiling module uart_tx
+-- Compiling module tb_uart_tx
+
+Top level modules:
+	tb_uart_tx
+End time: 17:54:39 on Oct 25,2026, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0

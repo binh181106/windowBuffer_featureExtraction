@@ -1,0 +1,58 @@
+Reading H:/questasim64_10.7c/tcl/vsim/pref.tcl
+
+# 10.7c
+
+# vsim -c tb_top_ecg_classifier -do "run 100000; puts "A<<[examine /tb_top_ecg_classifier/dut/u_ctrl_fsm/current_state]>>"; puts "B<<[examine /tb_top_ecg_classifier/dut/u_ctrl_fsm/state]>>"; puts "C<<[examine /tb_top_ecg_classifier/dut/u_ctrl_fsm/timeout_cnt]>>"; puts "F<<[examine /tb_top_ecg_classifier/dut/window_ready]>>"; puts "I<<[examine /tb_top_ecg_classifier/byte_val]>>"; puts "J<<[examine /tb_top_ecg_classifier/rx_ok]>>"; puts "K<<[examine /tb_top_ecg_classifier/status_led]>>"; puts "L<<[examine /tb_top_ecg_classifier/zzz_bad]>>"; quit -f" 
+# Start time: 22:32:11 on Oct 30,2026
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: ../top/top_ecg_classifier.v(216): (vopt-2241) Connection width does not match width of port 'sample_rate_div'. The port definition is at: ../adc/adc_interface.v(20).
+# ** Warning: ../top/top_ecg_classifier.v(236): (vopt-2685) [TFMPC] - Too few port connections for 'u_window'.  Expected 13, found 12.
+# ** Warning: ../top/top_ecg_classifier.v(236): (vopt-2718) [TFMPC] - Missing connection for port 'sample_cnt'.
+# //  Questa Sim-64
+# //  Version 10.7c win64 Aug 18 2018
+# //
+# //  Copyright 1991-2018 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading sv_std.std
+# Loading work.tb_top_ecg_classifier(fast)
+# Loading work.ai_classifier(fast)
+# run 100000
+# ========================================
+# Top-Level ECG Classifier Testbench
+# ========================================
+#  puts "A<<[examine /tb_top_ecg_classifier/dut/u_ctrl_fsm/current_state]>>"
+# ** Error: (vish-4014) No objects found matching '/tb_top_ecg_classifier/dut/u_ctrl_fsm/current_state'.
+# 
+#  puts "B<<[examine /tb_top_ecg_classifier/dut/u_ctrl_fsm/state]>>"
+# ** Error: (vish-4014) No objects found matching '/tb_top_ecg_classifier/dut/u_ctrl_fsm/state'.
+# 
+#  puts "C<<[examine /tb_top_ecg_classifier/dut/u_ctrl_fsm/timeout_cnt]>>"
+# ** Error: (vish-4014) No objects found matching '/tb_top_ecg_classifier/dut/u_ctrl_fsm/timeout_cnt'.
+# 
+#  puts "F<<[examine /tb_top_ecg_classifier/dut/window_ready]>>"
+# ** Error: (vish-4014) No objects found matching '/tb_top_ecg_classifier/dut/window_ready'.
+# 
+#  puts "I<<[examine /tb_top_ecg_classifier/byte_val]>>"
+# ** Error: (vish-4014) No objects found matching '/tb_top_ecg_classifier/byte_val'.
+# 
+#  puts "J<<[examine /tb_top_ecg_classifier/rx_ok]>>"
+# ** Error: (vish-4014) No objects found matching '/tb_top_ecg_classifier/rx_ok'.
+# 
+#  puts "K<<[examine /tb_top_ecg_classifier/status_led]>>"
+# ** Error: (vish-4014) No objects found matching '/tb_top_ecg_classifier/status_led'.
+# 
+#  puts "L<<[examine /tb_top_ecg_classifier/zzz_bad]>>"
+# ** Error: (vish-4014) No objects found matching '/tb_top_ecg_classifier/zzz_bad'.
+# 
+#  quit -f
+# End time: 22:32:12 on Oct 30,2026, Elapsed time: 0:00:01
+# Errors: 8, Warnings: 3

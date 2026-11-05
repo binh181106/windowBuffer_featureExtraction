@@ -1,0 +1,94 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dH:/IC Design/Code/ECG/ecg-thinh-uvm/simlib
+T_opt
+!s110 1793527690
+Va@PeC2]C?>HjioL>0l?JB0
+04 14 4 work tb_pacer_repre fast 0
+=1-c8530905c11f-6ae70f8a-36d-4300
+o-quiet -auto_acc_if_foreign -work work_pr
+Z1 tCvgOpt 0
+n@_opt
+OL;O;10.7c;67
+vecg_rom
+Z2 DXx6 sv_std 3 std 0 22 d=_JfHTnXCN[H5FjiaJJc0
+Z3 !s110 1793527689
+!i10b 1
+!s100 :?C3f`270RZO;zNQl`cQR0
+IXozU@WEF;LPZXaQVfb8XB1
+Z4 VDg1SIo80bB@j0V0VzS_@n1
+!s105 ecg_rom_v_unit
+S1
+R0
+w1793465283
+8../demo/ecg_rom.v
+F../demo/ecg_rom.v
+L0 17
+Z5 OL;L;10.7c;67
+r1
+!s85 0
+31
+Z6 !s108 1793527689.000000
+Z7 !s107 ../tb/tb_pacer_repre.sv|../demo/sample_pacer.v|../demo/ecg_rom.v|
+Z8 !s90 -sv|-work|work_pr|../demo/ecg_rom.v|../demo/sample_pacer.v|../tb/tb_pacer_repre.sv|+incdir+..|
+!i113 0
+Z9 o-sv -work work_pr -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z10 !s92 -sv -work work_pr +incdir+.. -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R1
+vsample_pacer
+R2
+R3
+!i10b 1
+!s100 U>`6HX@BD;@>Cc[gW4>P23
+InZ9UAfUVRNkUmM2kzgi^a1
+R4
+!s105 sample_pacer_v_unit
+S1
+R0
+w1793526435
+8../demo/sample_pacer.v
+F../demo/sample_pacer.v
+L0 36
+R5
+r1
+!s85 0
+31
+R6
+R7
+R8
+!i113 0
+R9
+R10
+R1
+vtb_pacer_repre
+R2
+R3
+!i10b 1
+!s100 bj5[eVD`<9`h>=XBXiiHg2
+ICX`MX@KBza]P[CRf8j0jn0
+R4
+!s105 tb_pacer_repre_sv_unit
+S1
+R0
+w1793526455
+8../tb/tb_pacer_repre.sv
+F../tb/tb_pacer_repre.sv
+L0 25
+R5
+r1
+!s85 0
+31
+R6
+R7
+R8
+!i113 0
+R9
+R10
+R1

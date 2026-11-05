@@ -1,0 +1,44 @@
+Reading H:/questasim64_10.7c/tcl/vsim/pref.tcl
+
+# 10.7c
+
+# vsim -c tb_demo_status -do "run -all; quit -f" 
+# Start time: 13:41:01 on Nov 05,2026
+# ** Note: (vsim-3812) Design is being optimized...
+# //  Questa Sim-64
+# //  Version 10.7c win64 Aug 18 2018
+# //
+# //  Copyright 1991-2018 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading sv_std.std
+# Loading work.tb_demo_status(fast)
+# Loading work.ai_classifier(fast)
+# run -all
+# [ecg_rom] $readmemh("../demo/ecg_rom.hex"): loaded 2048 words
+# ========================================
+# Demo STATUS TB  TARGET_HZ=33333 (fast)
+# ========================================
+# PASS T2 busy: STATUS=0x00000001, fsm_state=1
+# PASS T3 overflow readback: forced=0x00000009 released=0x00000001
+# PASS T5 adc source -> STATUS bit3=1 (STATUS=0x00000009)
+# FAIL T6 feature source: followed=00000000000000000000000000000000 STATUS=0x00000001
+# PASS T7 mlp source -> STATUS bit3=1 (STATUS=0x00000009)
+# PASS T1 idle: STATUS=0x00000000 fsm_state=0
+# PASS T4 undisturbed: winR=7 adc=2048 eod=1 drop=0 demo_overflow=0 demo_done=1
+# PASS T8 pkt_drop does NOT set STATUS bit3 (STATUS=0x00000000, demo_overflow=1 during force)
+# ========================================
+# Test Summary: 7/8 FAILED
+# ========================================
+# ** Note: $finish    : ../tb/tb_demo_status.sv(323)
+#    Time: 84914701 ns  Iteration: 0  Instance: /tb_demo_status
+# End time: 13:41:03 on Nov 05,2026, Elapsed time: 0:00:02
+# Errors: 0, Warnings: 0

@@ -1,0 +1,466 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dH:/IC Design/Code/ECG/ecg-thinh-uvm/scripts
+vadc_interface
+Z1 DXx6 sv_std 3 std 0 22 d=_JfHTnXCN[H5FjiaJJc0
+Z2 !s110 1793367123
+!i10b 1
+!s100 Oim?6BWH[<N:dd]XBIYW<2
+I3ZG;17E>Y8oG^_ibTWP`62
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+Z4 !s105 apb_slave_if_v_unit
+S1
+R0
+w1792929950
+8H:/IC Design/Code/ECG/ecg-thinh-uvm/adc/adc_interface.v
+FH:/IC Design/Code/ECG/ecg-thinh-uvm/adc/adc_interface.v
+Z5 L0 11
+Z6 OL;L;10.7c;67
+r1
+!s85 0
+31
+Z7 !s108 1793367123.000000
+Z8 !s107 H:/IC Design/Code/ECG/ecg-thinh-uvm/top/top_ecg_classifier.v|H:/IC Design/Code/ECG/ecg-thinh-uvm/uart/uart_tx.v|H:/IC Design/Code/ECG/ecg-thinh-uvm/control/control_fsm.v|H:/IC Design/Code/ECG/ecg-thinh-uvm/ai/mlp_weights_rom.v|H:/IC Design/Code/ECG/ecg-thinh-uvm/ai/ai_classifier.v|H:/IC Design/Code/ECG/ecg-thinh-uvm/feature/feature_extraction.v|H:/IC Design/Code/ECG/ecg-thinh-uvm/window/window_buffer.v|H:/IC Design/Code/ECG/ecg-thinh-uvm/adc/adc_interface.v|H:/IC Design/Code/ECG/ecg-thinh-uvm/apb/apb_slave_if.v|
+Z9 !s90 -sv|-mfcu|-work|work_reg|H:/IC Design/Code/ECG/ecg-thinh-uvm/apb/apb_slave_if.v|H:/IC Design/Code/ECG/ecg-thinh-uvm/adc/adc_interface.v|H:/IC Design/Code/ECG/ecg-thinh-uvm/window/window_buffer.v|H:/IC Design/Code/ECG/ecg-thinh-uvm/feature/feature_extraction.v|H:/IC Design/Code/ECG/ecg-thinh-uvm/ai/ai_classifier.v|H:/IC Design/Code/ECG/ecg-thinh-uvm/ai/mlp_weights_rom.v|H:/IC Design/Code/ECG/ecg-thinh-uvm/control/control_fsm.v|H:/IC Design/Code/ECG/ecg-thinh-uvm/uart/uart_tx.v|H:/IC Design/Code/ECG/ecg-thinh-uvm/top/top_ecg_classifier.v|
+!i113 0
+Z10 o-sv -mfcu -work work_reg -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z11 tCvgOpt 0
+vai_classifier
+R1
+R2
+!i10b 1
+!s100 9EDoZB3hQY3fI:EQh7LQL0
+ICKzg]h03?VkUeLLi6gL[_2
+R3
+R4
+S1
+R0
+w1792943434
+8H:/IC Design/Code/ECG/ecg-thinh-uvm/ai/ai_classifier.v
+FH:/IC Design/Code/ECG/ecg-thinh-uvm/ai/ai_classifier.v
+L0 14
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+vapb_slave_if
+R1
+R2
+!i10b 1
+!s100 V1V`IX3miLL:4RgF;@hYo3
+IHTdach78:U<NnRggH]SfL1
+R3
+R4
+S1
+R0
+w1792930057
+8H:/IC Design/Code/ECG/ecg-thinh-uvm/apb/apb_slave_if.v
+FH:/IC Design/Code/ECG/ecg-thinh-uvm/apb/apb_slave_if.v
+L0 6
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+vcontrol_fsm
+R1
+R2
+!i10b 1
+!s100 kZMPP`I@0Sl@WK54eJAhR1
+I0gBdzEQfRdiN1B09KJY:O1
+R3
+R4
+S1
+R0
+w1793005710
+8H:/IC Design/Code/ECG/ecg-thinh-uvm/control/control_fsm.v
+FH:/IC Design/Code/ECG/ecg-thinh-uvm/control/control_fsm.v
+Z12 L0 20
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+vfeature_extraction
+R1
+R2
+!i10b 1
+!s100 cSUVN`VWIXX>F7CGzcj_h3
+IFV=LSIkW_?<kdg^XjK<Uh1
+R3
+R4
+S1
+R0
+w1792932570
+8H:/IC Design/Code/ECG/ecg-thinh-uvm/feature/feature_extraction.v
+FH:/IC Design/Code/ECG/ecg-thinh-uvm/feature/feature_extraction.v
+L0 22
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+vmlp_weights_rom
+R1
+R2
+!i10b 1
+!s100 0RH@bYB6DEle=R7Ph>TCa0
+IoXlA7`e22IXzDdl=1LMHI1
+R3
+R4
+S1
+R0
+Z13 w1792663069
+8H:/IC Design/Code/ECG/ecg-thinh-uvm/ai/mlp_weights_rom.v
+FH:/IC Design/Code/ECG/ecg-thinh-uvm/ai/mlp_weights_rom.v
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+vtb_adc_interface
+R1
+R2
+!i10b 1
+!s100 Icn@O9ZR=X6YhOV9O`EOd3
+I6Xm`R7UzfLH8VG]5:T;RH3
+R3
+!s105 tb_adc_interface_sv_unit
+S1
+R0
+w1792942211
+8H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_adc_interface.sv
+FH:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_adc_interface.sv
+L0 6
+R6
+r1
+!s85 0
+31
+R7
+!s107 H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_adc_interface.sv|
+!s90 -sv|-mfcu|-work|work_reg|H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_adc_interface.sv|
+!i113 0
+R10
+R11
+vtb_ai_classifier
+R1
+!s110 1793367126
+!i10b 1
+!s100 [:9V91WLF?2VLl`Ul55Sn2
+INPRPOii?3]Z@YiOW0cZQA0
+R3
+!s105 tb_ai_classifier_sv_unit
+S1
+R0
+w1792942962
+8H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_ai_classifier.sv
+FH:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_ai_classifier.sv
+L0 6
+R6
+r1
+!s85 0
+31
+!s108 1793367126.000000
+!s107 H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_ai_classifier.sv|
+!s90 -sv|-mfcu|-work|work_reg|H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_ai_classifier.sv|
+!i113 0
+R10
+R11
+vtb_apb_slave_if
+R1
+!s110 1793367127
+!i10b 1
+!s100 Z8fG8nXTzi95L[:8X5Y[l3
+IoY]Y@F8JfFa1XmLP_f[dG0
+R3
+!s105 tb_apb_slave_if_sv_unit
+S1
+R0
+w1792941425
+8H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_apb_slave_if.sv
+FH:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_apb_slave_if.sv
+L0 6
+R6
+r1
+!s85 0
+31
+!s108 1793367127.000000
+!s107 H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_apb_slave_if.sv|
+!s90 -sv|-mfcu|-work|work_reg|H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_apb_slave_if.sv|
+!i113 0
+R10
+R11
+vtb_control_fsm
+R1
+!s110 1793367129
+!i10b 1
+!s100 o1]=j><D1MmQm<WASWP3z3
+Io8Ig2^ZX@W:zd4RhZo`9a0
+R3
+!s105 tb_control_fsm_sv_unit
+S1
+R0
+w1792935000
+8H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_control_fsm.sv
+FH:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_control_fsm.sv
+L0 3
+R6
+r1
+!s85 0
+31
+!s108 1793367129.000000
+!s107 H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_control_fsm.sv|
+!s90 -sv|-mfcu|-work|work_reg|H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_control_fsm.sv|
+!i113 0
+R10
+R11
+vtb_feature_extraction
+R1
+!s110 1793367125
+!i10b 1
+!s100 d@Li`7;z7;MfUD@>1<VY90
+IzY5V>z9HLj>HJOkjoRVWW0
+R3
+!s105 tb_feature_extraction_sv_unit
+S1
+R0
+w1792935585
+8H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_feature_extraction.sv
+FH:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_feature_extraction.sv
+L0 15
+R6
+r1
+!s85 0
+31
+!s108 1793367125.000000
+!s107 H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_feature_extraction.sv|
+!s90 -sv|-mfcu|-work|work_reg|H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_feature_extraction.sv|
+!i113 0
+R10
+R11
+vtb_feature_simple
+R1
+!s110 1793367130
+!i10b 1
+!s100 D5cH6cHC8UEDZX4>8DV6<0
+IYdEgnGoi6<Y`kfJoXA1]d1
+R3
+!s105 tb_feature_simple_sv_unit
+S1
+R0
+R13
+8H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_feature_simple.sv
+FH:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_feature_simple.sv
+L0 3
+R6
+r1
+!s85 0
+31
+!s108 1793367130.000000
+!s107 H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_feature_simple.sv|
+!s90 -sv|-mfcu|-work|work_reg|H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_feature_simple.sv|
+!i113 0
+R10
+R11
+vtb_top_ecg_classifier
+R1
+!s110 1793367132
+!i10b 1
+!s100 ]]?LWQDeHKU=k6O0hVkIX2
+IP_nPVWRa8;h0eGb=IR0N81
+R3
+!s105 tb_top_ecg_classifier_sv_unit
+S1
+R0
+w1793005550
+8H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_top_ecg_classifier.sv
+FH:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_top_ecg_classifier.sv
+L0 6
+R6
+r1
+!s85 0
+31
+!s108 1793367132.000000
+!s107 H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_top_ecg_classifier.sv|
+!s90 -sv|-mfcu|-work|work_reg|H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_top_ecg_classifier.sv|
+!i113 0
+R10
+R11
+vtb_uart_tx
+R1
+!s110 1793367128
+!i10b 1
+!s100 njV`AV=`LBVIXU2AlTn010
+II3=_ZM9>iRd^DlA;LgiF@0
+R3
+!s105 tb_uart_tx_sv_unit
+S1
+R0
+w1792942351
+8H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_uart_tx.sv
+FH:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_uart_tx.sv
+L0 3
+R6
+r1
+!s85 0
+31
+!s108 1793367128.000000
+!s107 H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_uart_tx.sv|
+!s90 -sv|-mfcu|-work|work_reg|H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_uart_tx.sv|
+!i113 0
+R10
+R11
+vtb_window_buffer
+R1
+!s110 1793367124
+!i10b 1
+!s100 cd;21SRoFIDI=RTN?XWGk0
+I`gPPT>U80hY90j<koCVRE1
+R3
+!s105 tb_window_buffer_sv_unit
+S1
+R0
+w1792942004
+8H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_window_buffer.sv
+FH:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_window_buffer.sv
+L0 6
+R6
+r1
+!s85 0
+31
+!s108 1793367124.000000
+!s107 H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_window_buffer.sv|
+!s90 -sv|-mfcu|-work|work_reg|H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_window_buffer.sv|
+!i113 0
+R10
+R11
+vtb_window_simple
+R1
+!s110 1793367131
+!i10b 1
+!s100 6j:4hYOgVj>[DKD@hTKF]2
+I?b5:AZeFF9B67^bA`=8?f2
+R3
+!s105 tb_window_simple_sv_unit
+S1
+R0
+R13
+8H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_window_simple.sv
+FH:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_window_simple.sv
+L0 6
+R6
+r1
+!s85 0
+31
+!s108 1793367131.000000
+!s107 H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_window_simple.sv|
+!s90 -sv|-mfcu|-work|work_reg|H:/IC Design/Code/ECG/ecg-thinh-uvm/tb/tb_window_simple.sv|
+!i113 0
+R10
+R11
+vtop_ecg_classifier
+R1
+R2
+!i10b 1
+!s100 APK0bB^fdJJ0iB>545Mad3
+IQbLLHZUhT]FX:a4XK7bdK3
+R3
+R4
+S1
+R0
+w1792944062
+8H:/IC Design/Code/ECG/ecg-thinh-uvm/top/top_ecg_classifier.v
+FH:/IC Design/Code/ECG/ecg-thinh-uvm/top/top_ecg_classifier.v
+L0 13
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+vuart_tx
+R1
+R2
+!i10b 1
+!s100 dlmNjZ4:LZI:ZWJR2mcc52
+IjBIdP^eb9<`jd[azVjS:J3
+R3
+R4
+S1
+R0
+R13
+8H:/IC Design/Code/ECG/ecg-thinh-uvm/uart/uart_tx.v
+FH:/IC Design/Code/ECG/ecg-thinh-uvm/uart/uart_tx.v
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+vwindow_buffer
+R1
+R2
+!i10b 1
+!s100 nf[zSjYBlL6`Qeg[K8Y9H0
+IOFIlC0905Tg^@<D[EDV^n3
+R3
+R4
+S1
+R0
+w1792930680
+8H:/IC Design/Code/ECG/ecg-thinh-uvm/window/window_buffer.v
+FH:/IC Design/Code/ECG/ecg-thinh-uvm/window/window_buffer.v
+R12
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11

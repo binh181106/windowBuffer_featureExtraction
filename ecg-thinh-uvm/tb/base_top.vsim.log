@@ -1,0 +1,17 @@
+Reading pref.tcl
+
+# 2025.2
+
+# ** Note: (vsim-220) 'H:/altera/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
+# vsim -c -work base_top tb_top_ecg_classifier -do "run -all; quit -f" 
+# Start time: 18:17:57 on Oct 25,2026
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Note: (vopt-220) 'H:/altera/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
+# ** Warning: ../top/top_ecg_classifier.v(166): (vopt-2241) Connection width does not match width of port 'paddr'. The port definition is at: ../apb/apb_slave_if.v(12).
+# ** Error (suppressible): ../top/top_ecg_classifier.v(166): (vopt-2912) Port 'p_irq' not found in module 'apb_slave_if' (11th connection).
+# Optimization failed
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=1, Warnings=1.
+# Error loading design
+Error loading design
+# End time: 18:17:57 on Oct 25,2026, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 1

@@ -1,0 +1,22 @@
+$date
+	Mon Oct 26 16:13:58 2026
+$end
+$version
+	Questa Altera Starter FPGA Edition Version 2025.2
+$end
+$timescale
+	1ps
+$end
+
+$scope module tb_feature_extraction $end
+
+$scope task load_pattern $end
+$upscope $end
+
+$scope task wait_state_reached $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+$end

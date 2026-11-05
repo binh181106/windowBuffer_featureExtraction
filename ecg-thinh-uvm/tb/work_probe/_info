@@ -1,0 +1,67 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dH:/IC Design/Code/ECG/ecg-thinh-uvm/tb
+T_opt
+!s110 1793366589
+VfU@3BUzA`W9SP@QYGBKjW3
+04 14 4 work tb_control_fsm fast 0
+=1-c8530905c11f-6ae49a3d-a7-4678
+o-quiet -auto_acc_if_foreign -work work_probe
+Z1 tCvgOpt 0
+n@_opt
+OL;O;10.7c;67
+vcontrol_fsm
+Z2 DXx6 sv_std 3 std 0 22 d=_JfHTnXCN[H5FjiaJJc0
+Z3 !s110 1793366569
+!i10b 1
+!s100 kZMPP`I@0Sl@WK54eJAhR1
+IlF>W07]=_D8U>G[W4ezDb3
+Z4 VDg1SIo80bB@j0V0VzS_@n1
+!s105 control_fsm_v_unit
+S1
+R0
+w1793005710
+8../control/control_fsm.v
+F../control/control_fsm.v
+L0 20
+Z5 OL;L;10.7c;67
+r1
+!s85 0
+31
+Z6 !s108 1793366569.000000
+Z7 !s107 tb_control_fsm.sv|../control/control_fsm.v|
+Z8 !s90 -sv|-work|work_probe|../control/control_fsm.v|tb_control_fsm.sv|
+!i113 0
+Z9 o-sv -work work_probe -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R1
+vtb_control_fsm
+R2
+R3
+!i10b 1
+!s100 o1]=j><D1MmQm<WASWP3z3
+IiYI]WVC?8R=^C6HjDD3UK3
+R4
+!s105 tb_control_fsm_sv_unit
+S1
+R0
+w1792935000
+8tb_control_fsm.sv
+Ftb_control_fsm.sv
+L0 3
+R5
+r1
+!s85 0
+31
+R6
+R7
+R8
+!i113 0
+R9
+R1

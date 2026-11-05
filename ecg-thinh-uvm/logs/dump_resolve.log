@@ -1,0 +1,80 @@
+Reading H:/questasim64_10.7c/tcl/vsim/pref.tcl
+
+# 10.7c
+
+# vsim -c tb_top_ecg_classifier -do "dumpfile /dev/null; puts "P1<<[catch {dump /tb_top_ecg_classifier/dut/u_ctrl_fsm/current_state} e1]>>"; puts "P2<<[catch {dump /tb_top_ecg_classifier/dut/u_ctrl_fsm/state} e2]>>"; puts "P3<<[catch {dump /tb_top_ecg_classifier/dut/u_ctrl_fsm/timeout_cnt} e3]>>"; puts "P4<<[catch {dump /tb_top_ecg_classifier/dut/u_ctrl_fsm/feat_started} e4]>>"; puts "P5<<[catch {dump /tb_top_ecg_classifier/dut/u_ctrl_fsm/cnt} e5]>>"; puts "P6<<[catch {dump /tb_top_ecg_classifier/dut/window_ready} e6]>>"; puts "P7<<[catch {dump /tb_top_ecg_classifier/dut/feature_start} e7]>>"; puts "P8<<[catch {dump /tb_top_ecg_classifier/dut/feature_valid} e8]>>"; puts "P9<<[catch {dump /tb_top_ecg_classifier/dut/mlp_start} e9]>>"; puts "P10<<[catch {dump /tb_top_ecg_classifier/dut/mlp_done} e10]>>"; puts "P11<<[catch {dump /tb_top_ecg_classifier/dut/uart_send} e11]>>"; puts "P12<<[catch {dump /tb_top_ecg_classifier/dut/sys_class_code} e12]>>"; puts "P13<<[catch {dump /tb_top_ecg_classifier/dut/sys_done} e13]>>"; puts "P14<<[catch {dump /tb_top_ecg_classifier/irq} e14]>>"; puts "P15<<[catch {dump /tb_top_ecg_classifier/uart_txd} e15]>>"; puts "P16<<[catch {dump /tb_top_ecg_classifier/byte_val} e16]>>"; puts "P17<<[catch {dump /tb_top_ecg_classifier/rx_ok} e17]>>"; puts "P18<<[catch {dump /tb_top_ecg_classifier/status_led} e18]>>"; puts "P19<<[catch {dump /tb_top_ecg_classifier/adc_valid} e19]>>"; puts "P20<<[catch {dump /tb_top_ecg_classifier/adc_data} e20]>>"; puts "P21<<[catch {dump /tb_top_ecg_classifier/sys_clk} e21]>>"; puts "P22<<[catch {dump /tb_top_ecg_classifier/sys_rst_n} e22]>>"; puts "CTL<<[catch {dump /tb_top_ecg_classifier/dut/zzz_bad_signal} ctl]>>"; puts "CTLE=[string range $ctl 0 79]"; quit -f" 
+# Start time: 22:35:54 on Oct 30,2026
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: ../top/top_ecg_classifier.v(216): (vopt-2241) Connection width does not match width of port 'sample_rate_div'. The port definition is at: ../adc/adc_interface.v(20).
+# ** Warning: ../top/top_ecg_classifier.v(236): (vopt-2685) [TFMPC] - Too few port connections for 'u_window'.  Expected 13, found 12.
+# ** Warning: ../top/top_ecg_classifier.v(236): (vopt-2718) [TFMPC] - Missing connection for port 'sample_cnt'.
+# //  Questa Sim-64
+# //  Version 10.7c win64 Aug 18 2018
+# //
+# //  Copyright 1991-2018 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading sv_std.std
+# Loading work.tb_top_ecg_classifier(fast)
+# Loading work.ai_classifier(fast)
+# dumpfile /dev/null
+# invalid command name "dumpfile"
+#  puts "P1<<[catch {dump /tb_top_ecg_classifier/dut/u_ctrl_fsm/current_state} e1]>>"
+P1<<1>>
+#  puts "P2<<[catch {dump /tb_top_ecg_classifier/dut/u_ctrl_fsm/state} e2]>>"
+P2<<1>>
+#  puts "P3<<[catch {dump /tb_top_ecg_classifier/dut/u_ctrl_fsm/timeout_cnt} e3]>>"
+P3<<1>>
+#  puts "P4<<[catch {dump /tb_top_ecg_classifier/dut/u_ctrl_fsm/feat_started} e4]>>"
+P4<<1>>
+#  puts "P5<<[catch {dump /tb_top_ecg_classifier/dut/u_ctrl_fsm/cnt} e5]>>"
+P5<<1>>
+#  puts "P6<<[catch {dump /tb_top_ecg_classifier/dut/window_ready} e6]>>"
+P6<<1>>
+#  puts "P7<<[catch {dump /tb_top_ecg_classifier/dut/feature_start} e7]>>"
+P7<<1>>
+#  puts "P8<<[catch {dump /tb_top_ecg_classifier/dut/feature_valid} e8]>>"
+P8<<1>>
+#  puts "P9<<[catch {dump /tb_top_ecg_classifier/dut/mlp_start} e9]>>"
+P9<<1>>
+#  puts "P10<<[catch {dump /tb_top_ecg_classifier/dut/mlp_done} e10]>>"
+P10<<1>>
+#  puts "P11<<[catch {dump /tb_top_ecg_classifier/dut/uart_send} e11]>>"
+P11<<1>>
+#  puts "P12<<[catch {dump /tb_top_ecg_classifier/dut/sys_class_code} e12]>>"
+P12<<1>>
+#  puts "P13<<[catch {dump /tb_top_ecg_classifier/dut/sys_done} e13]>>"
+P13<<1>>
+#  puts "P14<<[catch {dump /tb_top_ecg_classifier/irq} e14]>>"
+P14<<1>>
+#  puts "P15<<[catch {dump /tb_top_ecg_classifier/uart_txd} e15]>>"
+P15<<1>>
+#  puts "P16<<[catch {dump /tb_top_ecg_classifier/byte_val} e16]>>"
+P16<<1>>
+#  puts "P17<<[catch {dump /tb_top_ecg_classifier/rx_ok} e17]>>"
+P17<<1>>
+#  puts "P18<<[catch {dump /tb_top_ecg_classifier/status_led} e18]>>"
+P18<<1>>
+#  puts "P19<<[catch {dump /tb_top_ecg_classifier/adc_valid} e19]>>"
+P19<<1>>
+#  puts "P20<<[catch {dump /tb_top_ecg_classifier/adc_data} e20]>>"
+P20<<1>>
+#  puts "P21<<[catch {dump /tb_top_ecg_classifier/sys_clk} e21]>>"
+P21<<1>>
+#  puts "P22<<[catch {dump /tb_top_ecg_classifier/sys_rst_n} e22]>>"
+P22<<1>>
+#  puts "CTL<<[catch {dump /tb_top_ecg_classifier/dut/zzz_bad_signal} ctl]>>"
+CTL<<1>>
+#  puts "CTLE=[string range $ctl 0 79]"
+CTLE=ambiguous command name "dump": dumpFileToTranscript dumpObjTypes dump_registry d
+#  quit -f
+# End time: 22:35:55 on Oct 30,2026, Elapsed time: 0:00:01
+# Errors: 1, Warnings: 3

@@ -1,0 +1,1 @@
+H:/altera/25.1std/questa_fse/win64/VisualizerRls/bin/viscom.exe -nolock -quiet -jmem_size 934320 base_uart_tx.tb_uart_tx -quiet -auto_acc_if_foreign -work base_uart_tx -allow_unnamed -o _opt -id 1-94b609da484b-6adde3f5-1a9-968

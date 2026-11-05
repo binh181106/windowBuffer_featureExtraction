@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module name="top_ecg_rom_demo" Register="17" Alu="15" Lut="3">
+    <SubModule name="u_rom" Bsram="1"/>
+    <SubModule name="u_pacer" Register="51" Alu="10" Lut="48"/>
+    <SubModule name="u_adc_if" Register="22" Lut="7"/>
+    <SubModule name="u_window" Register="42" Alu="9" Lut="268" Ssram="64"/>
+    <SubModule name="u_feature" Register="389" Alu="146" Lut="1556" MULT12X12="1" MULT27X36="2"/>
+    <SubModule name="u_ctrl_fsm" Register="48" Lut="97"/>
+    <SubModule name="u_ai" Register="145" Alu="192" Lut="219"/>
+    <SubModule name="u_apb" Register="10" Lut="12"/>
+    <SubModule name="u_seq" Register="17" Lut="28"/>
+    <SubModule name="u_pz" Register="197" Alu="201" Lut="185"/>
+    <SubModule name="u_uart_tx" Register="36" Lut="65"/>
+</Module>
